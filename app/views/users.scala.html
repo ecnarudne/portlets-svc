@@ -1,0 +1,21 @@
+@(message: String)
+
+@import com.feth.play.module.pa.views.html._
+
+@forProviders() { p =>
+    <a href="@p.getUrl()">@p.getKey()</a>
+}
+
+
+
+@main(message) {
+<script src="@routes.Assets.at("javascripts/index.js")" type="text/javascript"></script>
+<ul id="users"></ul>
+<form action="@routes.Application.addUser()" method="post" >
+	<input placeholder="email" name="email" />
+	<input placeholder="Full Name" name="fullName" />
+	<input placeholder="Google ID" name="googleId" />
+	<input placeholder="Preferred Name" name="preferredName" />
+	<input type="submit" value="Add" />
+</form>
+}

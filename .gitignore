@@ -1,0 +1,12 @@
+logs
+project/target
+target
+tmp
+.history
+dist
+/.idea
+/*.iml
+/out
+/.idea_modules
+/RUNNING_PID
+/.cache
