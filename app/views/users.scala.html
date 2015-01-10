@@ -1,13 +1,5 @@
 @(message: String)
 
-@import com.feth.play.module.pa.views.html._
-
-@forProviders() { p =>
-    <a href="@p.getUrl()">@p.getKey()</a>
-}
-
-
-
 @main(message) {
 <script src="@routes.Assets.at("javascripts/index.js")" type="text/javascript"></script>
 <ul id="users"></ul>

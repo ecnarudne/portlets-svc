@@ -1,5 +1,7 @@
 @(title: String)(content: Html)
 
+@import com.feth.play.module.pa.views.html._
+
 <!DOCTYPE html>
 
 <html>
@@ -10,6 +12,16 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
+@currentAuth() { auth =>
+	@if(auth != null) {
+		<a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+	} else {
+		@forProviders() { p =>
+		    <a href="@p.getUrl()">Login via @p.getKey()</a>
+		}
+	}
+}
+<br/>
         @content
     </body>
 </html>

@@ -34,7 +34,7 @@ public class User extends Model {
 	private Boolean male;
 	private boolean emailVerified = false;
 	private UserValidityState userValidity = UserValidityState.PENDING;
-	private int timezone;
+	private Integer timezone;
 	private String birthday;
 
 	/* Constructors */
@@ -207,17 +207,17 @@ public class User extends Model {
 	public void setUserValidity(UserValidityState userValidity) {
 		this.userValidity = userValidity;
 	}
-	public int getTimezone() {
-		return timezone;
-	}
-	public void setTimezone(int timezone) {
-		this.timezone = timezone;
-	}
 	public String getBirthday() {
 		return birthday;
 	}
 	public void setBirthday(String birthday) {
 		this.birthday = birthday;
+	}
+	public Integer getTimezone() {
+		return timezone;
+	}
+	public void setTimezone(Integer timezone) {
+		this.timezone = timezone;
 	}
 	@Override
 	public String toString() {
