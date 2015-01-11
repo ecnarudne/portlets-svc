@@ -8,6 +8,14 @@ POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()
 GET     /listusers                  controllers.Application.listUsers()
 
+POST    /addPortlet                 controllers.Application.addPortlet()
+GET     /portlets                   controllers.Application.portlets()
+GET     /allportlets                controllers.Application.allportlets()
+
+POST    /buyPortlet                 controllers.Application.buyPortlet()
+GET     /myportlets                 controllers.Application.myportlets()
+GET     /portfolio                  controllers.Application.portfolio()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 

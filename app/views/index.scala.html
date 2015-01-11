@@ -1,5 +1,7 @@
 @(user: models.User)
 
 @main(user) {
+	<a href="@routes.Application.portlets()" >Portlets</a>
 	<a href="@routes.Application.users()" >Users</a>
+	<a href="@routes.Application.portfolio()" >Portfolio</a>
 }

@@ -1,4 +1,4 @@
 $ ->
 	$.get "/listusers", (data) ->
-		$.each data, (index, user) ->
-			$("#users").append $("<li>").text user.fullName
+		$.each data, (index, item) ->
+			$("#list").append $("<li>").text item.fullName
