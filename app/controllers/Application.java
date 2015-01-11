@@ -63,7 +63,7 @@ public class Application extends Controller {
     }
     
     public static Result myportlets() {
-    	List<UserPortletStock> list = UserPortletStock.find.all();
+    	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
     	return ok(Json.toJson(list));
     }
 

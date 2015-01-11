@@ -1,7 +1,10 @@
 @(user: models.User)
 
 @main(user) {
-	<a href="@routes.Application.portlets()" >Portlets</a>
+<h1>Home</h1>
+<a href="@routes.Application.portlets()" >Portlets</a>
+@if(user != null && user.getFullName() != null) {
 	<a href="@routes.Application.users()" >Users</a>
 	<a href="@routes.Application.portfolio()" >Portfolio</a>
+}
 }

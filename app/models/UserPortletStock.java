@@ -1,5 +1,7 @@
 package models;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -28,6 +30,23 @@ public class UserPortletStock extends Model {
 	private long buyEpoch;
 
 	public static Finder<Long, UserPortletStock> find = new Finder<Long, UserPortletStock>(Long.class, UserPortletStock.class);
+
+	public static List<UserPortletStock> findByUser(User user) {
+		//TODO must cache
+		if(user == null)
+			return null;
+		return find.where().eq("user", user).findList();
+	}
+
+	public static UserPortletStock findByPortlet(Portlet portlet) {
+		//TODO must cache
+		if(portlet == null)
+			return null;
+		List<UserPortletStock> list = find.where().eq("portlet", portlet).findList();
+		if(list != null && !list.isEmpty())
+			return list.get(0);
+		return null;
+	}
 
 	/* Boiler-plates */
 	public String getId() {

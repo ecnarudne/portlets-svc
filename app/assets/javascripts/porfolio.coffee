@@ -1,7 +1,7 @@
 $ ->
 	$.get "/myportlets", (data) ->
 		$.each data, (index, item) ->
-			$("#list").append $("<li>").text item.portlet.name
+			$("#list").append $("<li>").text item.portlet.name+'-'+item.stock+'-'+item.qty+'-'+item.buyPrice
 $ ->
 	$.get "/allportlets", (data) ->
 		$.each data, (index, p) ->
