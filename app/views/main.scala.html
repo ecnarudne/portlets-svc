@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(user: models.User)(content: Html)
 
 @import com.feth.play.module.pa.views.html._
 
@@ -6,21 +6,20 @@
 
 <html>
     <head>
-        <title>@title</title>
+        <title>MyPortlets @user</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
-@currentAuth() { auth =>
-	@if(auth != null) {
+	@if(user != null && user.getFullName() != null) {
+		@user.getFullName()&nbsp;
 		<a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
 	} else {
 		@forProviders() { p =>
 		    <a href="@p.getUrl()">Login via @p.getKey()</a>
 		}
 	}
-}
 <br/>
         @content
     </body>

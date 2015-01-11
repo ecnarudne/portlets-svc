@@ -52,6 +52,9 @@ public class User extends Model {
 
 	/* eBean Methods */
 	public static User findByProvider(String provider, String providerId) {
+		//TODO must cache
+		if(provider == null || providerId == null)
+			return null;
 		if(isAuthGoogle(provider)) {
 	    	List<User> users = find.where().eq("googleId", providerId).findList();
 			if(users != null && !users.isEmpty())
@@ -60,6 +63,8 @@ public class User extends Model {
 	    	List<User> users = find.where().eq("facebookId", providerId).findList();
 			if(users != null && !users.isEmpty())
 				return users.get(0);
+		} else {
+			Logger.error("Unknown provider: " + provider);
 		}
 		return null;
 	}
@@ -100,9 +105,13 @@ public class User extends Model {
 		return newUser;
 	}
 	public static User findByAuthUserIdentity(AuthUserIdentity identity) {
+		if(identity == null)
+			return null;
 		return findByProvider(identity.getProvider(), identity.getId());
 	}
 	public static boolean existsByAuthUserIdentity(AuthUser authUser) {
+		if(authUser == null)
+			return false;
 		return (findByProvider(authUser.getProvider(), authUser.getId()) != null);
 	}
 	public static void addLinkedAccount(AuthUser oldUser, AuthUser newUser) {
