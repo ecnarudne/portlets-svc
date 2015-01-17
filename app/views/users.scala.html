@@ -1,7 +1,7 @@
 @(user: models.User)
 
 @main(user) {
-<script src="@routes.Assets.at("javascripts/index.js")" type="text/javascript"></script>
+<script src="@routes.Assets.at("javascripts/users.js")" type="text/javascript"></script>
 <h1>Users</h1>
 <ul id="list"></ul>
 <form action="@routes.Application.addUser()" method="post" >
