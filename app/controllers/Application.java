@@ -1,12 +1,15 @@
 package controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 
 import models.Portlet;
+import models.PortletValidityState;
 import models.User;
 import models.UserPortletStock;
+import models.UserValidityState;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -34,6 +37,8 @@ public class Application extends Controller {
 
     public static Result addUser() {
     	User newUser = Form.form(User.class).bindFromRequest().get();
+    	newUser.setEmailVerified(false);
+    	newUser.setValidity(UserValidityState.PENDING);
     	newUser.save();
     	return redirect(routes.Application.users());
     }
@@ -54,7 +59,16 @@ public class Application extends Controller {
 
     public static Result addPortlet() {
     	Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
-    	newPortlet.save();
+    	newPortlet.setCreatedOn(new Date());
+    	
+    	final User localUser = getLocalUser(session());
+    	if(localUser != null) {
+			newPortlet.setOwner(localUser);
+			newPortlet.setValidity(PortletValidityState.PENDING);
+	    	newPortlet.save();
+    	} else {
+    		Logger.error("Invalid User: " + localUser);
+    	}
     	return redirect(routes.Application.portlets());
     }
 

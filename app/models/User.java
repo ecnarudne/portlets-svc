@@ -32,8 +32,8 @@ public class User extends Model {
 	private String profilePicture;
 	private String locale;
 	private Boolean male;
-	private boolean emailVerified = false;
-	private UserValidityState userValidity = UserValidityState.PENDING;
+	private boolean emailVerified;
+	private UserValidityState validity;
 	private Integer timezone;
 	private String birthday;
 
@@ -210,11 +210,11 @@ public class User extends Model {
 	public void setEmailVerified(boolean emailVerified) {
 		this.emailVerified = emailVerified;
 	}
-	public UserValidityState getUserValidity() {
-		return userValidity;
+	public UserValidityState getValidity() {
+		return validity;
 	}
-	public void setUserValidity(UserValidityState userValidity) {
-		this.userValidity = userValidity;
+	public void setValidity(UserValidityState validity) {
+		this.validity = validity;
 	}
 	public String getBirthday() {
 		return birthday;
@@ -235,7 +235,7 @@ public class User extends Model {
 				+ ", facebookId=" + facebookId + ", profileLink=" + profileLink
 				+ ", profilePicture=" + profilePicture + ", locale=" + locale
 				+ ", male=" + male + ", emailVerified=" + emailVerified
-				+ ", userValidity=" + userValidity + ", timezone=" + timezone
+				+ ", uvalidity=" + validity + ", timezone=" + timezone
 				+ ", birthday=" + birthday + "]";
 	}
 }

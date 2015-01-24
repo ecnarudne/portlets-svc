@@ -6,8 +6,11 @@
 create table portlet (
   id                        varchar(255) not null,
   name                      varchar(255),
+  owner_id                  varchar(255),
   picture_url               varchar(255),
   notes                     varchar(255),
+  visible_to_all            boolean,
+  created_on                timestamp,
   constraint pk_portlet primary key (id))
 ;
 
@@ -57,12 +60,14 @@ create sequence user_seq;
 
 create sequence user_portlet_stock_seq;
 
-alter table portlet_stock add constraint fk_portlet_stock_portlet_1 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
-create index ix_portlet_stock_portlet_1 on portlet_stock (portlet_id);
-alter table user_portlet_stock add constraint fk_user_portlet_stock_user_2 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_user_portlet_stock_user_2 on user_portlet_stock (user_id);
-alter table user_portlet_stock add constraint fk_user_portlet_stock_portlet_3 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
-create index ix_user_portlet_stock_portlet_3 on user_portlet_stock (portlet_id);
+alter table portlet add constraint fk_portlet_owner_1 foreign key (owner_id) references user (id) on delete restrict on update restrict;
+create index ix_portlet_owner_1 on portlet (owner_id);
+alter table portlet_stock add constraint fk_portlet_stock_portlet_2 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
+create index ix_portlet_stock_portlet_2 on portlet_stock (portlet_id);
+alter table user_portlet_stock add constraint fk_user_portlet_stock_user_3 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_user_portlet_stock_user_3 on user_portlet_stock (user_id);
+alter table user_portlet_stock add constraint fk_user_portlet_stock_portlet_4 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
+create index ix_user_portlet_stock_portlet_4 on user_portlet_stock (portlet_id);
 
 
 

@@ -1,9 +1,11 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
@@ -16,8 +18,13 @@ public class Portlet extends Model {
 	private String id;
 	@Required
 	private String name;
+	@ManyToOne
+	private User owner;
 	private String pictureUrl;
 	private String notes;
+	private PortletValidityState validity;
+	private boolean visibleToAll;
+	private Date createdOn;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
@@ -55,5 +62,29 @@ public class Portlet extends Model {
 	}
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+	public boolean isVisibleToAll() {
+		return visibleToAll;
+	}
+	public void setVisibleToAll(boolean visibleToAll) {
+		this.visibleToAll = visibleToAll;
+	}
+	public User getOwner() {
+		return owner;
+	}
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	public PortletValidityState getValidity() {
+		return validity;
+	}
+	public void setValidity(PortletValidityState validity) {
+		this.validity = validity;
 	}
 }
