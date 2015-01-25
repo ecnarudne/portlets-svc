@@ -2,7 +2,11 @@
 
 Portlets service and related jobs  
 
-### To create Docker zip for AWS
+## To run local Docker using sbt-native-packager
+sudo ./activator docker:publishLocal
+docker run -p 9000:9000 portlets-svc:1.0-SNAPSHOT
+
+## To create custom Docker zip for AWS
 
 	cd <project-home:portlets-svc>  
 	./dockerzip.sh 
@@ -10,11 +14,12 @@ Upload the zip target/docker.zip to beanstalk-docker
 
 ##### check EC2 docker container
 docker script logs at /tmp/  
+
 	cd /tmp;cat docker_build.log  
 application files at /var/app/current/  
 other logs at /var/log  
 
-### To run on local Docker
+### To run custom Docker build locally
 
 	cd target  
 	unzip -o docker.zip -d portlets-svc  
@@ -23,4 +28,5 @@ other logs at /var/log
 	sudo docker run --name "portlets-svc-1.0-SNAPSHOT" --interactive --rm=true --tty --publish-all portlets-svc:1.0-SNAPSHOT  
 
 ##### check mapped localhost port by
-	sudo docker port portlets-svc-1.0-SNAPSHOT 9000  
+
+	sudo docker port portlets-svc:1.0-SNAPSHOT 9000  
