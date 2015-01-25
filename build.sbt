@@ -1,3 +1,5 @@
+import NativePackagerKeys._
+
 name := """portlets-svc"""
 
 version := "1.0-SNAPSHOT"
@@ -15,6 +17,10 @@ libraryDependencies ++= Seq(
   // Comment the next line for local development of the Play Authentication core:
   "com.feth" %% "play-authenticate" % "0.6.8"
 )
+
+maintainer := "Ashish Awasthi"
+
+dockerExposedPorts in Docker := Seq(9000, 9443)
 
 resolvers += Resolver.url("play-easymail (release)", url("http://joscha.github.io/play-easymail/repo/releases/"))(Resolver.ivyStylePatterns)
 
