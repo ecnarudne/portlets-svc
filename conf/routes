@@ -10,11 +10,18 @@ GET     /listusers                  controllers.Application.listUsers()
 
 POST    /addPortlet                 controllers.Application.addPortlet()
 GET     /portlets                   controllers.Application.portlets()
-GET     /allportlets                controllers.Application.allportlets()
+GET     /listportlets               controllers.Application.listPortlets()
 
 POST    /buyPortlet                 controllers.Application.buyPortlet()
-GET     /myportlets                 controllers.Application.myportlets()
+GET     /listmyportlets             controllers.Application.listMyPortlets()
 GET     /portfolio                  controllers.Application.portfolio()
+
+POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
+POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
+GET     /listportletstocks          controllers.Application.listPortletStocks()
+GET     /listmystocks               controllers.Application.listMyStocks()
+GET     /mystocks                   controllers.Application.myStocks()
+GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

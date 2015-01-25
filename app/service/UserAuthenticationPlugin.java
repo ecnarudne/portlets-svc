@@ -17,7 +17,7 @@ public class UserAuthenticationPlugin extends UserServicePlugin {
     public String save(final AuthUser authUser) {
         final boolean isLinked = User.existsByAuthUserIdentity(authUser);
         if (!isLinked) {
-            return User.create(authUser).getId();
+            return User.create(authUser).getId().toString();
         } else {
             // User already registered
             return null;
@@ -29,7 +29,7 @@ public class UserAuthenticationPlugin extends UserServicePlugin {
         // TODO Caching. Sync the cache when users get deactivated/deleted
         final User u = User.findByAuthUserIdentity(identity);
         if(u != null) {
-            return u.getId();
+            return u.getId().toString();
         } else {
             return null;
         }

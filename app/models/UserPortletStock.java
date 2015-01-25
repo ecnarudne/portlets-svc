@@ -13,7 +13,7 @@ public class UserPortletStock extends Model {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	private String id;
+	private Long id;
 	//@Required
 	@ManyToOne
 	private User user;
@@ -25,7 +25,7 @@ public class UserPortletStock extends Model {
 	//@Required
 	private double qty;
 	//@Required
-	private long buyPrice;
+	private double buyPrice;
 	//@Required
 	private long buyEpoch;
 
@@ -49,10 +49,10 @@ public class UserPortletStock extends Model {
 	}
 
 	/* Boiler-plates */
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public User getUser() {
@@ -79,10 +79,10 @@ public class UserPortletStock extends Model {
 	public void setQty(double qty) {
 		this.qty = qty;
 	}
-	public long getBuyPrice() {
+	public double getBuyPrice() {
 		return buyPrice;
 	}
-	public void setBuyPrice(long buyPrice) {
+	public void setBuyPrice(double buyPrice) {
 		this.buyPrice = buyPrice;
 	}
 	public long getBuyEpoch() {

@@ -12,9 +12,10 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     </head>
     <body>
-	<a href="@routes.Application.index()" >Home</a>&nbsp;
+	<a href="@routes.Application.index()" >Home</a>
 	@if(user != null && user.getFullName() != null) {
-		@user.getFullName()&nbsp;
+		@user.getFullName()
+		<a href="@user.getProfileLink()" target="_blank" ><img src="@user.getProfilePicture()" width="20" height="20" /></a>
 		<a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
 	} else {
 		@forProviders() { p =>

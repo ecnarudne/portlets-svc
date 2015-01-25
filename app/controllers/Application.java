@@ -6,6 +6,7 @@ import java.util.List;
 import com.feth.play.module.pa.PlayAuthenticate;
 
 import models.Portlet;
+import models.PortletStock;
 import models.PortletValidityState;
 import models.User;
 import models.UserPortletStock;
@@ -24,7 +25,8 @@ import views.html.*;
 
 public class Application extends Controller {
 
-    private static final String FLASH_ERROR_KEY = "FLASH_ERROR_KEY";
+    public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
+    public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
 
 	public static Result index() {
 		printSession();
@@ -52,9 +54,69 @@ public class Application extends Controller {
         return ok(portlets.render(getLocalUser(session())));
     }
     
-    public static Result allportlets() {
+    public static Result listPortlets() {
     	List<Portlet> list = Portlet.find.all();
     	return ok(Json.toJson(list));
+    }
+
+    public static Result addStockToPortlet() {
+    	PortletStock newPortletStock = Form.form(PortletStock.class).bindFromRequest().get();
+    	newPortletStock.setLastUpdatedOn(new Date());
+    	newPortletStock.save();
+    	return redirect(routes.Application.stocksInPortlet(newPortletStock.getPortlet().getId()));
+    }
+
+    public static Result listPortletStocks() {
+    	List<PortletStock> list = PortletStock.find.all();
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result listMyStocks() {
+    	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result myStocks() {
+        return ok(mystocks.render(getLocalUser(session())));
+    }
+
+    public static Result subscribeToPortlet() {
+        DynamicForm requestData = Form.form().bindFromRequest();
+        String portletId = requestData.get("portlet");
+    	Logger.debug("portlet ID: " + portletId);
+        Portlet portlet = Portlet.find.byId(Long.parseLong(portletId));
+    	double amount;
+		try {
+			amount = Double.parseDouble(requestData.get("amount").trim());
+		} catch (Exception e) {
+			flash("Invalid Amount: " + requestData.get("amount"));
+			Logger.error("Invalid Amount: " + requestData.get("amount"));
+	    	return redirect(routes.Application.myStocks());
+		}
+    	List<PortletStock> stocks = PortletStock.findByPortlet(portlet);
+
+    	if(stocks == null || stocks.isEmpty()) {
+			flash("No Stocks found for Portlet: " + portletId);
+			Logger.error("No Stocks found for Portlet: " + portletId);
+	    	return redirect(routes.Application.myStocks());
+    	}
+    	for (PortletStock stock : stocks) {
+        	UserPortletStock newUserPortletStock = new UserPortletStock();
+    		newUserPortletStock.setPortlet(portlet);
+    		double buyPrice = 1;//TODO market-data call. $/stock
+    		newUserPortletStock.setBuyPrice(buyPrice);
+	    	newUserPortletStock.setQty((amount*stock.getPercent())/(buyPrice*100));
+	    	newUserPortletStock.setStock(stock.getStock());
+	    	newUserPortletStock.setUser(getLocalUser(session()));
+	    	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
+	    	Logger.info("Saving: " + newUserPortletStock);
+	    	newUserPortletStock.save();//TODO Transaction
+    	}
+    	return redirect(routes.Application.myStocks());
+    }
+
+    public static Result stocksInPortlet(Long portletId) {
+        return ok(stocksinportlet.render(getLocalUser(session()), portletId));
     }
 
     public static Result addPortlet() {
@@ -67,7 +129,8 @@ public class Application extends Controller {
 			newPortlet.setValidity(PortletValidityState.PENDING);
 	    	newPortlet.save();
     	} else {
-    		Logger.error("Invalid User: " + localUser);
+            flash(FLASH_ERROR_KEY, "Please login first");
+    		Logger.error("Please login first");
     	}
     	return redirect(routes.Application.portlets());
     }
@@ -75,14 +138,13 @@ public class Application extends Controller {
     public static Result portfolio() {
         return ok(portfolio.render(getLocalUser(session())));
     }
-    
-    public static Result myportlets() {
+
+    public static Result listMyPortlets() {
     	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
     	return ok(Json.toJson(list));
     }
 
     public static Result buyPortlet() {
-    	//UserPortletStock newUserPortletStock = Form.form(UserPortletStock.class).bindFromRequest().get();
         DynamicForm requestData = Form.form().bindFromRequest();
     	UserPortletStock newUserPortletStock = new UserPortletStock();
         String portletName = requestData.get("portlet");

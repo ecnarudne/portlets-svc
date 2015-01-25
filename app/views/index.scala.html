@@ -3,8 +3,8 @@
 @main(user) {
 <h1>Home</h1>
 <a href="@routes.Application.portlets()" >Portlets</a>
-@if(user != null && user.getFullName() != null) {
+@if(user != null) {
 	<a href="@routes.Application.users()" >Users</a>
-	<a href="@routes.Application.portfolio()" >Portfolio</a>
+	<a href="@routes.Application.myStocks()" >Portfolio</a>
 }
 }

@@ -4,26 +4,29 @@
 # --- !Ups
 
 create table portlet (
-  id                        varchar(255) not null,
+  id                        bigint not null,
   name                      varchar(255),
-  owner_id                  varchar(255),
+  owner_id                  bigint,
   picture_url               varchar(255),
   notes                     varchar(255),
+  validity                  integer,
   visible_to_all            boolean,
   created_on                timestamp,
+  constraint ck_portlet_validity check (validity in (0,1,2,3)),
   constraint pk_portlet primary key (id))
 ;
 
 create table portlet_stock (
-  id                        varchar(255) not null,
-  portlet_id                varchar(255),
+  id                        bigint not null,
+  portlet_id                bigint,
   stock                     varchar(255),
-  qty                       double,
+  percent                   double,
+  last_updated_on           timestamp,
   constraint pk_portlet_stock primary key (id))
 ;
 
 create table user (
-  id                        varchar(255) not null,
+  id                        bigint not null,
   full_name                 varchar(255),
   email                     varchar(255),
   preferred_name            varchar(255),
@@ -34,20 +37,20 @@ create table user (
   locale                    varchar(255),
   male                      boolean,
   email_verified            boolean,
-  user_validity             integer,
+  validity                  integer,
   timezone                  integer,
   birthday                  varchar(255),
-  constraint ck_user_user_validity check (user_validity in (0,1,2,3)),
+  constraint ck_user_validity check (validity in (0,1,2,3)),
   constraint pk_user primary key (id))
 ;
 
 create table user_portlet_stock (
-  id                        varchar(255) not null,
-  user_id                   varchar(255),
-  portlet_id                varchar(255),
+  id                        bigint not null,
+  user_id                   bigint,
+  portlet_id                bigint,
   stock                     varchar(255),
   qty                       double,
-  buy_price                 bigint,
+  buy_price                 double,
   buy_epoch                 bigint,
   constraint pk_user_portlet_stock primary key (id))
 ;

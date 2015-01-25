@@ -20,7 +20,7 @@ public class User extends Model {
 
 	private static final long serialVersionUID = 1L;
 	@Id
-	private String id;
+	private Long id;
 	@Required
 	private String fullName;
 	@Required
@@ -144,10 +144,10 @@ public class User extends Model {
 	}
 
 	/* Boiler-plates */
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getFullName() {
