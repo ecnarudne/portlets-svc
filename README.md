@@ -5,6 +5,14 @@ Portlets service and related jobs
 
 *all commands to be run in project home directory*
 
+## Web UI dependencies setup
+
+	cd public ; bower install ; cd ..
+
+## To run local dev mode
+
+	activator ~run
+
 ## To run local Docker using sbt-native-packager  
 
 	sudo ./activator docker:publishLocal  
