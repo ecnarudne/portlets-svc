@@ -3,26 +3,140 @@
 @import com.feth.play.module.pa.views.html._
 
 <!DOCTYPE html>
-
-<html>
-    <head>
-        <title>MyPortlets @user</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    </head>
-    <body>
-	<a href="@routes.Application.index()" >Home</a>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<html lang="en" ng-app="mainApp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Google Font: Open Sans-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,700">
+    <link rel="stylesheet" href="@routes.Assets.at("bower_components/fontawesome/css/font-awesome.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("bower_components/bootstrap/dist/css/bootstrap.css")">
+    <!-- App CSS-->
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-admin-myportlets.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-flat.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+    <!-- Favicon-->
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.ico")">
+    <!-- DataTables CSS-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.6/css/jquery.dataTables.min.css">
+    <title>@if(user != null){@user.getFullName() |} MyPortlets</title>
+  </head>
+  <body ng-controller="MainCtrl">
+    <div id="wrapper">
+      <div class="jade"></div>
+      <header role="banner" class="navbar-fixed-top navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><i class="fa fa-cog"></i></button>
+            <a href="@routes.Application.index()" class="navbar-brand page-scroll"><i class="mpt-myportlets"></i><span class="light">my</span>portlets</a>
+          </div>
+          <!-- /.navbar-header-->
+          <nav role="navigation" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-left">
+              <li><a href="@routes.Application.portlets()">Discover</a></li>
+@if(user != null) {
+              <li><a href="@routes.Application.myStocks()">Create</a></li>
+              <li><a href="@routes.Application.users()">Users</a></li>
+}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
 	@if(user != null && user.getFullName() != null) {
-		@user.getFullName()
-		<a href="@user.getProfileLink()" target="_blank" ><img src="@user.getProfilePicture()" width="20" height="20" /></a>
-		<a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout">Logout</a>
+              <li class="dropdown navbar-profile">
+                <a data-toggle="dropdown" href="@user.getProfileLink()" target="_blank" class="dropdown-toggle">
+                  <img src="@user.getProfilePicture()" alt="" class="navbar-profile-avatar img-circle">
+                  <span class="navbar-profile-label">@user.getFullName()</span><i class="fa fa-caret-down"></i>
+                </a>
+                <ul role="menu" class="dropdown-menu">
+                  <li><a href="./page-settings.html"><i class="fa fa-cogs"></i>&nbsp;Settings</a></li>
+                  <li class="divider"></li>
+                  <li><a href="@com.feth.play.module.pa.controllers.routes.Authenticate.logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+                </ul>
+              </li>
 	} else {
+              <li class="dropdown navbar-profile">
+                <a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle">
+                  <span class="navbar-profile-label">Login</span><i class="fa fa-caret-down"></i>
+                </a>
+                <ul role="menu" class="dropdown-menu">
 		@forProviders() { p =>
-		    <a href="@p.getUrl()">Login via @p.getKey()</a>
+                  <li class="divider"></li>
+                  <li><a href="@p.getUrl()"><i class="fa fa-cogs"></i>&nbsp; @p.getKey()</a></li>
 		}
+                </ul>
+              </li>
 	}
-<br/>
+            </ul>
+            <form role="search" class="mainnav-form pull-left">
+              <input type="text" placeholder="Search" class="form-control input-md mainnav-search-query">
+              <button class="btn mainnav-form-btn"><i class="fa fa-search"></i></button>
+            </form>
+          </nav>
+        </div>
+        <!-- /.container-->
+      </header>
+      <div class="content">
+
         @content
-    </body>
+
+        <!-- .content-->
+      </div>
+    </div>
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-6 col-sm-3"></div>
+          <div class="col-xs-6 col-sm-2">
+            <h4>DISCOVER</h4>
+            <ul class="list-unstyled list-menu">
+              <li><a href="/" target="_blank">Home</a></li>
+              <li><a href="/billionaires/" target="_blank">Discover</a></li>
+              <li><a href="/dashboard/" target="_blank">Create</a></li>
+            </ul>
+          </div>
+          <div class="col-xs-6 col-sm-2">
+            <h4>LEGAL</h4>
+          </div>
+          <div class="col-xs-6 col-sm-2">
+            <h4>ABOUT</h4>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <h4>PRODUCTS</h4>
+          </div>
+        </div>
+        <div class="row">
+          <p class="pull-left">Copyright &copy; MyPortlets Pte Ltd.</p>
+        </div>
+      </div>
+    </footer>
+    <script src="@routes.Assets.at("bower_components/jquery/dist/jquery.js")"></script>
+    <script src="@routes.Assets.at("bower_components/bootstrap/dist/js/bootstrap.js")"></script>
+    <script src="@routes.Assets.at("bower_components/angular/angular.js")"></script>
+    <script>
+    var mainApp = angular.module('mainApp', []);
+    mainApp.controller('MainCtrl', function ($scope) {
+      $scope.portlets = [];
+    });
+    </script>
+    <script src="@routes.Assets.at("javascripts/mvpready-core.js")"></script>
+    <script src="@routes.Assets.at("javascripts/mvpready-admin.js")"></script>
+    <!-- Plugin JS-->
+    <script src="@routes.Assets.at("bower_components/jquery-flot/jquery.flot.js")"></script>
+    <script src="@routes.Assets.at("bower_components/flot.tooltip/js/jquery.flot.tooltip.js")"></script>
+    <script src="@routes.Assets.at("bower_components/jquery-flot/jquery.flot.pie.js")"></script>
+    <script src="@routes.Assets.at("bower_components/jquery-flot/jquery.flot.resize.js")"></script>
+    <script src="@routes.Assets.at("bower_components/jquery-flot/jquery.flot.stack.js")"></script>
+    <script src="@routes.Assets.at("bower_components/jquery-flot/jquery.flot.time.js")"></script>
+    <script src="@routes.Assets.at("bower_components/jquery-flot/jquery.flot.selection.js")"></script>
+    <script src="https://cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
+    <script src="@routes.Assets.at("mocks/demos/reports/line.js")"></script>
+    <script src="@routes.Assets.at("mocks/demos/flot/line.js")"></script>
+  </body>
 </html>
