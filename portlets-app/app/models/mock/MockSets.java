@@ -24,7 +24,7 @@ public class MockSets {
 						portletMock1, 
 						portletMock2, 
 						new PortletStock(portletMock1, "MSFT", 50), 
-						new PortletStock(portletMock1, "GOGL", 50), 
+						new PortletStock(portletMock1, "GOOG", 50), 
 						new PortletStock(portletMock2, "AMZN", 50), 
 						new PortletStock(portletMock2, "YHOO", 50)
 		))));
@@ -35,19 +35,19 @@ public class MockSets {
 						portletMock3, 
 						portletMock4, 
 						new PortletStock(portletMock1, "MSFT", 25), 
-						new PortletStock(portletMock1, "GOGL", 25), 
+						new PortletStock(portletMock1, "GOOG", 25), 
 						new PortletStock(portletMock1, "AMZN", 25), 
 						new PortletStock(portletMock1, "YHOO", 25), 
 						new PortletStock(portletMock2, "MSFT", 25), 
-						new PortletStock(portletMock2, "GOGL", 25), 
+						new PortletStock(portletMock2, "GOOG", 25), 
 						new PortletStock(portletMock2, "AMZN", 25), 
 						new PortletStock(portletMock2, "YHOO", 25), 
 						new PortletStock(portletMock3, "MSFT", 25), 
-						new PortletStock(portletMock3, "GOGL", 25), 
+						new PortletStock(portletMock3, "GOOG", 25), 
 						new PortletStock(portletMock3, "AMZN", 25), 
 						new PortletStock(portletMock3, "YHOO", 25), 
 						new PortletStock(portletMock4, "MSFT", 25), 
-						new PortletStock(portletMock4, "GOGL", 25), 
+						new PortletStock(portletMock4, "GOOG", 25), 
 						new PortletStock(portletMock4, "AMZN", 25), 
 						new PortletStock(portletMock4, "YHOO", 25)
 		))));
