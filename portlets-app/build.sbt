@@ -1,6 +1,6 @@
 import NativePackagerKeys._
 
-name := """portlets-svc"""
+name := """portlets-app"""
 
 version := "1.0-SNAPSHOT"
 

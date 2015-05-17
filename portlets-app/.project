@@ -1,5 +1,5 @@
 <projectDescription>
-  <name>portlets-svc</name>
+  <name>portlets-app</name>
   <buildSpec>
     <buildCommand>
       <name>org.eclipse.jdt.core.javabuilder</name>
