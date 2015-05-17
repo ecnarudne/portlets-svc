@@ -19,6 +19,8 @@ import play.Logger;
 public class User extends Model {
 
 	private static final long serialVersionUID = 1L;
+	public static final long ROOTED_ADMIN_ID = 0L;
+	public static final String ROOTED_ADMIN_NAME = "ROOTED_ADMIN";
 	@Id
 	private Long id;
 	@Required

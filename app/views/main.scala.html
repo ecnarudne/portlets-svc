@@ -19,6 +19,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,700">
     <link rel="stylesheet" href="@routes.Assets.at("bower_components/fontawesome/css/font-awesome.css")">
     <link rel="stylesheet" href="@routes.Assets.at("bower_components/bootstrap/dist/css/bootstrap.css")">
+    <script src="@routes.Assets.at("bower_components/jquery/dist/jquery.js")"></script>
+    <script src="@routes.Assets.at("bower_components/bootstrap/dist/js/bootstrap.js")"></script>
+    <script src="@routes.Assets.at("bower_components/angular/angular.js")"></script>
+    <script>
+    var mainApp = angular.module('mainApp', []);
+    mainApp.controller('MainCtrl', function ($scope) {
+      $scope.portlets = [];
+    });
+    </script>
     <!-- App CSS-->
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-admin-myportlets.css")">
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-flat.css")">
@@ -116,15 +125,6 @@
         </div>
       </div>
     </footer>
-    <script src="@routes.Assets.at("bower_components/jquery/dist/jquery.js")"></script>
-    <script src="@routes.Assets.at("bower_components/bootstrap/dist/js/bootstrap.js")"></script>
-    <script src="@routes.Assets.at("bower_components/angular/angular.js")"></script>
-    <script>
-    var mainApp = angular.module('mainApp', []);
-    mainApp.controller('MainCtrl', function ($scope) {
-      $scope.portlets = [];
-    });
-    </script>
     <script src="@routes.Assets.at("javascripts/mvpready-core.js")"></script>
     <script src="@routes.Assets.at("javascripts/mvpready-admin.js")"></script>
     <!-- Plugin JS-->

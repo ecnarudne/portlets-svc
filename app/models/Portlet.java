@@ -28,6 +28,14 @@ public class Portlet extends Model {
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
+	public Portlet(){}
+	public Portlet(String name, User owner, String pictureUrl) {
+		super();
+		this.name = name;
+		this.owner = owner;
+		this.pictureUrl = pictureUrl;
+	}
+
 	public static Portlet findByName(String name) {
 		//TODO must cache
 		if(name == null)

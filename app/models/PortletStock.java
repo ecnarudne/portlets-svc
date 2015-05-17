@@ -26,6 +26,14 @@ public class PortletStock extends Model {
 
 	public static Finder<Long, PortletStock> find = new Finder<Long, PortletStock>(Long.class, PortletStock.class);
 
+	public PortletStock(){}
+	public PortletStock(Portlet portlet, String stock, double percent) {
+		super();
+		this.portlet = portlet;
+		this.stock = stock;
+		this.percent = percent;
+	}
+
 	public static List<PortletStock> findByPortlet(Portlet portlet) {
 		if(portlet == null)
 			return null;

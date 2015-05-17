@@ -1,3 +1,4 @@
 10005:service.UserAuthenticationPlugin
 10010:com.feth.play.module.pa.providers.oauth2.google.GoogleAuthProvider
 10020:com.feth.play.module.pa.providers.oauth2.facebook.FacebookAuthProvider
+550:com.typesafe.plugin.RedisPlugin
