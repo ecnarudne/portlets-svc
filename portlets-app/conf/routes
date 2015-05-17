@@ -4,9 +4,6 @@
 
 # Home page
 GET     /                           controllers.Application.index()
-POST    /newuser                    controllers.Application.addUser()
-GET     /users                      controllers.Application.users()
-GET     /listusers                  controllers.Application.listUsers()
 
 POST    /addPortlet                 controllers.Application.addPortlet()
 GET     /portlets                   controllers.Application.portlets()
@@ -22,6 +19,10 @@ GET     /listportletstocks          controllers.Application.listPortletStocks()
 GET     /listmystocks               controllers.Application.listMyStocks()
 GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
+
+POST    /newuser                    controllers.Application.addUser()
+GET     /users                      controllers.Application.users()
+GET     /listusers                  controllers.Application.listUsers()
 
 GET     /admin/mocks                controllers.Admin.mockSets()
 GET     /admin/listmocks            controllers.Admin.listMockSets()

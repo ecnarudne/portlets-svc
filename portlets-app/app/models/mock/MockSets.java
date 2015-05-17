@@ -12,10 +12,10 @@ import play.db.ebean.Model;
 
 public class MockSets {
 	public Map<String, MockSet> map;
-	Portlet portletMock1 = new Portlet("PortletMock1", getAdminUser(), "/bower_components/jquery-flot/examples/image/hs-2004-27-a-large-web.jpg"); 
-	Portlet portletMock2 = new Portlet("PortletMock2", getAdminUser(), "/bower_components/jquery-flot/examples/image/hs-2004-27-a-large-web.jpg"); 
-	Portlet portletMock3 = new Portlet("PortletMock3", getAdminUser(), "/bower_components/jquery-flot/examples/image/hs-2004-27-a-large-web.jpg"); 
-	Portlet portletMock4 = new Portlet("PortletMock4", getAdminUser(), "/bower_components/jquery-flot/examples/image/hs-2004-27-a-large-web.jpg"); 
+	Portlet portletMock1 = new Portlet("Software Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
+	Portlet portletMock2 = new Portlet("Big Data Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
+	Portlet portletMock3 = new Portlet("Mobile Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
+	Portlet portletMock4 = new Portlet("Robotics Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
 
 	public MockSets() {
 		map = new HashMap<String, MockSet>();
@@ -23,10 +23,10 @@ public class MockSets {
 				new MockSet(new ArrayList<Model>(Arrays.asList(
 						portletMock1, 
 						portletMock2, 
-						new PortletStock(portletMock1, "StockMock1", 50), 
-						new PortletStock(portletMock1, "StockMock2", 50), 
-						new PortletStock(portletMock2, "StockMock3", 50), 
-						new PortletStock(portletMock2, "StockMock4", 50)
+						new PortletStock(portletMock1, "MSFT", 50), 
+						new PortletStock(portletMock1, "GOGL", 50), 
+						new PortletStock(portletMock2, "AMZN", 50), 
+						new PortletStock(portletMock2, "YHOO", 50)
 		))));
 		map.put("Dummy4s",
 				new MockSet(new ArrayList<Model>(Arrays.asList(
@@ -34,37 +34,38 @@ public class MockSets {
 						portletMock2, 
 						portletMock3, 
 						portletMock4, 
-						new PortletStock(portletMock1, "StockMock1", 25), 
-						new PortletStock(portletMock1, "StockMock2", 25), 
-						new PortletStock(portletMock1, "StockMock3", 25), 
-						new PortletStock(portletMock1, "StockMock4", 25), 
-						new PortletStock(portletMock2, "StockMock1", 25), 
-						new PortletStock(portletMock2, "StockMock2", 25), 
-						new PortletStock(portletMock2, "StockMock3", 25), 
-						new PortletStock(portletMock2, "StockMock4", 25), 
-						new PortletStock(portletMock3, "StockMock1", 25), 
-						new PortletStock(portletMock3, "StockMock2", 25), 
-						new PortletStock(portletMock3, "StockMock3", 25), 
-						new PortletStock(portletMock3, "StockMock4", 25), 
-						new PortletStock(portletMock4, "StockMock1", 25), 
-						new PortletStock(portletMock4, "StockMock2", 25), 
-						new PortletStock(portletMock4, "StockMock3", 25), 
-						new PortletStock(portletMock4, "StockMock4", 25)
+						new PortletStock(portletMock1, "MSFT", 25), 
+						new PortletStock(portletMock1, "GOGL", 25), 
+						new PortletStock(portletMock1, "AMZN", 25), 
+						new PortletStock(portletMock1, "YHOO", 25), 
+						new PortletStock(portletMock2, "MSFT", 25), 
+						new PortletStock(portletMock2, "GOGL", 25), 
+						new PortletStock(portletMock2, "AMZN", 25), 
+						new PortletStock(portletMock2, "YHOO", 25), 
+						new PortletStock(portletMock3, "MSFT", 25), 
+						new PortletStock(portletMock3, "GOGL", 25), 
+						new PortletStock(portletMock3, "AMZN", 25), 
+						new PortletStock(portletMock3, "YHOO", 25), 
+						new PortletStock(portletMock4, "MSFT", 25), 
+						new PortletStock(portletMock4, "GOGL", 25), 
+						new PortletStock(portletMock4, "AMZN", 25), 
+						new PortletStock(portletMock4, "YHOO", 25)
 		))));
 	}
 	public MockSet persist(String nick) {
-		MockSet toRun = map.get(nick);
-		if(toRun != null) {
-			for (Model model : toRun.models) {
+		MockSet toPersist = map.get(nick);
+		if(toPersist != null) {
+			for (Model model : toPersist.models) {
 				model.save();
 			}
 		}
-		return toRun;
+		return toPersist;
 	}
 	private User getAdminUser() {
 		User rooted = User.find.byId(User.ROOTED_ADMIN_ID);
 		if(rooted == null) {
 			rooted = new User();
+			rooted.setId(User.ROOTED_ADMIN_ID);
 			rooted.setFullName(User.ROOTED_ADMIN_NAME);
 			rooted.save();
 		}

@@ -67,11 +67,13 @@ public class Admin extends Controller {
     public static Result importMarketDataFile() {
         DynamicForm requestData = Form.form().bindFromRequest();
         String filepath = requestData.get("filepath");
+        String exchange = requestData.get("exchange");
+        String date = requestData.get("date");
     	Logger.debug("filepath: " + filepath);
     	CsvMarketDataLoader loader = new CsvMarketDataLoader();
     	if(filepath != null && filepath.trim().isEmpty())
     		filepath = CsvMarketDataLoader.FILE_PATH_DEFAULT;
-    	loader.loadToRedis(filepath);
+    	loader.loadToRedis(filepath, exchange, date);
     	return redirect(routes.Admin.mockSets());
     }
 

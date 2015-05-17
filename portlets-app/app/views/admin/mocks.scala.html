@@ -11,7 +11,9 @@
 </form><br/><br/>
 <h3>Import Market Data from CSV File on Server</h3>
 <form action="@routes.Admin.importMarketDataFile()" method="post" >
-	<input type="text" id="filepath" name="filepath" />
+	<input type="text" id="filepath" name="filepath" value="/var/tmp/NASDAQ_20150517.txt" />
+	<input type="text" id="exchange" name="exchange" value="NASDAQ" />
+	<input type="text" id="date" name="date" value="20150517" />
 	<input type="submit" value="Import" />
 </form>
 }

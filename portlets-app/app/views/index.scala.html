@@ -33,14 +33,14 @@
                 </div>
                 <div class="col-xs-12 col-sm-8 col-sm-pull-2">
 @if(user != null) {
-                  <h2 class="username">@user.getFullName() Something</h2>
-}
+                  <h2 class="username">@user.getFullName() @user.getNameTitle()</h2>
                   <!-- username-->
-                  <div class="userblurb"><span>Managing Partner of Treasure Cap Investment</span></div>
+                  <div class="userblurb"><span>@user.getProfileTitle()</span></div>
                   <!-- blurb text-->
                   <div class="userdesc">
-                    <p>25 years of investment in the U.S. Stock markets. Outperforming the S&#38;P 500 for the past 10 years.</p>
+                    <p>@user.getProfileDescription()</p>
                   </div>
+}
                   <!-- desc text-->
                 </div>
                 <!-- /.col			-->

@@ -28,6 +28,9 @@ public class User extends Model {
 	@Required
 	private String email;
 	private String preferredName;
+	private String nameTitle;
+	private String profileTitle;
+	private String profileDescription;
 	private String googleId;
 	private String facebookId;
 	private String profileLink;
@@ -101,6 +104,9 @@ public class User extends Model {
 			Logger.error("Unknown Auth Provider: " + provider);
 			return null;
 		}
+		newUser.nameTitle = "";//TODO remove dummy value for test
+		newUser.profileTitle = "Managing Partner of Treasure Cap Investment";//TODO remove dummy value for test
+		newUser.profileDescription = "25 years of investment in the U.S. Stock markets. Outperforming the S&P 500 for the past 10 years.";//TODO remove dummy value for test
 		newUser.save();
 		Logger.debug("Saved newUser: " + newUser);
 		System.out.println("Saved newUser: " + newUser);
@@ -169,6 +175,24 @@ public class User extends Model {
 	}
 	public void setPreferredName(String preferredName) {
 		this.preferredName = preferredName;
+	}
+	public String getNameTitle() {
+		return nameTitle;
+	}
+	public void setNameTitle(String nameTitle) {
+		this.nameTitle = nameTitle;
+	}
+	public String getProfileTitle() {
+		return profileTitle;
+	}
+	public void setProfileTitle(String profileTitle) {
+		this.profileTitle = profileTitle;
+	}
+	public String getProfileDescription() {
+		return profileDescription;
+	}
+	public void setProfileDescription(String profileDescription) {
+		this.profileDescription = profileDescription;
 	}
 	public String getGoogleId() {
 		return googleId;

@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import models.Stock;
 import play.Logger;
 
 public class CsvMarketDataLoader implements MarketDataLoader {
@@ -12,7 +13,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 	public static final String CSV_SPLIT_BY = ",";
 
 	@Override
-	public boolean loadToRedis(String filepath) {
+	public boolean loadToRedis(String filepath, String exchange, String date) {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(filepath));
@@ -29,7 +30,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 						"-close=" + split[5] + 
 						"-volume=" + split[6]
 						);
-
+				addMissingStock(split[0], exchange, date);
 				String key = RedisKey.LAST_MARKET_PRICE_FLOAT + split[0];
 				play.cache.Cache.set(key, split[5]);
 				Logger.debug("Fetched: " + ((String) play.cache.Cache.get(key)));
@@ -50,8 +51,13 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 		Logger.debug("Done Import " + filepath);
 		return true;
 	}
-	public static void main(String[] args) {
-		CsvMarketDataLoader n = new CsvMarketDataLoader();
-		n.loadToRedis(null);
+	private void addMissingStock(String symbol, String exchange, String date) {
+		Stock stock = Stock.findBySymbol(symbol);
+		if(stock == null) {
+			Stock s = new Stock(symbol);
+			s.setPrimaryExchange(exchange);
+			s.save();
+			Logger.info("Added to Stocks: " + s);
+		}
 	}
 }

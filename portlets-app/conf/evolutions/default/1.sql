@@ -25,11 +25,23 @@ create table portlet_stock (
   constraint pk_portlet_stock primary key (id))
 ;
 
+create table stock (
+  id                        bigint not null,
+  symbol                    varchar(255),
+  name                      varchar(255),
+  primary_exchange          varchar(255),
+  type                      varchar(255),
+  constraint pk_stock primary key (id))
+;
+
 create table user (
   id                        bigint not null,
   full_name                 varchar(255),
   email                     varchar(255),
   preferred_name            varchar(255),
+  name_title                varchar(255),
+  profile_title             varchar(255),
+  profile_description       varchar(255),
   google_id                 varchar(255),
   facebook_id               varchar(255),
   profile_link              varchar(255),
@@ -59,6 +71,8 @@ create sequence portlet_seq;
 
 create sequence portlet_stock_seq;
 
+create sequence stock_seq;
+
 create sequence user_seq;
 
 create sequence user_portlet_stock_seq;
@@ -82,6 +96,8 @@ drop table if exists portlet;
 
 drop table if exists portlet_stock;
 
+drop table if exists stock;
+
 drop table if exists user;
 
 drop table if exists user_portlet_stock;
@@ -91,6 +107,8 @@ SET REFERENTIAL_INTEGRITY TRUE;
 drop sequence if exists portlet_seq;
 
 drop sequence if exists portlet_stock_seq;
+
+drop sequence if exists stock_seq;
 
 drop sequence if exists user_seq;
 

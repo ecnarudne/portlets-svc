@@ -8,6 +8,7 @@ import com.feth.play.module.pa.PlayAuthenticate;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
+import models.Stock;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
@@ -103,10 +104,10 @@ public class Application extends Controller {
     	for (PortletStock stock : stocks) {
         	UserPortletStock newUserPortletStock = new UserPortletStock();
     		newUserPortletStock.setPortlet(portlet);
-    		double buyPrice = 1;//TODO market-data call. $/stock
-    		newUserPortletStock.setBuyPrice(buyPrice);
-	    	newUserPortletStock.setQty((amount*stock.getPercent())/(buyPrice*100));
 	    	newUserPortletStock.setStock(stock.getStock());
+    		double buyPrice = Stock.currentPrice(stock.getStock());
+    		newUserPortletStock.setBuyPrice(buyPrice);
+	    	newUserPortletStock.setQty(Math.round((amount*stock.getPercent())/buyPrice)/100);
 	    	newUserPortletStock.setUser(getLocalUser(session()));
 	    	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
 	    	Logger.info("Saving: " + newUserPortletStock);
