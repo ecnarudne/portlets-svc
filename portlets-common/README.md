@@ -1,0 +1,4 @@
+# portlets-common 
+
+Common project. 
+

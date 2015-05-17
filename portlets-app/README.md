@@ -1,9 +1,9 @@
-# portlets-svc  
+# portlets-app  
 
-Portlets service and related jobs  
+Portlets application and related jobs  
 
 
-*all commands to be run in project home directory*
+*all commands to be run in portlets-app directory*
 
 ## Web UI dependencies setup
 
