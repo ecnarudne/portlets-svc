@@ -10,21 +10,24 @@
                   <div class="row col-sm-12">
                     <h4>Basic Information</h4>
                     <hr>
-                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
-                      <label for="portletName" class="col-md-3 control-label">Portlet Name</label>
-                      <div class="col-md-9">
-                        <input id="portletName" type="text" placeholder="Give your portlet a name" class="form-control">
-                      </div>
-                    </div>
-                    <!-- /.form-group-->
-                    <div class="form-group col-lg-8 col-md-8">
-                      <label for="portletDesc" class="col-md-3 control-label">Short Description</label>
-                      <div class="col-md-9">
-                        <textarea id="portletDesc" style="resize: none; min-height: 100px" placeholder="Tell us what your portlet is about" class="form-control"></textarea>
-                      </div>
-                    </div>
-                    <!-- /.form-group-->
-                  </div>
+                    <form method="POST" name="portlet_form" ng-submit="addPortlet()" >
+	                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
+	                      <label for="portletName" class="col-md-3 control-label">Portlet Name</label>
+	                      <div class="col-md-9">
+	                        <input id="portletName" name="name" ng-model="portlet.name" type="text" placeholder="Give your portlet a name" class="form-control">
+	                      </div>
+	                    </div>
+	                    <!-- /.form-group-->
+	                    <div class="form-group col-lg-8 col-md-8">
+	                      <label for="portletDesc" class="col-md-3 control-label">Short Description</label>
+	                      <div class="col-md-9">
+	                        <textarea id="portletDesc" name="notes" ng-model="portlet.notes" style="resize: none; min-height: 100px" placeholder="Tell us what your portlet is about" class="form-control"></textarea>
+	                      </div>
+	                    </div>
+	                    <button type="submit" class="btn btn-primary">Add Portlet</button>
+	                    <!-- /.form-group-->
+	                 <form>
+	              </div>
                   <!-- /.1st row-->
                   <div class="row col-sm-12">
                     <h4>Portlet Selection</h4>

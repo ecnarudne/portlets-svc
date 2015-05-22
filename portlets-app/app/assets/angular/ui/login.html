@@ -9,21 +9,21 @@
         <!-- /.col-->
       </div>
       <!-- /.row--><span class="account-or-social text-muted">OR, SIGN IN BELOW</span>
-      <form method="POST" action="./page-explore.html" class="form account-form">
+      <form method="POST" name="user_login" ng-submit="userLogin()" class="form account-form">
         <div class="form-group">
-          <label for="login-username" class="placeholder-hidden">Username</label>
-          <input id="login-username" type="text" placeholder="Username" tabindex="1" class="form-control">
+          <label for="username" class="placeholder-hidden">Username</label>
+          <input ng-model="user.name" id="username" type="text" placeholder="Username" tabindex="1" class="form-control">
         </div>
         <!-- /.form-group-->
         <div class="form-group">
-          <label for="login-password" class="placeholder-hidden">Password</label>
-          <input id="login-password" type="password" placeholder="Password" tabindex="2" class="form-control">
+          <label for="password" class="placeholder-hidden">Password</label>
+          <input id="password" ng-model="user.password" type="password" placeholder="Password" tabindex="2" class="form-control">
         </div>
         <!-- /.form-group-->
         <div class="form-group clearfix">
           <div class="pull-left">
             <label class="checkbox-inline">
-              <input type="checkbox" value="" tabindex="3"><small>Remember me</small>
+              <input type="checkbox" value="" ng-model="user.rememberme" tabindex="3"><small>Remember me</small>
             </label>
           </div>
           <div class="pull-right"><small><a href="/#/forgot-password">Forgot Password?</a></small></div>

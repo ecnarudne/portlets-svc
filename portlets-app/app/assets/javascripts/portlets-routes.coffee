@@ -10,7 +10,7 @@ do ->
         
         templateUrl: '/assets/angular/ui/login.html'
         
-        controller: 'LoginCtrl').when('/sign-up',
+        controller: 'AuthenticatedCtrl').when('/sign-up',
         
         templateUrl: '/assets/angular/ui/sign-up.html').when('/page-settings',
         
@@ -18,7 +18,9 @@ do ->
 
         templateUrl: '/assets/angular/ui/forgot-password.html').when('/portlet-create',
         
-        templateUrl: '/assets/angular/ui/portlet-create.html').when('/page-explore',
+        templateUrl: '/assets/angular/ui/portlet-create.html'
+        
+        controller: 'PortletCtrl').when('/page-explore',
         
         templateUrl: '/assets/angular/ui/page-explore.html').when('/portfolio',
         
@@ -26,7 +28,9 @@ do ->
         
         templateUrl: '/assets/angular/ui/page-portlet.html').when('/404',
         
-        templateUrl: '/assets/angular/ui/error-400.html').otherwise redirectTo: '/404'
+        templateUrl: '/assets/angular/ui/error-400.html').when('/500',
+        
+        templateUrl: '/assets/angular/ui/error-500.html').otherwise redirectTo: '/404'
       return
   ]
   return

@@ -5,6 +5,8 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+POST     /user/login                 controllers.Application.login()
+
 POST    /addPortlet                 controllers.Application.addPortlet()
 GET     /portlets                   controllers.Application.portlets()
 GET     /listportlets               controllers.Application.listPortlets()
@@ -31,6 +33,8 @@ POST    /admin/importmkt            controllers.Admin.importMarketDataFile()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+# TO resolve Access-Control-Allow-Origin
+OPTIONS	/*path    controllers.Application.preflight(path: String)
 
 # Play Authenticate
 GET     /logout                     com.feth.play.module.pa.controllers.Authenticate.logout
