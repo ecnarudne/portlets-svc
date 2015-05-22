@@ -1,0 +1,112 @@
+
+        <div id="main" class="container">
+          <div class="row">
+            <div class="col-md-12 col-sm-12">
+              <div>
+                <div class="panel-heading">
+                  <h4>Create your own Portlet</h4>
+                </div>
+                <div class="panel-body">
+                  <div class="row col-sm-12">
+                    <h4>Basic Information</h4>
+                    <hr>
+                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                      <label for="portletName" class="col-md-3 control-label">Portlet Name</label>
+                      <div class="col-md-9">
+                        <input id="portletName" type="text" placeholder="Give your portlet a name" class="form-control">
+                      </div>
+                    </div>
+                    <!-- /.form-group-->
+                    <div class="form-group col-lg-8 col-md-8">
+                      <label for="portletDesc" class="col-md-3 control-label">Short Description</label>
+                      <div class="col-md-9">
+                        <textarea id="portletDesc" style="resize: none; min-height: 100px" placeholder="Tell us what your portlet is about" class="form-control"></textarea>
+                      </div>
+                    </div>
+                    <!-- /.form-group-->
+                  </div>
+                  <!-- /.1st row-->
+                  <div class="row col-sm-12">
+                    <h4>Portlet Selection</h4>
+                    <hr>
+                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                      <label for="stockExchange" class="col-md-3 control-label">Stock Exchange</label>
+                      <div class="col-md-9">
+                        <select id="stockExchange" name="stockExchange" data-required="true" class="form-control parsley-validated">
+                          <option value="">Please Select</option>
+                          <option value="nasdaq">NASDAQ</option>
+                          <option value="nyse">New York Stock Exchange</option>
+                          <option value="sgx">Singapore Stock Exchange</option>
+                        </select>
+                      </div>
+                    </div>
+                    <!-- /.form-group-->
+                    <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                      <label for="addStock" class="col-md-3 control-label">Stocks and weightage</label>
+                      <div class="col-md-9">
+                        <div class="row">
+                          <div>
+                            <select data-placeholder="Choose a stock..." multiple="" style="width:350px;" tabindex="4" class="chosen-select">
+                              <option value=""></option>
+                             
+                              <option value="Zimbabwe">Zimbabwe</option>
+                              <option value="Zimbabwe">Zimbabwe</option>
+                              <option value="Zimbabwe">Zimbabwe</option>
+                              <option value="Zimbabwe">Zimbabwe</option><br /><option value="Zimbabwe">Zimbabwe</option>
+                              <option value="Zimbabwe">Zimbabwe</option>
+                            </select>
+                          </div>
+                          <div class="top-20"><a data-toggle="" href="#addStocks" class="btn btn-primary demo-element">Add Stocks</a><span style="display:inline-block">You have selected<span class="badge badge-secondary">0</span>stock(s) in your portlet</span></div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.form-group-->
+                  </div>
+                  <!-- /.2nd row-->
+                </div>
+                <!-- /.panel body-->
+              </div>
+              <!-- /.panel-->
+            </div>
+            <!-- /.end col-->
+          </div>
+          <!-- /.end row-->
+        </div>
+        <!-- /main-->
+        <div class="clearfix"></div>
+        <div id="addStocks" tabindex="-1" role="dialog" class="modal modal-styled fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" data-dismiss="modal" aria-hidden="true" class="close">&#215;</button>
+                <h3 class="modal-title">Large Modal</h3>
+              </div>
+              <!-- /.modal-header-->
+              <div class="modal-body">
+                <h4>Text in a modal</h4>
+                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                <h4>Popover in a modal</h4>
+                <p>This<a href="javascript:;" role="button" title="" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title" class="btn btn-default ui-popover">button</a>should trigger a popover on click.</p>
+                <h4>Tooltips in a modal</h4>
+                <p><a href="javascript:;" title="" data-original-title="Tooltip" class="ui-tooltip">This link</a>and<a href="javascript:;" title="" data-original-title="Tooltip" class="ui-tooltip">that link</a>should have tooltips on hover.</p>
+                <hr>
+                <h4>Overflowing text to show scroll behavior</h4>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>	 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+                <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
+              </div>
+              <!-- /.modal-body-->
+              <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+              </div>
+              <!-- /.modal-footer-->
+            </div>
+            <!-- /.modal-content-->
+          </div>        

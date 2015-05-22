@@ -11,3 +11,10 @@ dist
 /RUNNING_PID
 /.cache
 /*.log
+
+/.classpath
+/.project
+/.settings
+/bin/
+/.cache
+/.tmpBin

@@ -1773,7 +1773,7 @@ span.label-skeleton {
   height: 100%;
   position: absolute;
   right: 0;
-  background: #111111 url(../img/gallery/zoom.png) no-repeat 50%;
+  background: #111111 url(../images/gallery/zoom.png) no-repeat 50%;
   z-index: 10;
   opacity: 0.5;
   filter: alpha(opacity=50);

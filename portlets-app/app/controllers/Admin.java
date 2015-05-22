@@ -35,7 +35,7 @@ public class Admin extends Controller {
 
 	public static Result index() {
 		printSession();
-        return ok(index.render(getLocalUser(session())));
+        return ok(index.render());
     }
 
     public static Result users() {
