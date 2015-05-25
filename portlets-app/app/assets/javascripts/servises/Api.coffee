@@ -13,7 +13,7 @@ angular.module('Api', ['ngCookies'])
       
       # We need to set cookie after login. Hardcoaded cookie   
       
-      $cookies.cookieVal =  'XYZ'
+      $cookies.cookieVal =  'Please set it after login'
       cookieVal = $cookies.cookieVal
 
       actionUrl = (path) ->

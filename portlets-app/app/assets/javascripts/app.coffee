@@ -3,12 +3,15 @@ do ->
   app.controller 'IndexCtrl', [
     '$http'
     '$scope'
-    'User'    
-    ($http, $scope, User) ->
-      User.setUserId false
-      
-      console.log 'User.getUserId ' + User.getUserId       
-      $scope.user =  true
+    '$cookies'    
+    ($http, $scope, $cookies) ->
+
+      if($cookies.cookieVal == undefined)
+        console.log "Hello cookie is undefined"
+        $scope.user = false
+      else
+        $scope.user = true
+
       console.log 'hello u r in IndexCtrl'
       
       return
