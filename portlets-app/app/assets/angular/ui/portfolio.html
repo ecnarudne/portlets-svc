@@ -1,4 +1,4 @@
-      <div ng-app="" ng-controller="PortfolioCtrl"> 
+   
         <div class="row mpt-portlet-color mpt-vprimary">
           <div class="container top-20">
             <div class="row">
@@ -11,28 +11,28 @@
                 <div class="col-xs-6 col-sm-2 col-sm-push-8">
                   <div class="list-group"><a href="javascript:;" class="list-group-item">
                       <h3 class="pull-right"></h3>
-                      <h4 class="list-group-item-heading" ng-bind="data.portletCreated"></h4>
+                      <h4 class="list-group-item-heading" ng-bind="data.user.portletCreated"></h4>
                       <p class="list-group-item-text" >Portlets created</p></a>
                     <div href="javascript:;" class="list-group-item">
                       <h3 class="pull-right"></h3>
-                      <h4 class="list-group-item-heading" ng-bind="data.followers"></h4>
+                      <h4 class="list-group-item-heading" ng-bind="data.user.followers"></h4>
                       <p class="list-group-item-text">Followers</p>
                     </div>
                     <div href="javascript:;" class="list-group-item">
                       <h3 class="pull-right"></h3>
-                      <h4 class="list-group-item-heading" ng-bind="data.following"></h4>
+                      <h4 class="list-group-item-heading" ng-bind="data.user.following"></h4>
                       <p class="list-group-item-text">Following</p>
                     </div>
                   </div>
                   <!-- /.list-group-->
                 </div>
                 <div class="col-xs-12 col-sm-8 col-sm-pull-2">
-                  <h2 class="username">Chris Reed Something</h2>
+                  <h2 class="username" ng-bind="data.user.name"></h2>
                   <!-- username-->
-                  <div class="userblurb"><span>Managing Partner of Treasure Cap Investment</span></div>
+                  <div class="userblurb"><span ng-bind="data.user.blurb"></span></div>
                   <!-- blurb text-->
                   <div class="userdesc">
-                    <p>25 years of investment in the U.S. Stock markets. Outperforming the S&#38;P 500 for the past 10 years.</p>
+                    <p ng-bind="data.user.desc"></p>
                   </div>
                   <!-- desc text-->
                 </div>
@@ -45,16 +45,16 @@
                   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <ul class="list-inline numbers">
                       <li>
-                        <h2>{{data.portfolioValue}}<small>Portfolio Value</small></h2>
+                        <h2><span ng-bind="data.portlet.portfolioValue"></span><small>Portfolio Value</small></h2>
                       </li>
                       <li class="icon"><i id="daily_return_icon_fund" class="fa fa-sort-up"></i>
                         <h2>
-                          <div id="daily_performance" >{{data.dailyReturn}}%</div><small>Daily Return</small>
+                          <div id="daily_performance"> <span ng-bind="data.portlet.dailyReturn"></span>%</div><small>Daily Return</small>
                         </h2>
                       </li>
                       <li>
                         <h2>
-                          <div id="yearly_performance">{{data.yearlyReturn}}%</div><small>1Y Return</small>
+                          <div id="yearly_performance"><span ng-bind="data.portlet.yearlyReturn"></span>%</div><small>1Y Return</small>
                         </h2>
                       </li>
                     </ul>
@@ -131,7 +131,6 @@
                         </tr>
                       </tfoot>
                       <tbody>
-                        
                         <tr ng-repeat="item in data.tableItems">
                           <td><a href="/page-portlet.html">{{item.name}} </a></td>
                           <td class="mpt-v3"></td>
@@ -140,40 +139,6 @@
                           <td id="tblrow-gain" class="hide_column_fd">{{item.oneYearReturn}}%</td>
                           <td id="tblrow-daily" class="hide_column_fd">{{item.portletReturn}}%</td>
                         </tr>
-
-
-<!--                         <tr>
-                          <td><a href="/page-portlet2.html">Bear International Market</a></td>
-                          <td class="mpt-v4"></td>
-                          <td>-1.63% </td>
-                          <td id="tblrow-price">-1.63%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -1.63%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">2.56%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet.html">China Internet </a></td>
-                          <td class="mpt-v4"></td>
-                          <td>56.76% </td>
-                          <td id="tblrow-price">56.76%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> 56.76%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">4.51%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet.html">U.S. Treasury Ladder </a></td>
-                          <td class="mpt-v5"></td>
-                          <td>-4.97% </td>
-                          <td id="tblrow-price">-4.97%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">1.45%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet.html">Utilities Pay the bill</a></td>
-                          <td class="mpt-v1"></td>
-                          <td>-4.97% </td>
-                          <td id="tblrow-price">-4.97%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">1.45%</td>
-                        </tr> -->
                       </tbody>
                     </table>
                   </div>
@@ -184,5 +149,4 @@
             <!-- /.sidebar col-->
           </div>
         </div>
-      </div>
   
