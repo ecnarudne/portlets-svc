@@ -30,7 +30,9 @@ do ->
 
         controller: 'PortfolioCtrl').when('/page-portlet',
         
-        templateUrl: '/assets/angular/ui/page-portlet.html').when('/404',
+        templateUrl: '/assets/angular/ui/page-portlet.html'
+
+        controller: 'PagePortletCtrl').when('/404',
         
         templateUrl: '/assets/angular/ui/error-400.html').when('/500',
         

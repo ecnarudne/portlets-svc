@@ -18,4 +18,9 @@ public class JsonHelper extends Controller{
 	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/discover.json");    	
 	    	return ok(portletInfoData);
 	    }
+	    
+	    public static Result getPortletPageDetails(){    	    		    	
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/pagePortlet.json");    	
+	    	return ok(portletInfoData);
+	    }
 }
