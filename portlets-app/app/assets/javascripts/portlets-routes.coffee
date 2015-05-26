@@ -26,7 +26,9 @@ do ->
         
         controller: 'DiscoverCtrl').when('/portfolio',
         
-        templateUrl: '/assets/angular/ui/portfolio.html').when('/page-portlet',
+        templateUrl: '/assets/angular/ui/portfolio.html'
+
+        controller: 'PortfolioCtrl').when('/page-portlet',
         
         templateUrl: '/assets/angular/ui/page-portlet.html').when('/404',
         
