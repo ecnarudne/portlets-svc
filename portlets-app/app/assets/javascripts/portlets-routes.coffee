@@ -22,7 +22,9 @@ do ->
         
         controller: 'PortletCtrl').when('/page-explore',
         
-        templateUrl: '/assets/angular/ui/page-explore.html').when('/portfolio',
+        templateUrl: '/assets/angular/ui/page-explore.html'
+        
+        controller: 'DiscoverCtrl').when('/portfolio',
         
         templateUrl: '/assets/angular/ui/portfolio.html').when('/page-portlet',
         

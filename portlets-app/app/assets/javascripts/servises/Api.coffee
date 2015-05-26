@@ -13,7 +13,7 @@ angular.module('Api', ['ngCookies'])
       
       # We need to set cookie after login. Hardcoaded cookie   
       
-      $cookies.cookieVal =  'XYZ'
+      $cookies.cookieVal =  'Please set it after login'
       cookieVal = $cookies.cookieVal
 
       actionUrl = (path) ->
@@ -72,12 +72,16 @@ angular.module('Api', ['ngCookies'])
         return
       
       api.prototype.getPortfolioDetails = (request) ->
-        get(actionUrl("/portfolio/details"),request)
-        return  
+        get(actionUrl("/page/portfolio/details"),request)
+        return 
       
+      api.prototype.getDiscoverPageDetails = (request) ->
+        get(actionUrl("/page/discover/details"),request)
+        return  
+
       isLogin = () ->
         if($cookies.cookieVal == undefined)
-          $log.debug('User is not logedin redirecting to login.')
+          $log.debug('User is not logedin redirecting to sign-up.')
           $location.path("/sign-up")
           return false
         else
