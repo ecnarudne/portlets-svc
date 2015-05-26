@@ -5,11 +5,14 @@ import java.util.List;
 
 import models.Portlet;
 import models.PortletStock;
-import models.PortletValidityState;
 import models.Stock;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -37,6 +40,27 @@ public class Application extends Controller {
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
     
+    public static Result getPortfoliodetail(){
+    	System.out.println("get portfolio deat method is called");
+    	JSONObject obj = new JSONObject();
+
+        try {
+        	obj.put("portletCreated", new Integer(38));
+			obj.put("follower", new Integer(105));
+			obj.put("following", new Integer(380));
+	        obj.put("followers", new Integer(100));
+	        obj.put("portfolioValue", new Double(2.49));
+	        obj.put("dailyReturn", new Double(0.56));
+	        obj.put("yearlyReturn", new Double(2.53));
+		
+        } catch (JSONException e) {
+			
+			e.printStackTrace();
+		}
+        
+        
+    	return ok(obj.toString());
+    }
     public static Result preflight(String path) {
 		return ok("");
 	}
