@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import org.json.JSONObject;
-
 import play.libs.Json;
 
 import com.fasterxml.jackson.core.JsonParseException;

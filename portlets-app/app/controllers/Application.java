@@ -10,10 +10,6 @@ import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -24,8 +20,6 @@ import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
-import service.CorsComposition;
-import service.JsonTester;
 import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
@@ -36,28 +30,11 @@ import views.html.users;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
 
-@CorsComposition.Cors
+
 public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
-    /*
-     * Dummy actions to get JSON data to use,
-     * Kindly remove it after fetching real data  
-     * */ 
-    
-    public static Result getPortfoliodetail(){
-    	System.out.println("get portfolio deat method is called");
-    	JsonNode json=	JsonTester.getJsonObject("public/jsonFiles/portfolio.json");
-        	    
-    	return ok(json);
-    }
-    
-    public static Result getDiscoverPageDetails(){    	    	
-    	JSONObject obj = new JSONObject();
-    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/discover.json");    	
-    	return ok(portletInfoData);
-    }
     
     public static Result preflight(String path) {
 		return ok("");
@@ -73,9 +50,7 @@ public class Application extends Controller {
     }
     
     public static Result login() {    	
-    	JsonNode json = request().body().asJson();
-    	System.out.println("Json data got is "+ json);
-    	
+    	JsonNode json = request().body().asJson();    	    	
         return ok(users.render(getLocalUser(session())));
     }
     
