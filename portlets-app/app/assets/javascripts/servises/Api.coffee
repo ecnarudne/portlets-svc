@@ -79,6 +79,10 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/page/discover/details"),request)
         return  
 
+      api.prototype.getPortletPageDetails = (request) ->
+        get(actionUrl("/page/portlet/details"),request)
+        return
+
       isLogin = () ->
         if($cookies.cookieVal == undefined)
           $log.debug('User is not logedin redirecting to sign-up.')

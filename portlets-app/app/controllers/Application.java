@@ -46,6 +46,13 @@ public class Application extends Controller {
      * Kindly remove it after fetching real data  
      * */ 
     
+    public static Result getPortletPageDetails(){
+    	System.out.println("get PortletPageDetails method is called");
+    	JsonNode json=	JsonTester.getJsonObject("public/jsonFiles/pagePortlet.json");
+        	    
+    	return ok(json);
+    }
+    
     public static Result getPortfoliodetail(){
     	System.out.println("get portfolio deat method is called");
     	JsonNode json=	JsonTester.getJsonObject("public/jsonFiles/portfolio.json");

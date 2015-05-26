@@ -5,4 +5,5 @@ app = angular.module('portlets-controller', [
   'PortletCtrl'
   'PortfolioCtrl'
   'DiscoverCtrl'
+  'PagePortletCtrl'
   ])

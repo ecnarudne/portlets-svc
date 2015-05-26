@@ -9,24 +9,24 @@
           <div class="row">
             <div class="col-xs-12 mpt-performance">
               <div><span>Total Return</span></div>
-              <h1>9.03%</h1>
+              <h1 > <span ng-bind="data.portlet.totalReturn"></span>%</h1>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
               <div><span>Daily Return</span></div>
-              <h2>-4.03%</h2>
+              <h2><span ng-bind="data.portlet.dailyReturn"></span>%</h2>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
               <div><span>1 Year Return</span></div>
-              <h2>5.14%</h2>
+              <h2><span ng-bind="data.portlet.oneYearReturn"></span>%</h2>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <h4>Created by : J.Livermore</h4>
-              <h4>Created Since : 2014.02.22</h4>
-              <h4>Followers : 200</h4>
+              <h4>Created by : <span ng-bind="data.portlet.createdBy"></span></h4>
+              <h4>Created Since : <span ng-bind="data.portlet.createdSince"></span></h4>
+              <h4>Followers : <span ng-bind="data.portlet.followers"></span></h4>
             </div>
           </div>
         </div>
