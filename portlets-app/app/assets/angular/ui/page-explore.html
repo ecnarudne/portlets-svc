@@ -7,96 +7,16 @@
       </div>
     </div>
     <div class="row text-center">
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
+      
+      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="portlet in data">
         <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
             <div class="category-name">
-              <div class="h4">Basic Materials</div>
+              <div class="h4" ng-bind="portlet.name"></div>
             </div>
             <div class="category-project-count">
-              <div class="h4 bold">10 Portlets</div>
+              <div class="h4 bold" ><span ng-bind="portlet.total"></span> Portlets</div>
             </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Energy?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Energy</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">32 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Financial?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Financial</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">52 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Healthcare?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Healthcare</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">26 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Industrials?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Industrials</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">15 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Real-Estate?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Real Estate</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">85 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Technology?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Technology</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">150 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Telecommunication?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Telecommunication</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">25 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Technology?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Utilities</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">7 Portlets</div>
-            </div></a></div>
-      </div>
-      <div class="category-container col-xs-6 col-sm-3 col-md-15">
-        <div class="category-link"><a href="/discover/categories/Consumer?ref=discover_index" class="category">
-            <div class="category-name">
-              <div class="h4">Consumer</div>
-            </div>
-            <div class="category-project-count">
-              <div class="h4 bold">63 Portlets</div>
-            </div></a></div>
-      </div>
+      </div>      
     </div>
   </div>
 </div>
@@ -107,16 +27,8 @@
         <form id="nl-form" class="nl-form">
           <select>
             <option value="1" selected="">Everything</option>
-            <option value="2">Basic Material</option>
-            <option value="3">Energy</option>
-            <option value="4">Financial</option>
-            <option value="5">Healthcare</option>
-            <option value="6">Industrials</option>
-            <option value="7">Real Estate</option>
-            <option value="8">Technology</option>
-            <option value="9">Telecommunication</option>
-            <option value="10">Utilities</option>
-            <option value="11">Consumer					</option>
+            <option ng-repeat="portlet in data"
+            ng-bind="portlet.name"></option>
           </select> sorted by
           <select>
             <option value="1" selected="">popularity</option>

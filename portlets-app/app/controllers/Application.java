@@ -60,18 +60,10 @@ public class Application extends Controller {
     	return ok(json);
     }
     
-    public static Result getDiscoverPageDetails() throws JSONException{    	
+    public static Result getDiscoverPageDetails(){    	    	
     	JSONObject obj = new JSONObject();
-        
-    	obj.put("portletCreated", new Integer(38));
-		obj.put("follower", new Integer(105));
-		obj.put("following", new Integer(380));
-        obj.put("followers", new Integer(100));
-        obj.put("portfolioValue", new Double(2.49));
-        obj.put("dailyReturn", new Double(0.56));
-        obj.put("yearlyReturn", new Double(2.53));
-           
-    	return ok(obj.toString());
+    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/discover.json");    	
+    	return ok(portletInfoData);
     }
     
     public static Result preflight(String path) {
