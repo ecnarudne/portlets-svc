@@ -73,7 +73,7 @@ angular.module('Api', ['ngCookies'])
         
       isLogin = () ->
         if($cookies.cookieVal == undefined)
-          $log.debug('User is not logedin redirecting to login.')
+          $log.debug('User is not logedin redirecting to sign-up.')
           $location.path("/sign-up")
           return false
         else
