@@ -18,7 +18,7 @@ angular.module('PortfolioCtrl',['Api'])
                     $log.debug('Fetching table data.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
-                    $scope.data = data
+                    $scope.data = data[0]
                     $log.debug 'table Item:     ' + JSON.stringify(data.tableItems)
 
                   error: (data, status, headers, config, statusText) ->

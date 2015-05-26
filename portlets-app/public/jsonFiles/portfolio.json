@@ -1,3 +1,21 @@
 [{
-  "name": "portlets-svc"    
+	"user":{
+		"name" : "Chris Reed Something",
+		"blurb": "Managing Partner of Treasure Cap Investment", 
+		"desc" : "25 years of investment in the U.S. Stock markets. Outperforming the S&#38;P 500 for the past 10 years.",
+		"followers":100,
+		"following":380,
+		"portletCreated":38,		
+		"follower":105
+	},
+	"portlet" :{
+		"dailyReturn":0.56,
+		"yearlyReturn":2.53,
+		"portfolioValue":2.49
+	},
+	"tableItems":
+		[
+			{"portletReturn":0.5,"totalReturn":-9.51,"dailyReturn":-9.51,"name":"High-Yield Dividends","oneYearReturn":5.8},
+			{"portletReturn":0.5,"totalReturn":-9.51,"dailyReturn":-9.51,"name":"High-Yield Dividends","oneYearReturn":5.8}
+		]
 }]
