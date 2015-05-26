@@ -1,4 +1,5 @@
-        <div class="row mpt-portlet-color mpt-vprimary" ng-app="" ng-controller="PortfolioCtrl">
+      <div ng-app="" ng-controller="PortfolioCtrl"> 
+        <div class="row mpt-portlet-color mpt-vprimary">
           <div class="container top-20">
             <div class="row">
               <div class="userbox">
@@ -130,15 +131,18 @@
                         </tr>
                       </tfoot>
                       <tbody>
-                        <tr>
-                          <td><a href="/page-portlet.html">High-Yield Dividends </a></td>
+                        
+                        <tr ng-repeat="item in data.tableItems">
+                          <td><a href="/page-portlet.html">{{item.name}} </a></td>
                           <td class="mpt-v3"></td>
-                          <td>-9.51% </td>
-                          <td id="tblrow-price">-9.51%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -9.51%</td>
-                          <td id="tblrow-daily" class="hide_column_fd">-0.09%</td>
+                          <td>{{item.totalReturn}}% </td>
+                          <td id="tblrow-price">{{item.dailyReturn}}%</td>
+                          <td id="tblrow-gain" class="hide_column_fd">{{item.oneYearReturn}}%</td>
+                          <td id="tblrow-daily" class="hide_column_fd">{{item.portletReturn}}%</td>
                         </tr>
-                        <tr>
+
+
+<!--                         <tr>
                           <td><a href="/page-portlet2.html">Bear International Market</a></td>
                           <td class="mpt-v4"></td>
                           <td>-1.63% </td>
@@ -169,7 +173,7 @@
                           <td id="tblrow-price">-4.97%</td>
                           <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
                           <td id="tblrow-daily-gain" class="hide_column_fd">1.45%</td>
-                        </tr>
+                        </tr> -->
                       </tbody>
                     </table>
                   </div>
@@ -180,5 +184,5 @@
             <!-- /.sidebar col-->
           </div>
         </div>
-  
+      </div>
   

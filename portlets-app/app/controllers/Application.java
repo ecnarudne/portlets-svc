@@ -10,6 +10,7 @@ import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,7 +44,7 @@ public class Application extends Controller {
     public static Result getPortfoliodetail(){
     	System.out.println("get portfolio deat method is called");
     	JSONObject obj = new JSONObject();
-
+    	
         try {
         	obj.put("portletCreated", new Integer(38));
 			obj.put("follower", new Integer(105));
@@ -52,7 +53,26 @@ public class Application extends Controller {
 	        obj.put("portfolioValue", new Double(2.49));
 	        obj.put("dailyReturn", new Double(0.56));
 	        obj.put("yearlyReturn", new Double(2.53));
-		
+	        
+	        JSONObject table = new JSONObject();    
+	        table.put("name", "High-Yield Dividends");
+	        table.put("totalReturn",-9.51);
+	        table.put("dailyReturn",-9.51);
+	        table.put("oneYearReturn",5.8);
+	        table.put("portletReturn",0.5);
+	        
+	        JSONObject table1 = new JSONObject();
+	        table1.put("name", "High-Yield Dividends");
+	        table1.put("totalReturn",-2.51);
+	        table1.put("dailyReturn",-5.51);
+	        table1.put("oneYearReturn",6.8);
+	        table1.put("portletReturn",8.5);
+	        
+	        JSONArray tableItems =new JSONArray();
+	        tableItems.put(table);
+	        tableItems.put(table);
+	        obj.put("tableItems",tableItems);
+	        System.out.println(obj);
         } catch (JSONException e) {
 			
 			e.printStackTrace();
@@ -61,6 +81,11 @@ public class Application extends Controller {
         
     	return ok(obj.toString());
     }
+    
+    
+    
+    
+    
     public static Result preflight(String path) {
 		return ok("");
 	}
