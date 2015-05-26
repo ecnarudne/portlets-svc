@@ -18,6 +18,7 @@ libraryDependencies ++= Seq(
   // Comment the next line for local development of the Play Authentication core:
   "com.feth" %% "play-authenticate" % "0.6.8",
   "mysql" % "mysql-connector-java" % "5.1.34",
+  "org.json"%"org.json"%"chargebee-1.0",
   "com.typesafe.play.plugins" %% "play-plugins-redis" % "2.3.1"
 )
 
