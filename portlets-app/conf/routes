@@ -30,7 +30,11 @@ GET     /admin/mocks                controllers.Admin.mockSets()
 GET     /admin/listmocks            controllers.Admin.listMockSets()
 POST    /admin/addmock              controllers.Admin.addMockSet()
 POST    /admin/importmkt            controllers.Admin.importMarketDataFile()
-GET 	/portfolio/details			controllers.Application.getPortfoliodetail()
+
+#Dummy url to get json data
+GET 	/page/portfolio/details			controllers.Application.getPortfoliodetail()
+GET 	/page/discover/details			controllers.Application.getDiscoverPageDetails()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # TO resolve Access-Control-Allow-Origin

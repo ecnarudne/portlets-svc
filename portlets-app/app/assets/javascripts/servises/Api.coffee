@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://192.168.1.103:9000'
+      domain = 'http://192.168.1.107:9000'
       
       # We need to set cookie after login. Hardcoaded cookie   
       
@@ -72,9 +72,13 @@ angular.module('Api', ['ngCookies'])
         return
       
       api.prototype.getPortfolioDetails = (request) ->
-        get(actionUrl("/portfolio/details"),request)
-        return  
+        get(actionUrl("/page/portfolio/details"),request)
+        return 
       
+      api.prototype.getDiscoverPageDetails = (request) ->
+        get(actionUrl("/page/discover/details"),request)
+        return  
+
       isLogin = () ->
         if($cookies.cookieVal == undefined)
           $log.debug('User is not logedin redirecting to sign-up.')

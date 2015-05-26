@@ -24,6 +24,7 @@ import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import service.CorsComposition;
+import service.JsonTester;
 import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
@@ -39,28 +40,42 @@ public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
+    /*
+     * Dummy actions to get JSON data to use,
+     * Kindly remove it after fetching real data  
+     * */ 
     
-    public static Result getPortfoliodetail(){
+    public static Result getPortfoliodetail() throws JSONException{
     	System.out.println("get portfolio deat method is called");
-    	JSONObject obj = new JSONObject();
-
-        try {
+    	
+    	JsonNode obj1 = JsonTester.getJsonObject("public/jsonFiles/portfolio.json");
+    	
+    	/*JSONObject obj = new JSONObject();
         	obj.put("portletCreated", new Integer(38));
 			obj.put("follower", new Integer(105));
 			obj.put("following", new Integer(380));
 	        obj.put("followers", new Integer(100));
 	        obj.put("portfolioValue", new Double(2.49));
 	        obj.put("dailyReturn", new Double(0.56));
-	        obj.put("yearlyReturn", new Double(2.53));
-		
-        } catch (JSONException e) {
-			
-			e.printStackTrace();
-		}
+	        obj.put("yearlyReturn", new Double(2.53));*/
+	        
+    	return ok(obj1);
+    }
+    
+    public static Result getDiscoverPageDetails() throws JSONException{    	
+    	JSONObject obj = new JSONObject();
         
-        
+    	obj.put("portletCreated", new Integer(38));
+		obj.put("follower", new Integer(105));
+		obj.put("following", new Integer(380));
+        obj.put("followers", new Integer(100));
+        obj.put("portfolioValue", new Double(2.49));
+        obj.put("dailyReturn", new Double(0.56));
+        obj.put("yearlyReturn", new Double(2.53));
+           
     	return ok(obj.toString());
     }
+    
     public static Result preflight(String path) {
 		return ok("");
 	}
