@@ -24,6 +24,18 @@ angular.module('PortletCtrl',['Api'])
             $scope.portlet = {}
             original = angular.copy($scope.portlet)
             # Used to set ot reset form field after submitting
+            portletApi.getStockExchange(
+                before: ->
+                    $log.debug('Getting Stock Exchange data')
+                success: (data, status, headers, config) ->
+                    $scope.stockExchanges = data
+                    console.log "stock data fetched is : " + JSON.stringify(data)    
+                error: (data, status, headers, config) ->
+                    $log.error('Something went wrong! ' + data)
+                forbidden: (data, status, headers, config) ->
+                    $log.error('Got error while fetching')
+            )
+
             $scope.revert = ->
                 $scope.portlet = angular.copy(original)
                 $scope.portlet_form.$setPristine()
@@ -43,7 +55,7 @@ angular.module('PortletCtrl',['Api'])
                         # Setting coockies
                         console.log("Hi data submittes successfully")
                         $cookies.cookieVal = data.value                        
-                        $location.path("/portfolio")
+                        $location.path("/page-portlet")
                     error: (data, status, headers, config) ->
                         $log.error('Something went wrong! ' + data)
                         $location.path("/portlet-create")
@@ -52,6 +64,22 @@ angular.module('PortletCtrl',['Api'])
                         $log.error('Got error while Authentication Response: ' + data)
                         $scope.errorMessage = true
                         $location.path("/login")
+                    
+                )
+            $scope.getStocks = () ->
+                console.log "get stocks function is called"
+                portletApi.getStocks(
+                    data: 1     # Hard coded Id of Stock Exchange
+                    before: ->
+                        $log.debug('submitting stock exchange data.')
+                    success: (data, status, headers, config) ->
+                        console.log "stock fetched succesfully."
+                        $scope.stocks = data
+                        console.log JSON.stringify($scope.stocks)
+                    error: (data, status, headers, config) ->
+                        $log.error('Something went wrong! ' + data)
+                    forbidden: (data, status, headers, config) ->
+                        $log.error('Got error while Authentication Response: ' + data)
                 )
 
     ]

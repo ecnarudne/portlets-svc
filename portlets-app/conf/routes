@@ -35,7 +35,8 @@ POST    /admin/importmkt            controllers.Admin.importMarketDataFile()
 GET 	/page/portfolio/details			controllers.JsonHelper.getPortfoliodetail()
 GET 	/page/discover/details			controllers.JsonHelper.getDiscoverPageDetails()
 GET     /page/portlet/details           controllers.JsonHelper.getPortletPageDetails()
-
+GET     /stocks/details					controllers.JsonHelper.getStocks()
+GET     /stocks/exchange				controllers.JsonHelper.getStockExchange()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # TO resolve Access-Control-Allow-Origin

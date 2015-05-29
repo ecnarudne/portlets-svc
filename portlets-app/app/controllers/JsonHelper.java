@@ -23,4 +23,18 @@ public class JsonHelper extends Controller{
 	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/pagePortlet.json");    	
 	    	return ok(portletInfoData);
 	    }
+	    
+	    
+	    public static Result getStocks(){
+	    	System.out.println("getstock method is called....................");
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/stocks.json");    	
+	    	System.out.println(portletInfoData);
+	    	return ok(portletInfoData);
+	    }
+	    public static Result getStockExchange(){
+	    	System.out.println("getstockExchange method is called....................");
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/stockExchange.json");    	
+	    	System.out.println(portletInfoData);
+	    	return ok(portletInfoData);
+	    }
 }
