@@ -11,6 +11,7 @@ import service.JsonTester;
 public class JsonHelper extends Controller{
 	 	public static Result getPortfoliodetail(){
 	    	JsonNode json=	JsonTester.getJsonObject("public/jsonFiles/portfolio.json");
+	    	
 	    	return ok(json);
 	    }
 	 	

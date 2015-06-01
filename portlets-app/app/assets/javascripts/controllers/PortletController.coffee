@@ -67,20 +67,24 @@ angular.module('PortletCtrl',['Api'])
                     
                 )
             $scope.getStocks = () ->
-                console.log "get stocks function is called"
-                portletApi.getStocks(
-                    data: 1     # Hard coded Id of Stock Exchange
-                    before: ->
-                        $log.debug('submitting stock exchange data.')
-                    success: (data, status, headers, config) ->
-                        console.log "stock fetched succesfully."
-                        $scope.stocks = data
-                        console.log JSON.stringify($scope.stocks)
-                    error: (data, status, headers, config) ->
-                        $log.error('Something went wrong! ' + data)
-                    forbidden: (data, status, headers, config) ->
-                        $log.error('Got error while Authentication Response: ' + data)
-                )
+                console.log "get stocks function is called" + $scope.portlet.stockExchange
+                
+                if $scope.portlet.stockExchange == undefined
+                        alert "please select Exchange"
+                else
+                    portletApi.getStocks(
+                        data: 1     # Hard coded Id of Stock Exchange
+                        before: ->
+                            $log.debug('submitting stock exchange data.')
+                        success: (data, status, headers, config) ->
+                            console.log "stock fetched succesfully."
+                            $scope.stocks = data
+                            console.log JSON.stringify($scope.stocks)
+                        error: (data, status, headers, config) ->
+                            $log.error('Something went wrong! ' + data)
+                        forbidden: (data, status, headers, config) ->
+                            $log.error('Got error while Authentication Response: ' + data)
+                    )
 
     ]
 

@@ -1,5 +1,6 @@
 [{
 	"portlet" :{
+		"volatility" : "high",
 		"totalReturn" : 9.05,
 		"dailyReturn":0.56,
 		"oneYearReturn":2.53,

@@ -1,0 +1,26 @@
+
+.very-high{
+	background-color: #3d85c4;
+	color: #152E44;
+}
+
+.high{
+	background-color: #2fa8ec;
+	color: #164765;
+}
+
+.medium{	
+	background-color: #A3AEAE;
+	color: #676E6E;
+}
+
+.moderate{
+	background-color: #f98970;
+	color: #794337;
+}
+
+.low{
+	background-color: #ea5656;
+	color: #6A2727;
+}
+

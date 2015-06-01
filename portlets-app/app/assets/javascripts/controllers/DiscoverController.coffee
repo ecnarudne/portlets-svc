@@ -18,7 +18,8 @@ angular.module('DiscoverCtrl',['Api'])
                     $log.debug('Fetching Discover page details.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Discover page details fetched successfully.' + JSON.stringify(data)
-                    $scope.data = data
+                    $scope.data = data[0].sectors
+                    $scope.portlets = data[0].portlets
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while discover page details')                   
                   complete: (data, status, headers, config) ->
