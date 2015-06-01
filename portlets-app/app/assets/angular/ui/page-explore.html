@@ -50,26 +50,12 @@
     <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets">
       <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><span class="text-uppercase mpt-v3-text" ng-bind="portlet.volatility"></span><span class="mpt-returns" ng-bind="portlet.returns"></span><span></span> <span class="label label-skeleton">Followers <span ng-bind="portlet.followers"></span> </span></a>
         <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.imageURL}}" class="img-circle">
-        <strong ng-bind="portlet.creator"></strong><span class="pull-right" ng-bind="portlet.lastUpdated"></span></div>
+        <strong ng-bind="portlet.creator"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastUpdated"></span></div>
         <div class="panel-body mpt-portlet-body">
           <h3><a href="#" ng-bind="portlet.portletName"></a></h3> <p ng-bind="portlet.desc"> </p>
         </div>
         <div class="mpt-portlet-body"><a role="button" href="#/page-portlet" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
       </div>
-      <!-- <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v5"><span class="text-uppercase mpt-v5-text">Very High Volatility</span><span class="mpt-returns">-10.8%</span><span class="label label-skeleton">0 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>M.Maddy</strong><span class="pull-right">Last update: 2014.05.13</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">Market Movers</a></h3>This will be the greatest portlets. Period
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div>
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v2"><span class="text-uppercase mpt-v2-text">Moderate Volatility</span><span class="mpt-returns">3.5%</span><span class="label label-skeleton">19090 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>Bill Ackman</strong><span class="pull-right">Last update: 2015.02.22</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">Utilities Pay the bill</a></h3>With high yields and a 10-year track record of not cutting dividends, these stocks separate themselves from the pack.
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div> -->
     </div>
     <!-- /.end col-->
     
@@ -78,3 +64,4 @@
 </div>
 <!-- /main-->
 <div class="clearfix"></div>
+<script>var nlform = new NLForm( document.getElementById( 'nl-form' ) );</script>
