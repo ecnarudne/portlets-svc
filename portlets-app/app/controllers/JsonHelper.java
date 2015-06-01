@@ -38,4 +38,10 @@ public class JsonHelper extends Controller{
 	    	System.out.println(portletInfoData);
 	    	return ok(portletInfoData);
 	    }
+	    public static Result getStockDetails(){
+	    	System.out.println("getstockDetails method is called....................");
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/stock.json");    	
+	    	System.out.println(portletInfoData);
+	    	return ok(portletInfoData);
+	    }
 }

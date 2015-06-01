@@ -1,0 +1,16 @@
+[{
+	"stock" :{
+		"company" : "Apple",
+		"ticker" : "APPL",
+		"oneYearReturn": 2.53
+		},
+	"stockStat" : {
+		"open" : 112.69,
+		"high" : 113.24,
+		"low"	: 111.66,
+		"volume" : "5.34M",
+		"avgVol" : "641,718.00",
+		"mktcap" :	"655.57B"
+	}	
+
+}]

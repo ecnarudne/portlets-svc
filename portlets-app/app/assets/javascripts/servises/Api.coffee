@@ -91,6 +91,10 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/stocks/exchange"),request)
         return
 
+      api.prototype.getStockDetails = (request) ->
+        post(actionUrl("/stock/details"),request)
+        return
+          
       isLogin = () ->
         if($cookies.cookieVal == undefined)
           $log.debug('User is not logedin redirecting to sign-up.')
