@@ -19,3 +19,7 @@ portlets-app/bin/
 portlets-app/.cache
 portlets-app/.tmpBin
 portlets-app/applet.policy
+
+portlet-mobile-app/node-modules/
+portlet-mobile-app/platforms/
+portlet-mobile-app/plugins/

@@ -1,0 +1,21 @@
+
+ion-view(view-title='Sign Up', name='sign-up-view', ng-controller='Sign-upController')
+  ion-content.padding    
+    include header.jade
+    include social-sign-up.jade
+    .list.list-inset
+      label.item.item-input
+        input(type='email', placeholder='Enter your Email-Id', ng-model='data.email')
+      label.item.item-input
+        input(type='text', placeholder='Enter your Username', ng-model='data.username')
+      label.item.item-input
+        input(type='password', placeholder='Enter Password', ng-model='data.password')
+      label.item.item-input
+        input(type='password', placeholder='Confirm Password', ng-model='data.cpassword')
+    button.button.button-block.button-balanced(ng-click='signUp()')
+      | Create My Account &nbsp;
+      i.fa.fa-play-circle
+    p(align='center')
+      | Already have an account?<br>
+      a(href='#/login') Login to your Account!
+//script(src='./js/signUpValidate.js')

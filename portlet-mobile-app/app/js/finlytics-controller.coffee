@@ -1,0 +1,3 @@
+'use strict'
+
+finlyticsController = angular.module('finlytics-controller', ['LoginController', 'Sign-upController', 'RecPasswordController', 'PortletCreateCtrl', 'SideMenuCtrl', 'ionic'])
