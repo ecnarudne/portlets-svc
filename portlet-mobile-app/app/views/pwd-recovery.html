@@ -1,0 +1,19 @@
+
+<ion-view view-title="Recover-Password" name="fp-view" ng-controller="RecPasswordController">
+  <ion-content class="padding">
+    <div class="top-header"><br/>
+      <div class="top-header-div">
+        <h3>myportlets</h3>
+        <p>Create and invest in an idea or trend<br/>Build your own diversed portfolio of portlets</p><a href="#/" class="sign-up-link">SIGNUP</a><a href="#/login" class="login-link">LOGIN</a>
+      </div>
+    </div>
+    <h4 align="center">Reset Password</h4>
+    <h5 align="center">We"ll email you instructions on how to reset your password.</h5>
+    <div class="list">
+      <label class="item item-input"><span class="input-label">Email</span>
+        <input type="email" placeholder="i.e. xyz@ab.com" ng-model="data.email"/>
+      </label>
+    </div>
+    <button ng-click="recPass()" class="button button-block button-balanced">Reset Password &nbsp;<i class="fa fa-play-circle"></i></button><a href="#/login"><i class="fa fa-angle-double-left"></i>Back to Login</a>
+  </ion-content>
+</ion-view>

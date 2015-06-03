@@ -3204,12 +3204,12 @@ ol.list-comments .comment-item{
   overflow: hidden;
   padding: 20px 10px;
 }
-.category-container>.category-link a:hover{
+/*.category-container>.category-link a:hover{
   border: 1px solid #ffffff;
   border-radius: 5px;
   color: #ffffff;
   margin-top: -2px;
-}
+}*/
 .category-container .category-name .h4{
   font-size: 14px;
 }

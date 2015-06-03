@@ -3202,6 +3202,7 @@ ol.list-comments .comment-item{
 /* ----------------------------------------------- */
 .category-container{
   margin-bottom: 20px;
+  margin-right:10px;
 }
 .category-container>.category-link a{
   display: block;
@@ -3209,12 +3210,12 @@ ol.list-comments .comment-item{
   overflow: hidden;
   padding: 20px 10px;
 }
-.category-container>.category-link a:hover{
+/*.category-container>.category-link a:hover{
   border: 1px solid #ffffff;
   border-radius: 5px;
   color: #ffffff;
   margin-top: -2px;
-}
+}*/
 .category-container .category-name .h4{
   font-size: 14px;
 }
@@ -3222,7 +3223,7 @@ ol.list-comments .comment-item{
   padding-bottom: 10px
 }
 .category-container .category-project-count .h4{  
-  margin: 0px;
+  margin: 5px;
   font-size: 14px
 }
 @media(min-width: 768px){
