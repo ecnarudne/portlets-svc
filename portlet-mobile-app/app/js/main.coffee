@@ -57,6 +57,20 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
       cache: false
       reload: true
     )
+    .state('app.discover',
+      url: '/page-explore'
+      views: 'menuContent':
+        templateUrl: 'views/page-explore.html'
+      cache: false
+      reload: true
+    )
+    .state('app.portfolio',
+      url: '/portfolio'
+      views: 'menuContent':
+        templateUrl: 'views/portfolio.html'
+      cache: false
+      reload: true
+    )
     
   $urlRouterProvider.otherwise '/'
   return

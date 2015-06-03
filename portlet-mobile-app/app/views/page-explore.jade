@@ -1,0 +1,156 @@
+ion-view(view-title='Discover', name='discover-view', ng-controller='PageExploreCtrl')
+  ion-content.padding
+    .jumbotron.mpt-pt-head.mpt-gradient.top-60
+      .container
+          .row
+            .col-xs-12
+              h1.h1.light Sectors
+          |             
+          .row.text-center
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Basic-Materials?ref=discover_index')
+                  .category-name
+                    .h4 Basic Materials
+                  |                     
+                  .category-project-count
+                    .h4.bold 10 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Energy?ref=discover_index')
+                  .category-name
+                    .h4 Energy
+                  |                     
+                  .category-project-count
+                    .h4.bold 32 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Financial?ref=discover_index')
+                  .category-name
+                    .h4 Financial
+                  |                     
+                  .category-project-count
+                    .h4.bold 52 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Healthcare?ref=discover_index')
+                  .category-name
+                    .h4 Healthcare
+                  |                     
+                  .category-project-count
+                    .h4.bold 26 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Industrials?ref=discover_index')
+                  .category-name
+                    .h4 Industrials
+                  |                     
+                  .category-project-count
+                    .h4.bold 15 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Real-Estate?ref=discover_index')
+                  .category-name
+                    .h4 Real Estate
+                  |                     
+                  .category-project-count
+                    .h4.bold 85 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Technology?ref=discover_index')
+                  .category-name
+                    .h4 Technology
+                  |                     
+                  .category-project-count
+                    .h4.bold 150 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Telecommunication?ref=discover_index')
+                  .category-name
+                    .h4 Telecommunication
+                  |                     
+                  .category-project-count
+                    .h4.bold 25 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Technology?ref=discover_index')
+                  .category-name
+                    .h4 Utilities
+                  |                     
+                  .category-project-count
+                    .h4.bold 7 Portlets
+            |               
+            .category-container
+              .category-link
+                a.category(href='/discover/categories/Consumer?ref=discover_index')
+                  .category-name
+                    .h4 Consumer
+                  |                     
+                  .category-project-count
+    
+                    .h4.bold 63 Portlets
+    
+    #main.container
+    .row
+        .col-md-3.col-sm-3.padding.padding
+          .panel.panel-default.mpt-portlet
+            a.text-center.mpt-portlet-color.mpt-v5(href='./page-portlet.html')
+              span.text-uppercase Very High Volatility
+              span.mpt-returns.padding -10.8%
+              span 0 Followers
+            |         
+            .panel-body.mpt-portlet-body
+              h3
+                a(href='#') Market Movers
+              | This will be the greatest portlets. Period
+          |       
+          
+
+
+          .panel.panel-default.mpt-portlet
+            a.text-center.mpt-portlet-color.mpt-v2(href='./page-portlet.html')
+              span.text-uppercase.mpt-v2-text Moderate Volatility
+              span.mpt-returns 3.5%
+              span.label.label-skeleton 19090 Followers
+            |         
+            .panel-heading.mpt-portlet-heading.clearfix
+              img.img-circle(src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70')
+              strong Bill Ackman
+              span.pull-right Last update: 2015.02.22
+            |         
+            .panel-body.mpt-portlet-body
+              h3
+                a(href='#') Utilities Pay the bill
+              | With high yields and a 10-year track record of not cutting dividends, these stocks separate themselves from the pack.
+            |         
+            .mpt-portlet-body
+              a.btn.btn-link.btn-block.mpt-portlet-btn(role='button', href='./page-portlet.html') VIEW MORE
+        // /.end col
+        .col-md-4.col-sm-6.padding
+          .panel.panel-default.mpt-portlet
+            a.text-center.mpt-portlet-color.mpt-v5(href='./page-portlet.html')
+              span.text-uppercase.Very High Volatility
+              span.mpt-returns 129.8%
+              span.label.label-skeleton 223 Followers
+            |         
+            .panel-heading.mpt-portlet-heading.clearfix
+              img.img-circle(src='https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70')
+              strong C.Coleman
+              span.pull-right Last update: 2013.05.13
+            |         
+            .panel-body.mpt-portlet-body
+              h3
+                a(href='#') China Internet
+              | Great Wall? Meh. What&rsquo;s really been great is the internet market. China is the world&rsquo;s largest, with room to grow.
+            |         
+            .mpt-portlet-body
+              a.btn.btn-link.btn-block.mpt-portlet-btn(role='button', href='./page-portlet.html') VIEW MORE
+      // /.end row

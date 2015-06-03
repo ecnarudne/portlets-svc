@@ -13,7 +13,7 @@ var connect    = require('gulp-connect');
 var livereload = require('gulp-livereload');
 var path       = require('path');
 
-gulp.task('build', ['jade', 'less', 'ionic', 'css', 'js', 'coffee', 'images']);
+gulp.task('build', ['jade', 'less', 'html', 'ionic', 'css', 'js', 'coffee', 'images']);
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -21,6 +21,11 @@ var paths = {
 
 gulp.task('default', ['sass']);
 
+gulp.task('html', function() {
+    gulp.src('app/views/**/*.html')
+    .pipe(gulp.dest('www/views'))
+    .pipe(livereload())
+});
 /* Tasks add start*/
 //To convert jade files to html
 gulp.task('jade', function() {
@@ -92,6 +97,7 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(paths.sass, ['sass']);
+  gulp.watch('app/views/**/*.html', ['html']);
   gulp.watch('app/img/**/*.*', ['copy-images']);
   gulp.watch('app/css/**/*.less', ['less']);
   gulp.watch('app/js/**/*.coffee', ['coffee']);
