@@ -1,0 +1,44 @@
+
+<ion-view view-title="Portlet-create" name="Portlet-create" ng-controller="PortletCreateCtrl">
+  <ion-content id="portlet-create" class="padding">
+  	<div class="row" style="color:#ffffff;">
+  		<div  style="margin-left:50px;" class="col-90">
+  		<a href="#" class="pull-right"><h4 style="color:#ffffff;">Done</h4></a>	
+  		<h4 align="center">Add Stocks</h4>
+  		</div>
+  	</div>
+  
+  	<label class="item item-input" style="color:#ffffff;border: 1px solid #ffffff;border-radius: 5px;">
+  		  <i class="icon ion-search placeholder-icon"></i>
+  		  <input style="color: grey" ng-model="search" type="search" placeholder="Search">
+    </label>
+    <div class="table-striped">
+        <table style="margin-top:10px;color:#ffffff; font-size: 30px;" class="table">
+        
+            <tr ng-repeat="stock in stocks">
+              <td ng-bind="stock.name"></td>
+              <td ng-bind="stock.ticker"></td>
+              <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
+            </tr>
+            <!-- <tbody>
+            <tr>
+              <td>google</td>
+              <td>GOOGL </td>
+              <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
+            </tr> 
+            <tr>
+              <td>IBM</td>
+              <td>IBM</td>
+              <td><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
+            </tr>
+            <tr>
+              <td>APPLE</td>
+              <td>AAPL</td>
+              <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
+            </tr> 
+ -->
+
+
+            </tbody>
+            </table>
+      </div>

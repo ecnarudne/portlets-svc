@@ -3203,6 +3203,8 @@ ol.list-comments .comment-item{
 .category-container{
   margin-bottom: 20px;
   margin-right:10px;
+  border: 1px solid #ffffff;
+  border-radius: 5px;
 }
 .category-container>.category-link a{
   display: block;

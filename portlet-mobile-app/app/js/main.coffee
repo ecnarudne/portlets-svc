@@ -71,6 +71,20 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
       cache: false
       reload: true
     )
+    .state('app.portlet-create2',
+      url: '/portlet-create2'
+      views: 'menuContent':
+        templateUrl: 'views/portlet-create2.html'
+      cache: false
+      reload: true
+    )
+    .state('app.portlet-create3',
+      url: '/portlet-create3'
+      views: 'menuContent':
+        templateUrl: 'views/portlet-create3.html'
+      cache: false
+      reload: true
+    )
     
   $urlRouterProvider.otherwise '/'
   return
