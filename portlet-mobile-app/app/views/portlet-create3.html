@@ -14,7 +14,7 @@
     </label>
     <div class="table-striped">
         <table style="margin-top:10px;color:#ffffff; font-size: 20px;" class="table">
-            <tr ng-repeat="stock in stocks">
+            <tr ng-repeat="stock in stocks  | filter : search">
               <td ng-bind="stock.name"></td>
               <td ng-bind="stock.ticker"></td>
               <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>

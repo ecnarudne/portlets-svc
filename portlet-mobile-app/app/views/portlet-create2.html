@@ -21,26 +21,15 @@
             </tr>
       	  </thead>
           <tbody>
-          	<tr>
-          		<td>google</td>
-          		<td><input style="color:#ffffff;border: 1px solid #ffffff;border-radius: 5px;background: transparent;" type="text"> </td>
-          		<td class=" ion-ios-minus-outline"></td>
-          	</tr>	
-          	<tr>
-          		<td>IBM</td>
-          		<td><input style="color:#ffffff;border: 1px solid #ffffff;border-radius: 5px;background: transparent;"  type="text" length='5'> </td>
-          		<td class=" ion-ios-minus-outline"></td>
-          	</tr>
-          	<tr>
-          		<td>APPLE</td>
-          		<td><input style="color:#ffffff;border: 1px solid #ffffff;border-radius: 5px;background: transparent;" class="input" type="text" length='5'> </td>
-          		<td class=" ion-ios-minus-outline"></td>
-          	</tr>	
-          </tbody>
+            <tr ng-repeat="stockWeightage in stockWeightages">
+              <td ng-bind="stockWeightage.name"></td>
+              <td><input ng-model="stockWeightage.weightage" ng-change="getAvailable()" style="color:#ffffff;border: 1px solid #ffffff;border-radius: 5px;background: transparent;" type="text"> </td>
+              <td class=" ion-ios-minus-outline"></td>
+            </tr> 
+        </tbody>
       </table>
   	</div>
-    <!-- <div align="center" style="margin-bottm:10px">
-      <hr>
-      <label> available weightage:</label><p ng-bind>
-    </div> -->
+    <div align="center" >
+      <label style="margin-bottm:10px; font-size: 20px ; color:#ffffff;">Available weightage :<span ng-bind="available"></span>%</label> 
+    </div>
   </ion-content>
