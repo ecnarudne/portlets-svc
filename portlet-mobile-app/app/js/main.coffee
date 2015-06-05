@@ -43,7 +43,7 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
       cache: false
       reload: true
     )
-    .state('app.portlet',
+    .state('app.portlet-create',
       url: '/portlet-create'
       views: 'menuContent':
         templateUrl: 'views/portlet-create.html'
@@ -82,6 +82,13 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
       url: '/portlet-create3'
       views: 'menuContent':
         templateUrl: 'views/portlet-create3.html'
+      cache: false
+      reload: true
+    )
+    .state('app.portlet',
+      url: '/portlet'
+      views: 'menuContent':
+        templateUrl: 'views/portlet.html'
       cache: false
       reload: true
     )

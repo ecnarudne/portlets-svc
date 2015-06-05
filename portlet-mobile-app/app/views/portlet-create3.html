@@ -13,32 +13,11 @@
   		  <input style="color: grey" ng-model="search" type="search" placeholder="Search">
     </label>
     <div class="table-striped">
-        <table style="margin-top:10px;color:#ffffff; font-size: 30px;" class="table">
-        
+        <table style="margin-top:10px;color:#ffffff; font-size: 20px;" class="table">
             <tr ng-repeat="stock in stocks">
               <td ng-bind="stock.name"></td>
               <td ng-bind="stock.ticker"></td>
               <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
             </tr>
-            <!-- <tbody>
-            <tr>
-              <td>google</td>
-              <td>GOOGL </td>
-              <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
-            </tr> 
-            <tr>
-              <td>IBM</td>
-              <td>IBM</td>
-              <td><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
-            </tr>
-            <tr>
-              <td>APPLE</td>
-              <td>AAPL</td>
-              <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
-            </tr> 
- -->
-
-
-            </tbody>
-            </table>
+        </table>
       </div>
