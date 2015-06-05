@@ -13,97 +13,16 @@
           </div>
         </div>            
         <div class=" text-center">
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
+              <div ng-repeat="sector in sectors" class="category-container col-xs-3 col-sm-3 col-md-3">
                 <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
                     <div class="category-name">
-                      <div class="h4">Basic Materials</div>
+                      <div class="h4" ng-bind="sector.name"></div>
                     </div>
                     <div class="category-project-count">
-                      <div class="h4 bold">10 Portlets</div>
+                      <div class="h4 bold"> <span class="h4 bold"><span ng-bind="sector.total"></span> Portlets </span> </div>
                     </div></a></div>
               </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Energy?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Energy</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">32 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Financial?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Financial</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">52 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Healthcare?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Healthcare</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">26 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Industrials?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Industrials</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">15 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Real-Estate?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Real Estate</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">85 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Technology?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Technology</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">150 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Telecommunication?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Telecommunication</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">25 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Technology?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Utilities</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">7 Portlets</div>
-                    </div></a></div>
-              </div>
-              <div class="category-container col-xs-6 col-sm-3 col-md-15">
-                <div class="category-link"><a href="/discover/categories/Consumer?ref=discover_index" class="category">
-                    <div class="category-name">
-                      <div class="h4">Consumer</div>
-                    </div>
-                    <div class="category-project-count">
-                      <div class="h4 bold">63 Portlets</div>
-                    </div></a></div>
-              </div>
-            </div>
+        </div>
         
             <div class="table-responsive" >
             
@@ -132,32 +51,13 @@
     
     </div>
     <div id="main" class="container"></div>
-    <div class="row">
-      <div class="col-md-3 col-sm-3">
-        <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v5"><span class="text-uppercase">Very High Volatility</span><span class="mpt-returns padding">-10.8%</span><span>0 Followers</span></a>        
+      <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
+        <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><strong><span class="text-uppercase">{{portlet.volatility}} Volatility</span></strong><span class="mpt-returns" ng-bind="portlet.returns"></span><span><span ng-bind="portlet.followers" ></span> Followers</span></a>        
           <div class="panel-body mpt-portlet-body">
-            <h3><a href="#">Market Movers</a></h3>This will be the greatest portlets. Period
+            <h5><a href="#" ng-bind="portlet.portletName" ></a></h5>
+            <h5 ng-bind="portlet.desc"></h5>  
           </div>
-        </div>      
-        <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v2"><span class="text-uppercase mpt-v2-text">Moderate Volatility</span><span class="mpt-returns">3.5%</span><span class="label label-skeleton">19090 Followers</span></a>        
-          <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"/><strong>Bill Ackman</strong><span class="pull-right">Last update: 2015.02.22</span></div>        
-          <div class="panel-body mpt-portlet-body">
-            <h3><a href="#">Utilities Pay the bill</a></h3>With high yields and a 10-year track record of not cutting dividends, these stocks separate themselves from the pack.
-          </div>        
-          <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
         </div>
       </div>
-      <!-- /.end col-->
-      <div class="col-md-4 col-sm-6 padding">
-        <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v5"><span class="text-uppercase Very">High Volatility</span><span class="mpt-returns">129.8%</span><span class="label label-skeleton">223 Followers</span></a>        
-          <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"/><strong>C.Coleman</strong><span class="pull-right">Last update: 2013.05.13</span></div>        
-          <div class="panel-body mpt-portlet-body">
-            <h3><a href="#">China Internet</a></h3>Great Wall? Meh. What&rsquo;s really been great is the internet market. China is the world&rsquo;s largest, with room to grow.
-          </div>        
-          <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-        </div>
-      </div>
-    </div>
-    <!-- /.end row-->
   </ion-content>
 </ion-view>
