@@ -9,6 +9,7 @@ appController.controller(
     ($scope) ->
       console.log("u r in PortletCreateCtrl")
       $scope.data = {}
+      $scope.delete = false;
       $scope.stocks = [
         {
           'name': 'Apple'
@@ -58,4 +59,20 @@ appController.controller(
       $scope.signUp = ->
         console.log 'LOGIN user: ' + $scope.data.username + ' - PW: ' + $scope.data.password
         return
+
+      $scope.checkStocks = -> 
+        if $scope.stockWeightages.length < 9
+          alert 'Portlet should have at least 9 Stocks'
+          
+
+      $scope.showDelete = (stockWeightage) -> 
+        console.log 'wedfe' + stockWeightage
+        if $scope.delete == false
+          $scope.delete = true
+        else
+          $scope.delete = false
+
+        
+
+
   ])
