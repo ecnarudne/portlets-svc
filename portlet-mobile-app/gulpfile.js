@@ -13,7 +13,7 @@ var connect    = require('gulp-connect');
 var livereload = require('gulp-livereload');
 var path       = require('path');
 
-gulp.task('build', ['jade', 'less', 'html', 'ionic', 'css', 'js', 'coffee', 'images']);
+gulp.task('build', ['jade', 'less', 'html', 'index-html', 'ionic', 'css', 'js', 'coffee', 'images']);
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -21,9 +21,16 @@ var paths = {
 
 gulp.task('default', ['sass']);
 
+gulp.task('index-html',function(){
+     gulp.src('app/index.html')
+    .pipe(gulp.dest('www'))
+    .pipe(livereload())
+});
+
+
 gulp.task('html', function() {
-    gulp.src('app/views/**/*.html')
-    .pipe(gulp.dest('www/views'))
+    gulp.src('app/**/**/*.html')
+    .pipe(gulp.dest('www/'))
     .pipe(livereload())
 });
 /* Tasks add start*/
@@ -97,7 +104,7 @@ gulp.task('sass', function(done) {
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(paths.sass, ['sass']);
-  gulp.watch('app/index.html', ['html']);
+  gulp.watch('app/index.html', ['index-html']);
   gulp.watch('app/views/**/*.html', ['html']);
   gulp.watch('app/img/**/*.*', ['copy-images']);
   gulp.watch('app/css/**/*.css', ['css']);
