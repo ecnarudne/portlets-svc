@@ -5,7 +5,7 @@
 </style>
 <ion-view view-title="Discover" name="discover-view" ng-controller="PageExploreCtrl">
   <ion-content>
-    <div class="jumbotron mpt-pt-head mpt-gradient top-60">
+    <div class="jumbotron mpt-pt-head mpt-gradient top-60 myfont">
       <div class="container">
         <div class="row">
           <div class="col-xs-12">
@@ -50,7 +50,7 @@
         </div>
     
     </div>
-    <div id="main" class="container"></div>
+    <div id="main" class="container myfont">
       <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
         <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><strong><span class="text-uppercase">{{portlet.volatility}} Volatility</span></strong><span class="mpt-returns" ng-bind="portlet.returns"></span><span><span ng-bind="portlet.followers" ></span> Followers</span></a>        
           <div class="panel-body mpt-portlet-body">
@@ -58,6 +58,7 @@
             <h5 ng-bind="portlet.desc"></h5>  
           </div>
         </div>
+      </div>
       </div>
   </ion-content>
 </ion-view>
