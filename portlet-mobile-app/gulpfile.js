@@ -101,6 +101,7 @@ gulp.task('watch', function() {
   gulp.watch('app/views/**/*.html', ['html']);
   gulp.watch('app/img/**/*.*', ['copy-images']);
   gulp.watch('app/css/**/*.css', ['css']);
+  gulp.watch('app/css/**/*.less', ['less']);
   gulp.watch('app/js/**/*.coffee', ['coffee']);
   gulp.watch('app/**/*.jade', ['jade']);
 });
