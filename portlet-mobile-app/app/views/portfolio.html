@@ -33,35 +33,11 @@
                         </tr>
                       </tfoot>
                       <tbody>
-                        <tr>
-                          <td><a href="/page-portlet.html">High-Yield Dividends </a></td>
-                          <td>-9.51% </td>
-                          <td id="tblrow-price">-9.51%</td>
-                          <td id="tblrow-gain" > -9.51%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet2.html">Bear International Market</a></td>
-                          <td>-1.63% </td>
-                          <td id="tblrow-price">-1.63%</td>
-                          <td id="tblrow-gain"> -1.63%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet.html">China Internet </a></td>
-                          <td>56.76% </td>
-                          <td id="tblrow-price">56.76%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> 56.76%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet.html">U.S. Treasury Ladder </a></td>
-                          <td>-4.97% </td>
-                          <td id="tblrow-price">-4.97%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
-                        </tr>
-                        <tr>
-                          <td><a href="/page-portlet.html">Utilities Pay the bill</a></td>
-                          <td>-4.97% </td>
-                          <td id="tblrow-price">-4.97%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
+                        <tr ng-repeat= "tableItem in portfolio[0].tableItems">
+                          <td><a style="color:#ffffff" href="/page-portlet.html" ng-bind="tableItem.name"></a></td>
+                          <td><span ng-bind="tableItem.totalReturn"></span>%</td>
+                          <td><span ng-bind="tableItem.dailyReturn"></span>%</td>
+                          <td><span ng-bind="tableItem.oneYearReturn"></span>%</td>
                         </tr>
                       </tbody>
                     </table>
