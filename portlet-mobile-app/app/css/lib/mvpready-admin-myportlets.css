@@ -3213,16 +3213,18 @@ ol.list-comments .comment-item{
 /* !Discover Portlets Styles */
 /* ----------------------------------------------- */
 .category-container{
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-right:10px;
   border: 1px solid #ffffff;
   border-radius: 5px;
+
 }
+
 .category-container>.category-link a{
   display: block;
   color: #ffffff;
   overflow: hidden;
-  padding: 20px 10px;
+  padding: 5px 5px;
 }
 /*.category-container>.category-link a:hover{
   border: 1px solid #ffffff;

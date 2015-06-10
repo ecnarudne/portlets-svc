@@ -1,19 +1,16 @@
-<style type="text/css">
-  .white{
-    color:#ffffff;
-  }
-</style>
 <ion-view view-title="Discover" name="discover-view" ng-controller="PageExploreCtrl">
   <ion-content>
+     <a  href="#" style="font-size:25px"  class="  pull-right plus-icon  ion-ios-plus-outline white-color" data-pack="ios" data-tags="add, include, new, invite, +"></a>
+     
     <div class="jumbotron mpt-pt-head mpt-gradient top-60 myfont">
-      <div class="container">
+     <div class="container">
         <div class="row">
           <div class="col-xs-12">
-            <h4 style="color:#ffffff">SECTORS</h4>
+            <h4 class="white-color">SECTORS</h4>
           </div>
         </div>            
         <div class=" text-center">
-              <div ng-repeat="sector in sectors" class="category-container col-xs-3 col-sm-3 col-md-3">
+              <div ng-repeat="sector in sectors"  class="category-container colwd col-xs-5 col-sm-3 col-md-3">
                 <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
                     <div class="category-name">
                       <div class="h4" ng-bind="sector.name"></div>
@@ -24,22 +21,22 @@
               </div>
         </div>
         
-            <div class="table-responsive" >
+            <div class="table-striped" >
             
-            <table  class="table">
+            <table  class="table white-color"   >
               <tr>
                 <td align="center"  >
-                  <a class="white" href="#">show all <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" href="#">Show All <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
                 <td align="center">
-                  <a class="white" href="#">Top Performing <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" href="#">Top Performing <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
                 <td align="center">
-                  <a class="white" href="#">Newly added <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" href="#">Newly Added <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
@@ -51,6 +48,12 @@
     
     </div>
     <div id="main" class="container myfont">
+
+      <div class="row">
+        <div class="col-xs-12">
+              <h4>TRENDING PORTLETS</h4>
+        </div>
+      </div>
       <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
         <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><strong><span class="text-uppercase">{{portlet.volatility}} Volatility</span></strong><span class="mpt-returns" ng-bind="portlet.returns"></span><span><span ng-bind="portlet.followers" ></span> Followers</span></a>        
           <div class="panel-body mpt-portlet-body">
