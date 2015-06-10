@@ -93,5 +93,6 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
       reload: true
     )
     
+    
   $urlRouterProvider.otherwise '/'
   return

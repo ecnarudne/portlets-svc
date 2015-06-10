@@ -1,119 +1,169 @@
-<div class="content">
-        <div style="background-color: #f98970" class="jumbotron mpt-pt-head top-60">
-          <div class="container">
+<ion-content>
+<div class="content myfont">
+    <div class="jumbotron mpt-pt-head  portlet-bg ">
+        <div class="container ">
             <div class="row">
-              <div  class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row">
-                  <div class="col-xs-12 mpt-performance"></div>
-                </div>
-                <div style="color: #ffffff" class="row">
-                  <div class="col-xs-12 mpt-performance">
-                    <span>Since Inception</span>
-                    <h1>9.03%</h1>
-                    <span>Daily Return</span>
-                    <h5>-4.03%</h5>
+                <div  class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                           <div class="col-xs-12 mpt-performance"></div>
+                        </div>
 
+                        <div class="row white-color" >
+                          <div class="col-xs-12 ">
+                           <span>Since Inception</span>
+                           </div>
+                        </div>
 
-                    <span class="mpt-v4-text">High Volatility</span>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
-                    <div></div>
+                        <div  class="row white-color">
+                          <div class="col-xs-12 ">
+                             <h1 class="seventypx">9.03%</h1>
+                          </div>
+                        </div>
+                        
+                        <div  class="row white-color">
+                           <div class="col-xs-4 col-sm-4 col-md-2 ">
+                              <div>
+                                <span>Daily Return
+                                <h3 style="size:50px">-4.03%</h3></span>
+                              </div>
+                           </div>
+
+                            <div class="col-xs-4 col-sm-4 col-md-2">
+                              <span>1Y Return
+                              <h3 style="size:50px">5.33%</h3></span>  
+                            </div>
+
+                        </div>   
+                      
+                        <div class="row">
+                          <div  class="col-xs-12 col-sm-12 col-md-9"><h5>High Volatility</h5></span>
+                          </div>
+                         
+                        </div>
+                  </div>  
+            </div>
+
+            <div class="row">
+                <div class="userbox portlet-bg">
+                    <h3 >Portfolio Perfomance (%)</h3>
+                 
+                      <div class="panel-body">
+                        <div id="graph" class="chart-holder-300"></div>
+                      </div>
                     
-                  </div>
-                  <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
-                    <div><span>1 Year Return</span></div>
-                    <h3>5.14%</h3>
-                  </div>
+                    <div  class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
+                        <div class="btn-group btn-group-justified " data-toggle=
+                        "buttons">
+                            <label class="btn   " id=
+                            "lastdayninetynine"><input autocomplete="off" id=
+                            "lastdayninetynine" name="options" type=
+                            "radio">1W</label> <label class="btn "
+                            id="lastweekninetynine"><input autocomplete="off"
+                            id="lastweekninetynine" name="options" type=
+                            "radio">1M</label> <label class="btn "
+                            id="latenineties"><input autocomplete="off" id=
+                            "latenineties" name="options" type=
+                            "radio">3M</label> <label class="btn "
+                            id="ninetyninequarters"><input autocomplete="off"
+                            id="ninetyninequarters" name="options" type=
+                            "radio">6M</label> <label class="btn "
+                            id="oneyear"><input autocomplete="off" checked id=
+                            "ninetynine" name="options" type="radio">1Y</label>
+                            <label class="btn  active" id=
+                            "whole"><input autocomplete="off" id="whole" name=
+                            "options" type="radio">3Y</label>
+                        </div>
+                    </div><!-- /.line-graph-body-->
+                </div><!-- /.portlet-->
+            </div><!-- /.row-->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                <h5  class="text-inline white-color">Created Since:2015.10.14</h5>
+                <h5  class="text-inline-padding white-color">Followers:1987</h5>
+
                 </div>
-             
-              </div>
-              <!-- <div class="col-xs-12 col-sm-12 col-md-6">
-                <div class="mpt-lead">
-                  <h2>Bear International</h2>
-                  <p>Investors expecting a selloff in markets outside the US may find this motif worth a closer look.</p>
-                  <div> <span class="label label-skeleton">Energy &amp; Utilites</span> <span class="label label-skeleton">Financials</span> <span class="label label-skeleton">Consumer Products and Services</span> <span class="label label-skeleton">Telecommunications</span> <span class="label label-skeleton">Basic Material</span></div>
-                  <div role="group" class="btn-group btn-group-justified top-20"><a type="button" class="btn mpt-btn">Edit</a></div>
-                </div>
-              </div> -->
-            <h4>Created by : J.Livermore</h4>
             </div>
-            <!-- /.end row-->
-            <div class="row top-20">
-              <h3 class="panel-heading">Portlet Perfomance (%)</h3>
-              <div class="col-xs-12 col-sm-12 col-md-9">
-                <div class="panel-body">
-                  <div id="profile-chart" class="chart-holder-300"></div>
-                </div>
-              </div>
-          </div>
-           <div class="row">
-                <div class="col-xs-12">
-                  <h4>Created Since : 2014.02.22</h4>
-                  <h4>Followers : 200</h4>
-                </div>
+        </div><!-- /.container-->
+    </div>
+
+    <div class="container" id="main">
+        <div class="row">
+            <div class="col-xs-8 col-sm-10 col-md-10">
+                <h4>DESCRIPTION</h4>
+
+                <p class="text-alignment">I
+                discovered how to create circular images using CSS3 the other day
+                and thought it was totally awesome. The only drawback is that the
+                image has to appear as a background image. You can’t really do this
+                effect directly to an image that is displayed using an image tag.
+                What this means is that no one will be able to actually click and
+                drag the image onto their desktop, but that might be totally okay
+                with you.</p>
             </div>
 
-        </div>
-        <!-- /.end jumbotron-->
-        <div id="main" class="container">
-          <div class="row">
-            <h3 class="panel-heading">Stocks and Details</h3>
-            <div class="portlet-body">
-              <table id="table-1" width="100%" class="table"></table>
+            <div class="col-xs-4 col-sm-2 col-md-3">
+                <center>
+                <h4 class="twe" >CREATED BY</h4><img class="img-circle" src=
+                "../img/avatars/avatar-1-xs.jpg" style=
+                "width:50px;height:50px;position:center;">
+
+                <figcaption>
+                    Pei sang
+                </figcaption><br>
+                </center>
             </div>
-          </div>
-          <div class="row top-20">
-            <h3 class="panel-heading">Comments</h3>
-            <div class="col-xs-12 col-sm-8">
-              <div class="portlet-body">
-                <div class="comments">
-                  <div class="comment-box clearfix">
-                    <textarea rows="3" placeholder="Leave a comment..." tabindex="1" class="form-control share-widget-textarea"></textarea>
-                    <div class="top-20">
-                      <div class="pull-left"><a tabindex="2" class="btn btn-primary btn-sm">Post Comment</a></div>
-                    </div>
-                    <!-- /.share-widget-actions-->
-                  </div>
-                  <!-- /.share-widget-->
-                  <ol class="list-comments">
-                    <li class="comment-item">
-                      <div class="comment-inner">
-                        <div class="avatar pull-left"><a href="/profile/1328790824"><img alt="" height="80" src="https://d297h9he240fqh.cloudfront.net/assets/users/missing_small.png" width="80" class="img-circle"></a></div>
-                        <div class="comment-main clearfix">
-                          <h4><a href="/profile/#" class="author green-dark">Angus C</a><span class="date normal h6">
-                              <data>1 minute ago</data></span></h4>
-                          <p>no surprise is the biggest surprise really.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="comment-item">
-                      <div class="comment-inner">
-                        <div class="avatar pull-left"><a href="/profile/1328790824"><img alt="" height="80" src="https://ksr-ugc.imgix.net/avatars/14498118/fb_profile_picture.original.jpeg?v=1426227450&amp;w=80&amp;h=80&amp;fit=crop&amp;auto=format&amp;q=92&amp;s=f4b4337a7024d70f887693bef75794d4" width="80" class="img-circle"></a></div>
-                        <div class="comment-main clearfix">
-                          <h4><a href="/profile/#" class="author green-dark">Inblue</a><span class="date normal h6">
-                              <data>about 2 hours ago</data></span></h4>
-                          <p>whatever the rating i am not backing out i think PTS is good at least 2-3years of good use. and as time goes more and more apps will come up so its a good deal.</p>
-                        </div>
-                      </div>
-                    </li>
-                    <li class="comment-item">
-                      <div class="comment-inner">
-                        <div class="avatar pull-left"><a href="/profile/1328790824"><img alt="" height="80" src="https://ksr-ugc.imgix.net/avatars/14504088/984288_341471482724277_5423205727104278974_n.original.jpg?v=1427245972&amp;w=80&amp;h=80&amp;fit=crop&amp;auto=format&amp;q=92&amp;s=c1c2a78d4b5f6a05accc8377f14297ec" width="80" class="img-circle"></a></div>
-                        <div class="comment-main clearfix">
-                          <h4><a href="/profile/#" class="author green-dark">Angus C</a><span class="date normal h6">
-                              <data>2 days ago</data></span></h4>
-                          <p>FACT : "Some" Backers Will pay their PT or PTS near "twice" the price they were expecting...and the retaillers price...</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-        <!-- /main-->
-        <div class="clearfix"></div>
-      </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <h4>STOCKS AND DETAILS</h4>
+            </div>
+        </div>
+
+        <div class="table-striped">
+            <table class="table table-styles">
+                <thead>
+                    <tr>
+                        <th>COMPANY</th>
+
+                        <th class="col-leng" >WEIGHT</th>
+
+                        <th  class="col-lang" >RETURN</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>Direct Tv</td>
+
+                        <td>23%</td>
+
+                        <td>24.51%</td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-overflow">FDS Infotech Pvt. Ltd. is a
+                        pioneer in supply chain management Computer Software</td>
+
+                        <td>23%</td>
+
+                        <td>24.51%</td>
+                    </tr>
+
+                    <tr>
+                        <td>Direct Tv</td>
+
+                        <td>23%</td>
+
+                        <td>24.51%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ 
+
+
+</div>  
+
+</ion-content>

@@ -17,6 +17,16 @@
   font-style: normal;
 }
 
+.myfont{
+   padding: 0;
+  margin: 0;
+  font-family: 'Raleway', 'Open Sans', arial, sans-serif;
+  font-size: 14px;
+  background-color: #ffffff;
+  outline: 0;
+
+}
+
 body {
   padding: 0;
   margin: 0;
@@ -224,7 +234,8 @@ h6,
 }
 .chart-holder-300 {
   height: 300px;
-}
+  width: 200px;
+ }
 .chart-holder-350 {
   height: 350px;
 }
@@ -3172,6 +3183,7 @@ ol.list-comments .comment-item{
 }
 .userbox .btn{
   color: #ffffff;
+  background:  color: #e96d65;
   border: none;
   font-weight: 800;
   text-shadow: none;
