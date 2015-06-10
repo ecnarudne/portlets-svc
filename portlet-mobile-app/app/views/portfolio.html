@@ -1,23 +1,27 @@
-
 <ion-view view-title="Portfolio" name="portfolio-view" ng-controller="PortfolioCtrl">
-<ion-nav-buttons side="primary">
-      <button class="button" ng-click="doSomething()">
-        I'm a button on the primary of the navbar!
-      </button>
-    </ion-nav-buttons>
-  <ion-content>
-    <div class="jumbotron mpt-pt-head mpt-gradient page-font top-60">
-      <div class="container" style="color:#ffffff">
-          <h4 align="center" class="light">Portfolio </h4>
-          <h1 align="center">25.9</h1>
+  <ion-content class="portfolio-bg">
+      <div  class="row">
+        <div  style="margin-left:30px" class="col">
+          <a id="add-portfolio" href="#" class="ion-ios-plus-outline button pull-right"></a> 
+          <h4 align="center" class='page-text'>Portfolio</h4>
+        </div>
       </div>
-      <div MyDivClass class="row" style="color:#ffffff;margin-top:100px">
-              <div class="col-xs-12">
-                <div class="portlet">
-                  <div class="table-responsive">
-                    <p ></p>
-                    <table class="table" style="overflow-x: hidden;">
-                      <thead>
+
+      <div class="container page-text">
+          <h1 align="center">25.9%</h1>
+      </div>
+      
+      <div class="row padding">
+        <div class="col">
+
+        </div>
+      </div>
+      <div class="row" style="margin-top:100px">
+              <div class="col col-xs-12">
+                <div>
+                  <div class="table-striped">
+                    <table class="table">
+                      <thead class="page-text">
                         <tr>
                           <th>Stock</th>
                           <th>Total</th>
@@ -33,7 +37,7 @@
                           <td></td>
                         </tr>
                       </tfoot>
-                      <tbody>
+                      <tbody style="color:white">
                         <tr ng-repeat= "tableItem in portfolio[0].tableItems">
                           <td><a style="color:#ffffff" href="/page-portlet.html" ng-bind="tableItem.name"></a></td>
                           <td><span ng-bind="tableItem.totalReturn"></span>%</td>
