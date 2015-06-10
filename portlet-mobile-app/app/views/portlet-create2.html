@@ -22,10 +22,7 @@
           <tbody class = 'table-content'>
             <tr ng-repeat="stockWeightage in stockWeightages">
               <td ng-bind="stockWeightage.name"></td>
-              <td><input size='5' style ="color: #ffffff;
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-  background: transparent;"ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"> </td>
+              <td><input size='5' style ="color: #ffffff;border: 1px solid #ffffff;border-radius: 5px;background: transparent;"ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"> </td>
               <td><button ng-click="showDelete(stockWeightage)" type="button" class="ion-ios-minus-outline button table-button"></button> <button ng-show='delete'  class ="button button-assertive">delete</button></td>
             </tr> 
         </tbody>
