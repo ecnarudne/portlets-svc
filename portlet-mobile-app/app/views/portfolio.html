@@ -1,28 +1,31 @@
 
 <ion-view view-title="Portfolio" name="portfolio-view" ng-controller="PortfolioCtrl">
+<ion-nav-buttons side="primary">
+      <button class="button" ng-click="doSomething()">
+        I'm a button on the primary of the navbar!
+      </button>
+    </ion-nav-buttons>
   <ion-content>
-    <div class="jumbotron mpt-pt-head mpt-gradient top-60">
+    <div class="jumbotron mpt-pt-head mpt-gradient page-font top-60">
       <div class="container" style="color:#ffffff">
           <h4 align="center" class="light">Portfolio </h4>
           <h1 align="center">25.9</h1>
       </div>
-      <div class="row" style="color:#ffffff;margin-top:100px">
+      <div MyDivClass class="row" style="color:#ffffff;margin-top:100px">
               <div class="col-xs-12">
                 <div class="portlet">
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>NAME</th>
-                          <th>TOTAL RETURN</th>
-                          <th>DAILY RETURN</th>
-                          <th>1 YEAR RETURN</th>
-                          <th>PORTLET RETURN</th>
+                          <th>Stock</th>
+                          <th>Total</th>
+                          <th>Daily</th>
+                          <th>1 Year</th>
                         </tr>
                       </thead>
                       <tfoot>
                         <tr>
-                          <td></td>
                           <td></td>
                           <td></td>
                           <td></td>
@@ -34,36 +37,31 @@
                           <td><a href="/page-portlet.html">High-Yield Dividends </a></td>
                           <td>-9.51% </td>
                           <td id="tblrow-price">-9.51%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -9.51%</td>
-                          <td id="tblrow-daily" class="hide_column_fd">-0.09%</td>
+                          <td id="tblrow-gain" > -9.51%</td>
                         </tr>
                         <tr>
                           <td><a href="/page-portlet2.html">Bear International Market</a></td>
                           <td>-1.63% </td>
                           <td id="tblrow-price">-1.63%</td>
-                          <td id="tblrow-gain" class="hide_column_fd"> -1.63%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">2.56%</td>
+                          <td id="tblrow-gain"> -1.63%</td>
                         </tr>
                         <tr>
                           <td><a href="/page-portlet.html">China Internet </a></td>
                           <td>56.76% </td>
                           <td id="tblrow-price">56.76%</td>
                           <td id="tblrow-gain" class="hide_column_fd"> 56.76%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">4.51%</td>
                         </tr>
                         <tr>
                           <td><a href="/page-portlet.html">U.S. Treasury Ladder </a></td>
                           <td>-4.97% </td>
                           <td id="tblrow-price">-4.97%</td>
                           <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">1.45%</td>
                         </tr>
                         <tr>
                           <td><a href="/page-portlet.html">Utilities Pay the bill</a></td>
                           <td>-4.97% </td>
                           <td id="tblrow-price">-4.97%</td>
                           <td id="tblrow-gain" class="hide_column_fd"> -4.97%</td>
-                          <td id="tblrow-daily-gain" class="hide_column_fd">1.45%</td>
                         </tr>
                       </tbody>
                     </table>
