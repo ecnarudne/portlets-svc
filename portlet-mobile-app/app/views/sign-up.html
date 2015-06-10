@@ -1,31 +1,33 @@
 
 <ion-view view-title="Sign Up" name="sign-up-view" ng-controller="Sign-upController">
-  <ion-content class="padding">   
+  <ion-content>   
     <div class="top-header"><br/>
       <div class="top-header-div">
         <h3>myportlets</h3>
         <p>Create and invest in an idea or trend<br/>Build your own diversed portfolio of portlets</p><a href="#/" class="sign-up-link">SIGNUP</a><a href="#/login" class="login-link">LOGIN</a>
       </div>
     </div>
-    <button class="button button-block button-positive"><i class="fa fa-facebook pull-left social-btn-fb"></i> Sign up with Facebook</button>
-    <button class="button button-block button-calm"><i class="fa fa-twitter pull-left social-btn-tw"></i> Sign up with Twitter</button>
-    <p align="center">or</p>
-    <div class="list list-inset">
-      <label class="item item-input">
-        <input type="email" placeholder="Enter your Email-Id" ng-model="data.email"/>
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Enter your Username" ng-model="data.username"/>
-      </label>
-      <label class="item item-input">
-        <input type="password" placeholder="Enter Password" ng-model="data.password"/>
-      </label>
-      <label class="item item-input">
-        <input type="password" placeholder="Confirm Password" ng-model="data.cpassword"/>
-      </label>
-    </div>
-    <button ng-click="signUp()" class="button button-block button-balanced">Create My Account &nbsp;<i class="fa fa-play-circle"></i></button>
-    <p align="center">Already have an account?<br><a href="#/login">Login to your Account!</a></p>
+    <div class="padding">
+      <button class="button button-block button-positive"><i class="fa fa-facebook pull-left social-btn-fb"></i> Sign up with Facebook</button>
+      <button class="button button-block button-calm"><i class="fa fa-twitter pull-left social-btn-tw"></i> Sign up with Twitter</button>
+      <p align="center">or</p>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="email" placeholder="Enter your Email-Id" ng-model="data.email"/>
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Enter your Username" ng-model="data.username"/>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Enter Password" ng-model="data.password"/>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Confirm Password" ng-model="data.cpassword"/>
+        </label>
+      </div>
+      <button ng-click="signUp()" class="button button-block button-balanced">Create My Account &nbsp;<i class="fa fa-play-circle"></i></button>
+      <p align="center">Already have an account?<br><a href="#/login">Login to your Account!</a></p>
+    </div>  
   </ion-content>
 </ion-view>
 <!--script(src='./js/signUpValidate.js')-->

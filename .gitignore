@@ -23,3 +23,4 @@ portlets-app/applet.policy
 portlet-mobile-app/node-modules/
 portlet-mobile-app/platforms/
 portlet-mobile-app/plugins/
+node_modules/

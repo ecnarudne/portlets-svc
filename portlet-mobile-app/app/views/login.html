@@ -1,31 +1,33 @@
 
 <ion-view view-title="Login" name="login-view" ng-controller="LoginController">
-  <ion-content class="padding">
+  <ion-content >
     <div class="top-header"><br/>
       <div class="top-header-div">
         <h3>myportlets</h3>
         <p>Create and invest in an idea or trend<br/>Build your own diversed portfolio of portlets</p><a href="#/" class="sign-up-link">SIGNUP</a><a href="#/login" class="login-link">LOGIN</a>
       </div>
     </div>
-    <button class="button button-block button-positive"><i class="fa fa-facebook pull-left social-btn-fb"></i> Login with Facebook</button>
-    <button class="button button-block button-calm"><i class="fa fa-twitter pull-left social-btn-tw"></i> Login with Twitter</button>
-    <p align="center">or</p>
-    <div class="list list-inset">
-      <label class="item item-input">
-        <input type="email" placeholder="Enter your Email-Id" ng-model="data.email" required=""/>
-      </label>
-      <label class="item item-input">
-        <input type="password" placeholder="Enter Password" ng-model="data.password"/>
-      </label>
-      <li class="item item-checkbox">
-        <label class="checkbox">
-          <input type="checkbox"/>
-        </label>Remember me
-      </li>
+    <div class = "padding">
+      <button class="button button-block button-positive"><i class="fa fa-facebook pull-left social-btn-fb"></i> Login with Facebook</button>
+      <button class="button button-block button-calm"><i class="fa fa-twitter pull-left social-btn-tw"></i> Login with Twitter</button>
+      <p align="center">or</p>
+      <div class="list list-inset">
+        <label class="item item-input">
+          <input type="email" placeholder="Enter your Email-Id" ng-model="data.email" required=""/>
+        </label>
+        <label class="item item-input">
+          <input type="password" placeholder="Enter Password" ng-model="data.password"/>
+        </label>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox"/>
+          </label>Remember me
+        </li>
+      </div>
+      <div class="pull-right"><small><a href="#/pwd-recovery"><u>Forgot Password?</u></a></small></div><br/>
+      <button ng-click="login()" class="button button-block button-balanced">Login &nbsp;<i class="fa fa-play-circle"></i></button>
+      <p align="center">Don&quot;t have an account?<br><a href="#/app/portlet-create">Create an Account!</a></p>
     </div>
-    <div class="pull-right"><small><a href="#/pwd-recovery"><u>Forgot Password?</u></a></small></div><br/>
-    <button ng-click="login()" class="button button-block button-balanced">Login &nbsp;<i class="fa fa-play-circle"></i></button>
-    <p align="center">Don&quot;t have an account?<br><a href="#/app/portlet-create">Create an Account!</a></p>
   </ion-content>
 </ion-view>
 <!--script(src='./js/loginValidate.js')-->
