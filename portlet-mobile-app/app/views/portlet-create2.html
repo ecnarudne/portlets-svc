@@ -1,13 +1,12 @@
 <ion-view view-title="Portlet-create" name="Portlet-create" ng-controller="PortletCreateCtrl">
-  <ion-content class="portfolio-bg padding page-font">
-  	<div class="row" style="color:#ffffff;">
-      <div  style="margin-left:50px;" class="col-90">
+  <ion-content class="portfolio-bg padding">
+  	<div class="row">
+      <div class="col-90 toggle-bar">
       <a href="#" class="pull-right" ng-click="checkStocks() "><h4>Create</h4></a> 
       <h4 align="center" class='page-text'>Create Portlet</h4>
       </div>
     </div>
-  	<hr>
-  	<div align="center">
+    <div align="center">
   		<a id="add-stock" href="#/app/portlet-create3" class="ion-ios-plus-outline button"> Add Stocks</a>
   	</div>
   	<div class="table-striped">
@@ -22,7 +21,7 @@
           <tbody class = 'table-content'>
             <tr ng-repeat="stockWeightage in stockWeightages">
               <td ng-bind="stockWeightage.name"></td>
-              <td><input size='5' style ="color: #ffffff;border: 1px solid #ffffff;border-radius: 5px;background: transparent;"ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"> </td>
+              <td><input size='5' style ="border: 1px solid #ffffff;border-radius: 5px;background: transparent;"ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></td>
               <td><button ng-click="showDelete(stockWeightage)" type="button" class="ion-ios-minus-outline button" style="font-size: 25px;background: transparent;color:#ffffff; border: 0px;"></button> <button ng-show='delete'  class ="button button-assertive">delete</button></td>
             </tr> 
         </tbody>
