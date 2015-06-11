@@ -11,7 +11,7 @@ angular.module('PortfolioCtrl',['Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PortfolioCtrl controller called')
-            
+            plotGraph()
             portletApi.getPortfolioDetails(
                 {
                   before: ->

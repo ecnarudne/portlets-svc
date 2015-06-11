@@ -1,4 +1,7 @@
-$(function () {
+function plotGraph()
+{
+  console.log("inmyfun");
+  $(function () {
     
   var d1, d2, data, chartOptions
 
@@ -140,3 +143,4 @@ if (holder.length) {
   }
 
 })
+}
