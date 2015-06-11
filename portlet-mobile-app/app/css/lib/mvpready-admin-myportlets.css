@@ -3213,18 +3213,18 @@ ol.list-comments .comment-item{
 /* !Discover Portlets Styles */
 /* ----------------------------------------------- */
 .category-container{
-  margin-bottom: 10px;
-  margin-right:10px;
+  margin-bottom: 20px;
+  margin-left: 20px;
   border: 1px solid #ffffff;
   border-radius: 5px;
-
+  padding-left: 10px;
 }
 
 .category-container>.category-link a{
   display: block;
   color: #ffffff;
-  overflow: hidden;
-  padding: 5px 5px;
+  
+  
 }
 /*.category-container>.category-link a:hover{
   border: 1px solid #ffffff;
@@ -3239,7 +3239,7 @@ ol.list-comments .comment-item{
   padding-bottom: 10px
 }
 .category-container .category-project-count .h4{  
-  margin: 5px;
+  margin: 10px;
   font-size: 14px
 }
 @media(min-width: 768px){
