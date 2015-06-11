@@ -1,7 +1,7 @@
 <ion-view view-title="Portfolio" name="portfolio-view" ng-controller="PortfolioCtrl">
   <ion-content class="portfolio-bg">
-      <div  class="row">
-        <div  style="margin-left:30px" class="col">
+      <div class="row">
+        <div class="col toggle-bar">
           <a id="add-portfolio" href="#" class="ion-ios-plus-outline button pull-right"></a> 
           <h4 align="center" class='page-text'>Portfolio</h4>
         </div>
@@ -11,45 +11,43 @@
           <h1 align="center">25.9%</h1>
       </div>
       
-      <div class="row padding">
+      <!-- <div class="row padding">
         <div class="col">
 
         </div>
-      </div>
-      <div class="row" style="margin-top:100px">
-              <div class="col col-xs-12">
-                <div>
-                  <div class="table-striped">
-                    <table class="table">
-                      <thead class="page-text">
-                        <tr>
-                          <th>Stock</th>
-                          <th>Total</th>
-                          <th>Daily</th>
-                          <th>1-Year</th>
-                        </tr>
-                      </thead>
-                      <tfoot>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </tr>
-                      </tfoot>
-                      <tbody style="color:white">
-                        <tr ng-repeat= "tableItem in portfolio[0].tableItems">
-                          <td><a style="color:#ffffff" href="#/app/portlet" ng-bind="tableItem.name"></a></td>
-                          <td><span ng-bind="tableItem.totalReturn"></span>%</td>
-                          <td><span ng-bind="tableItem.dailyReturn"></span>%</td>
-                          <td><span ng-bind="tableItem.oneYearReturn"></span>%</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>     
+      </div> -->
+      <div  style="margin-top:100px">
+          <div>
+            <div class="table-striped">
+              <table class="table">
+                <thead class="page-text">
+                  <tr>
+                    <th>Stock</th>
+                    <th>Total</th>
+                    <th>Daily</th>
+                    <th>1-Year</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                </tfoot>
+                <tbody style="color:white">
+                  <tr ng-repeat= "tableItem in portfolio[0].tableItems">
+                    <td><a style="color:#ffffff" href="#/app/portlet" ng-bind="tableItem.name"></a></td>
+                    <td><span ng-bind="tableItem.totalReturn"></span>%</td>
+                    <td><span ng-bind="tableItem.dailyReturn"></span>%</td>
+                    <td><span ng-bind="tableItem.oneYearReturn"></span>%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+      </div>     
     </div>
   </ion-content>
 </ion-view>
