@@ -1,4 +1,5 @@
-$(function () {
+function plotPortletGraph(){
+  $(function () {
    console.log("graph file loaded!"); 
   var d1, d2, data, chartOptions
 
@@ -51,7 +52,7 @@ $(function () {
     colors: ['#ffffff', mvpready_core.layoutColors]
   }    
 
-  var holder = $('#graph')
+  var holder = $('#portlet-graph')
 
 if (holder.length) {
 
@@ -140,3 +141,4 @@ if (holder.length) {
   }
 
 })
+}

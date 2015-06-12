@@ -1,169 +1,142 @@
-<ion-content>
-<div class="content myfont">
-    <div class="jumbotron mpt-pt-head  portlet-bg ">
-        <div class="container ">
-            <div class="row">
-                <div  class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="row">
-                           <div class="col-xs-12 mpt-performance"></div>
-                        </div>
-
-                        <div class="row white-color" >
-                          <div class="col-xs-12 ">
-                           <span>Since Inception</span>
-                           </div>
-                        </div>
-
-                        <div  class="row white-color">
-                          <div class="col-xs-12 ">
-                             <h1 class="seventypx">9.03%</h1>
-                          </div>
-                        </div>
-                        
-                        <div  class="row white-color">
-                           <div class="col-xs-5 col-sm-4 col-md-2 ">
-                              <div>
-                                <span>Daily Return
-                                <h3 style="size:50px">-4.03%</h3></span>
-                              </div>
-                           </div>
-
-                            <div class="col-xs-4 col-sm-4 col-md-2">
-                              <span>1Y Return
-                              <h3 style="size:50px">5.33%</h3></span>  
-                            </div>
-
-                        </div>   
-                      
-                        <div class="row">
-                          <div  class="col-xs-12 col-sm-12 col-md-9"><h5>High Volatility</h5></span>
-                          </div>
+<ion-view view-title="Portlet" name="portlet-view" ng-controller="PortletCtrl">
+    <ion-content >
+        <div class="content myfont">
+            <div class="jumbotron mpt-pt-head  portlet-bg ">
+                <div class="container ">
+                    <div class="row">
+                        <div  class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="row">
+                                   <div class="col-xs-12 mpt-performance"></div>
+                                </div>
+                                <div class="row white-color" >
+                                  <div class="col-xs-12 ">
+                                   <span>Since Inception</span>
+                                   </div>
+                                </div>
+                                <div  class="row white-color">
+                                  <div class="col-xs-12 ">
+                                     <h1 class="seventypx">9.03%</h1>
+                                  </div>
+                                </div>
+                                <div  class="row white-color">
+                                   <div class="col-xs-5 col-sm-4 col-md-2 ">
+                                      <div>
+                                        <span>Daily Return
+                                        <h3 style="size:50px">-4.03%</h3></span>
+                                      </div>
+                                   </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-2">
+                                      <span>1Y Return
+                                      <h3 style="size:50px">5.33%</h3></span>  
+                                    </div>
+                                </div>   
+                                <div class="row">
+                                  <div  class="col-xs-12 col-sm-12 col-md-9"><h5>High Volatility</h5></span>
+                                  </div>
+                                </div>
+                          </div>  
+                    </div>
+                    <div class="row">
+                        <div class="userbox portlet-bg">
+                            <h3 >Portfolio Perfomance (%)</h3>
                          
+                              <div class="panel-body">
+                                <div id="portlet-graph" class="chart-holder-300" style="height:300px;width:100%"></div>
+                              </div>
+                            <div  class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
+                                <div class="btn-group btn-group-justified " data-toggle=
+                                "buttons">
+                                    <label class="btn   " id=
+                                    "lastdayninetynine"><input autocomplete="off" id=
+                                    "lastdayninetynine" name="options" type=
+                                    "radio">1W</label> <label class="btn "
+                                    id="lastweekninetynine"><input autocomplete="off"
+                                    id="lastweekninetynine" name="options" type=
+                                    "radio">1M</label> <label class="btn "
+                                    id="latenineties"><input autocomplete="off" id=
+                                    "latenineties" name="options" type=
+                                    "radio">3M</label> <label class="btn "
+                                    id="ninetyninequarters"><input autocomplete="off"
+                                    id="ninetyninequarters" name="options" type=
+                                    "radio">6M</label> <label class="btn "
+                                    id="oneyear"><input autocomplete="off" checked id=
+                                    "ninetynine" name="options" type="radio">1Y</label>
+                                    <label class="btn  active" id=
+                                    "whole"><input autocomplete="off" id="whole" name=
+                                    "options" type="radio">3Y</label>
+                                </div>
+                            </div><!-- /.line-graph-body-->
+                        </div><!-- /.portlet-->
+                    </div><!-- /.row-->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <h5  class="text-inline white-color">Created Since:2015.10.14</h5>
+                        <h5  class="text-inline-padding white-color">Followers:1987</h5>
                         </div>
-                  </div>  
+                    </div>
+                </div><!-- /.container-->
             </div>
+            <div class="container" id="main">
+                <div class="row">
+                    <div class="col-xs-8 col-sm-10 col-md-10">
+                        <h4>DESCRIPTION</h4>
+                        <p class="text-alignment">I
+                        discovered how to create circular images using CSS3 the other day
+                        and thought it was totally awesome. The only drawback is that the
+                        image has to appear as a background image. You can’t really do this
+                        effect directly to an image that is displayed using an image tag.
+                        What this means is that no one will be able to actually click and
+                        drag the image onto their desktop, but that might be totally okay
+                        with you.</p>
+                    </div>
+                    <div class="col-xs-4 col-sm-2 col-md-3">
+                        <center>
+                        <h4 class="twe" >CREATED BY</h4><img class="img-circle" src=
+                        "../img/avatars/avatar-1-xs.jpg" style=
+                        "width:50px;height:50px;position:center;">
+                        <figcaption>
+                            Pei sang
+                        </figcaption><br>
+                        </center>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4>STOCKS AND DETAILS</h4>
+                    </div>
+                </div>
+                <div class="table-striped">
+                    <table class="table table-styles">
+                        <thead>
+                            <tr>
+                                <th>COMPANY</th>
+                                <th class="col-leng" >WEIGHT</th>
+                                <th  class="col-lang" >RETURN</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Direct Tv</td>
 
-            <div class="row">
-                <div class="userbox portlet-bg">
-                    <h3 >Portfolio Perfomance (%)</h3>
-                 
-                      <div class="panel-body">
-                        <div id="graph" class="chart-holder-300"></div>
-                      </div>
-                    
-                    <div  class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
-                        <div class="btn-group btn-group-justified " data-toggle=
-                        "buttons">
-                            <label class="btn   " id=
-                            "lastdayninetynine"><input autocomplete="off" id=
-                            "lastdayninetynine" name="options" type=
-                            "radio">1W</label> <label class="btn "
-                            id="lastweekninetynine"><input autocomplete="off"
-                            id="lastweekninetynine" name="options" type=
-                            "radio">1M</label> <label class="btn "
-                            id="latenineties"><input autocomplete="off" id=
-                            "latenineties" name="options" type=
-                            "radio">3M</label> <label class="btn "
-                            id="ninetyninequarters"><input autocomplete="off"
-                            id="ninetyninequarters" name="options" type=
-                            "radio">6M</label> <label class="btn "
-                            id="oneyear"><input autocomplete="off" checked id=
-                            "ninetynine" name="options" type="radio">1Y</label>
-                            <label class="btn  active" id=
-                            "whole"><input autocomplete="off" id="whole" name=
-                            "options" type="radio">3Y</label>
-                        </div>
-                    </div><!-- /.line-graph-body-->
-                </div><!-- /.portlet-->
-            </div><!-- /.row-->
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
-                <h5  class="text-inline white-color">Created Since:2015.10.14</h5>
-                <h5  class="text-inline-padding white-color">Followers:1987</h5>
+                                <td>23%</td>
 
+                                <td>24.51%</td>
+                            </tr>
+                            <tr>
+                                <td class="text-overflow">FDS Infotech Pvt. Ltd. is a
+                                pioneer in supply chain management Computer Software</td>
+                                <td>23%</td>
+                                <td>24.51%</td>
+                            </tr>
+                            <tr>
+                                <td>Direct Tv</td>
+                                <td>23%</td>
+                                <td>24.51%</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div><!-- /.container-->
-    </div>
-
-    <div class="container" id="main">
-        <div class="row">
-            <div class="col-xs-8 col-sm-10 col-md-10">
-                <h4>DESCRIPTION</h4>
-
-                <p class="text-alignment">I
-                discovered how to create circular images using CSS3 the other day
-                and thought it was totally awesome. The only drawback is that the
-                image has to appear as a background image. You can’t really do this
-                effect directly to an image that is displayed using an image tag.
-                What this means is that no one will be able to actually click and
-                drag the image onto their desktop, but that might be totally okay
-                with you.</p>
-            </div>
-
-            <div class="col-xs-4 col-sm-2 col-md-3">
-                <center>
-                <h4 class="twe" >CREATED BY</h4><img class="img-circle" src=
-                "../img/avatars/avatar-1-xs.jpg" style=
-                "width:50px;height:50px;position:center;">
-
-                <figcaption>
-                    Pei sang
-                </figcaption><br>
-                </center>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <h4>STOCKS AND DETAILS</h4>
-            </div>
-        </div>
-
-        <div class="table-striped">
-            <table class="table table-styles">
-                <thead>
-                    <tr>
-                        <th>COMPANY</th>
-
-                        <th class="col-leng" >WEIGHT</th>
-
-                        <th  class="col-lang" >RETURN</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td>Direct Tv</td>
-
-                        <td>23%</td>
-
-                        <td>24.51%</td>
-                    </tr>
-
-                    <tr>
-                        <td class="text-overflow">FDS Infotech Pvt. Ltd. is a
-                        pioneer in supply chain management Computer Software</td>
-
-                        <td>23%</td>
-
-                        <td>24.51%</td>
-                    </tr>
-
-                    <tr>
-                        <td>Direct Tv</td>
-
-                        <td>23%</td>
-
-                        <td>24.51%</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
- 
-
-
-</div>  
-
-</ion-content>
+        </div>  
+    </ion-content>
+</ion-view>
