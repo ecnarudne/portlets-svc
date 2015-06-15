@@ -8,10 +8,10 @@
     </div>
     <div class="row text-center">
       
-      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="portlet in data">
+      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="sector in sectors">
         <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
             <div class="category-name">
-              <div class="h4" ng-bind="portlet.name"></div>
+              <div class="h4" ng-bind="sector.name"></div>
             </div>
             <div class="category-project-count">
               <div class="h4 bold" ><span ng-bind="portlet.total"></span> Portlets</div>
@@ -20,15 +20,15 @@
     </div>
   </div>
 </div>
+{{sectors[0].name}}
 <div class="row mpt-vprimary">
   <div class="container">
     <div class="col-xs-12">
       <div class="main clearfix">
         <form id="nl-form" class="nl-form">
           <select>
-            <option value="1" selected="">Everything</option>
-            <option ng-repeat="portlet in data"
-            ng-bind="portlet.name"></option>
+            <!-- <option value="1" selected="">Everything</option> -->
+            <option ng-repeat=" sector in sectors " value = "{{sector.name}}" >{{sector.name}}</option>
           </select> sorted by
           <select>
             <option value="1" selected="">popularity</option>
@@ -64,4 +64,3 @@
 </div>
 <!-- /main-->
 <div class="clearfix"></div>
-<script>var nlform = new NLForm( document.getElementById( 'nl-form' ) );</script>
