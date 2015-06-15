@@ -23,20 +23,28 @@ appController.controller(
           'name': 'google'
           'ticker': 'GOOGL'
         }
+        {
+          'name': 'IBM'
+          'ticker': 'IBM'
+        }
       ]
 
       $scope.stockWeightages = [
         {
           'name': 'Apple'
-          'weightage': 0
+          'weightage': ''
         }
         {
           'name': 'Infosys'
-          'weightage': 0
+          'weightage': ''
         }
         {
           'name': 'google'
-          'weightage': 0
+          'weightage': ''
+        }
+        {
+          'name': 'IBM'
+          'weightage': ''
         }
       ]
       $scope.available = 100
@@ -51,9 +59,11 @@ appController.controller(
             per = parseInt(per + parseInt(weightage))
             console.log "while iteration"+ per
             i++
+        
         $scope.available = 100 - per
         if 100 - per < 0
             alert "weightage must be 100 %"
+        $scope.stockWeightages[i].weightage = $scope.stockWeightages[i].weightage + '%'
 
 
       $scope.signUp = ->
