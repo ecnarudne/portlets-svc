@@ -1,16 +1,16 @@
 <ion-view view-title="Portfolio" name="portfolio-view" ng-controller="PortfolioCtrl">
   <ion-content class="portfolio-bg">
     <div class="row">
-      <div  style="margin-left:20px;" class="col-90 ">
-        <a id="add-portfolio" menu-toggle="left" href="#" class="ion-navicon pull-left"></a>
-        <a id="add-portfolio" href="#" class="ion-ios-plus-outline button pull-right"></a> 
-        <h4 style="margin-left:10px;" align="center" class='page-text'>Portfolio</h4>
+      <div   class="col-90  toggle-bar">
+        <a id="add-portfolio"  menu-toggle="left" href="#" class="ion-navicon pull-left menu-btn-padd"></a>
+        <a id="add-portfolio" align="center" style="min-width:0px;padding:0px;" href="#" class="ion-ios-plus-outline button pull-right"></a> 
+        <h4  align="center" class='page-text'>Portfolio</h4>
       </div>
     </div>
         <div class="container page-text">
           <h1 align="center">25.9%</h1>
-          <div ><center><h4 style="display:inline;padding-right:20px;">1D:0.56%</h4>
-          <h4 style="padding-left:20px;display:inline;">1Y:2.53%</h4></center></div>
+          <div ><center><h5 style="display:inline;padding-right:5px;font-family:sans-serif;">1D:0.56%</h5>
+          <h5 style="padding-left:5px;display:inline;font-family:sans-serif;">1Y:2.53%</h5></center></div>
          </div> 
         <div  style="margin-top:100px">
           <div>
@@ -24,14 +24,14 @@
                     <th>1-Year</th>
                   </tr>
                 </thead>
-                <tfoot>
+             <!--    <tfoot>
                   <tr>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td></td>
                   </tr>
-                </tfoot>
+                </tfoot> -->
                 <tbody style="color:white">
                   <tr ng-repeat= "tableItem in portfolio[0].tableItems">
                     <td><a style="color:#ffffff" href="#/app/portlet" ng-bind="tableItem.name"></a></td>
