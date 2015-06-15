@@ -11,6 +11,19 @@ angular.module('PageStockCtrl',['Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PageStockCtrl controller called')
+            new (TradingView.MediumWidget)(
+              'container_id': 'tv-medium-widget-fb788'
+              'symbols': [ [
+                'Apple'
+                'AAPL '
+              ] ]
+              'gridLineColor': '#E9E9EA'
+              'fontColor': '#83888D'
+              'underLineColor': '#dbeffb'
+              'trendLineColor': '#4bafe9'
+              'width': '100%'
+              'height': '400px'
+              'chartOnly': true)
             
             portletApi.getStockDetails(
                   before: ->

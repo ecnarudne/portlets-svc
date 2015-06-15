@@ -11,7 +11,7 @@ angular.module('PagePortletCtrl',['Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PagePortletCtrl controller called')
-            
+            plotGraph()
             portletApi.getPortletPageDetails(
                 {
                   before: ->
