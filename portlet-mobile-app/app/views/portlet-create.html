@@ -1,15 +1,17 @@
 <ion-view view-title="Portlet-create" name="Portlet-create" ng-controller="PortletCreateCtrl">
-  <ion-content class="portfolio-bg padding">
+  <ion-content class="portfolio-bg ">
     <div class="row">
-      <div class="col-90 toggle-bar">
+      <div  style="margin-left:20px;" class="col-90 toggle-bar ">
+        <a id="add-portfolio" menu-toggle="left" href="#" class="ion-navicon pull-left"></a>
         <a href="#/app/portlet-create2" class="pull-right"><h4>Next</h4></a> 
-        <h4 align="center" class="page-text">Create Portlet</h4>
+       <h4 align="center" class="page-text">Create Portlet</h4>
       </div>
-    </div>     
-    <row">
+    </div>  
+    <div class="padding">   
+    <row >
       <span style="color:#ffffff;" class="input-label col col-90">Portlet Name</span> 
       <input type="text" placeholder="Give your portlet a name" class="col col-30"/><span class="input-label col col-90" style="color:#ffffff;">Short Description</span>
       <textarea style="color:#ffffff;" placeholder="Tell us what your portlet is about" class="col col-30"></textarea>
-    </row>
+    </row></div>
   </ion-content>
 </ion-view>

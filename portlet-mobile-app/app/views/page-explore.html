@@ -1,18 +1,20 @@
 <ion-view view-title="Discover" name="discover-view" ng-controller="PageExploreCtrl">
   <ion-content >
-    <div class="portfolio-bg">
-       <div  class="row">
-        <div  style="margin-left:90px" class="col">
-          <a id="add-portfolio" href="#" class="ion-ios-plus-outline button pull-right"></a> 
-          <h4 align="center" class='page-text'>Discover</h4>
-        </div>
+    <div class="portfolio-bg myfont">
+    <div class="row">
+      <div style="margin-left:20px" class="col-90 toggle-bar ">
+        <a id="add-portfolio" menu-toggle="left" href="#" class="ion-navicon pull-left"></a>
+        <a id="add-portfolio" href="#" class="ion-ios-plus-outline button pull-right"></a> 
+        <h4 align="center" class='page-text'>Discover</h4>
       </div>
-      <div>
+     </div> 
+    <div>
         <div class="row " style="margin-left:1px;">
           <div class="col-xs-12">
             <h4 class="white-color">SECTORS</h4>
           </div>
-        </div>            
+        </div>
+        <center>            
         <div class="page-font text-center">
               <div  ng-repeat="sector in sectors"  class="category-container colwd col-xs-5 col-sm-2 col-md-2">
                 <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
@@ -23,11 +25,11 @@
                       <div class="h4 bold"> <span class="h4 bold"><span ng-bind="sector.total"></span> Portlets </span> </div>
                     </div></a></div>
               </div>
-        </div>
+        </div></center>
         
             <div  class="table-striped" >
             
-            <table  class="table white-color"   >
+            <table style="font-size:18px;" class="table white-color"   >
               <tr>
                 <td align="center"  >
                   <a class="white-color" href="#">Show All <span class="pull-right icon-right ion-chevron-right"></span> </a>

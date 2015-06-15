@@ -3213,11 +3213,14 @@ ol.list-comments .comment-item{
 /* !Discover Portlets Styles */
 /* ----------------------------------------------- */
 .category-container{
-  margin-bottom: 20px;
-  margin-left: 20px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  
   border: 1px solid #ffffff;
   border-radius: 5px;
-  padding-left: 10px;
+  padding-left: 25px;
+  padding-bottom: 10px;
+
 }
 
 .category-container>.category-link a{
@@ -3233,13 +3236,13 @@ ol.list-comments .comment-item{
   margin-top: -2px;
 }*/
 .category-container .category-name .h4{
-  font-size: 14px;
+  font-size: 18px;
 }
 .category-container .category-project-count{
-  padding-bottom: 10px
+  padding-bottom: 15px
 }
 .category-container .category-project-count .h4{  
-  margin: 10px;
+  margin: 20px;
   font-size: 14px
 }
 @media(min-width: 768px){
@@ -3247,7 +3250,7 @@ ol.list-comments .comment-item{
     font-size: 20px;
   }
   .category-container .category-project-count{
-    padding-bottom: 10px
+    padding-bottom: 15px
   }
   .category-container .category-project-count .h4{
     margin: 0px;
