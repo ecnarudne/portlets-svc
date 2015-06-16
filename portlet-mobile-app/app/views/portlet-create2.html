@@ -24,8 +24,9 @@
 
      <div>
       
-     <ion-list class="portfolio-bg white-color">
+     <ion-list class="portfolio-bg white-color" ng-init="index=1">
         <ion-item  ng-repeat="stockWeightage in stockWeightages"  style="border:1px;"  class="portfolio-bg transparent " >
+        <div ng-if=$even ></div>
         <span><h2 style="display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2>
         <input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></span>
 
