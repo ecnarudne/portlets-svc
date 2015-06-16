@@ -1,6 +1,9 @@
-$(function() {
+function createTable()
+{
+    console.log('create table function is called.');
+    $(function() {
     $('#table-1').dataTable( {
-        "ajax": './js/demos/table_data.json',
+        "ajax": 'assets/javascripts/table_data.json',
         "columns": [
             { "data": "COMPANY",        "title": "COMPANY"},
             { "data": "TICKER",         "title": "TICKER" },
@@ -37,3 +40,4 @@ $(function() {
     })
 
 })
+}

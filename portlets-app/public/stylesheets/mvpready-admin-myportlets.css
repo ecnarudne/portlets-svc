@@ -3152,30 +3152,19 @@ span.mpt-v5-text{ color: #6A2727;}
 .category-container{
   margin-bottom: 20px;
 }
-.category-container>.category-link {
-  border: none;
-  border-radius: 5px;
-  background: #ffffff;
-  color: #888888;
-}
-.category-container>.category-link:hover {
-  border: none;
-}
 .category-container>.category-link a{
   display: block;
-  color: #888888;
+  color: #ffffff;
   overflow: hidden;
   padding: 20px 10px;
 }
 .category-container>.category-link a:hover{
-  background-color: #E96D65;
+  border: 1px solid #ffffff;
   border-radius: 5px;
   color: #ffffff;
-}
-.category-container .category-name{
+  margin-top: -2px;
 }
 .category-container .category-name .h4{
-  min-height: 40px;
   font-size: 14px;
 }
 .category-container .category-project-count{
@@ -3186,8 +3175,6 @@ span.mpt-v5-text{ color: #6A2727;}
   font-size: 14px
 }
 @media(min-width: 768px){
-  .category-container .category-name{
-  }
   .category-container .category-name .h4{
     font-size: 20px;
   }
@@ -3198,7 +3185,6 @@ span.mpt-v5-text{ color: #6A2727;}
     margin: 0px;
     font-size: 18px;
   } 
-}
 /* !Flot Chart Style */
 /* ----------------------------------------------- */
 .flot-tick-label{
