@@ -2,7 +2,7 @@
   <ion-content class="portfolio-bg">
   	<div class="row">
       <div align="center" class="col-90 toggle-bar">
-      <a id="add-portfolio"  href="#/app/portlet-create" class="ion-ios-arrow-back pull-left menu-btn-padd"></a>
+      <a id="add-portfolio"  href="#/app/portlet-create" class="pull-left menu-btn-padd"><h4>Back</h4></a>
       <a href="#" class="pull-right" ng-click="checkStocks() "><h4>Create</h4></a> 
       <h4 align="center" class='page-text'>Create Portlet</h4>
       </div>
@@ -24,7 +24,7 @@
 
      <div>
       
-     <ion-list class="portfolio-bg white-color"  >
+     <ion-list class="portfolio-bg white-color">
         <ion-item  ng-repeat="stockWeightage in stockWeightages"  style="border:1px;"  class="portfolio-bg transparent " >
         <span><h2 style="display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2>
         <input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></span>
