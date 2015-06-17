@@ -1,21 +1,32 @@
-
-<ion-side-menus enable-menu-with-back-views="false">
-  <ion-side-menu-content>
-    
-    </ion-nav-bar>
-    <ion-nav-view name="menuContent"></ion-nav-view>
-  </ion-side-menu-content>
-  <ion-side-menu side="left">
-    <ion-header-bar class="bar-stable">
-      <h1 class="title">Finlytics</h1>
-    </ion-header-bar>
-    <ion-content>
-      <ion-list>
-        <ion-item menu-close="" href="#/app/portlet-create">Create Portlet</ion-item>
-        <ion-item menu-close="" href="#/app/page-explore">Discover</ion-item>
-        <ion-item menu-close="" href="#/app/portfolio">Portfolio</ion-item>
-        <ion-item menu-close="" href="#/app/portlet">Settings</ion-item>
-      </ion-list>
-    </ion-content>
-  </ion-side-menu>
+<ion-side-menus enable-menu-with-back-views="false" class="sidemenu-bg myfont white-color">
+   <ion-side-menu-content >
+      </ion-nav-bar>
+      <ion-nav-view name="menuContent"></ion-nav-view>
+   </ion-side-menu-content>
+   <ion-side-menu side="left" class="sidemenu-bg">
+      <ion-header-bar id="sidemenu-search" class="sidemenu-bg"  >
+          <!-- <div class="padding">
+          <label class="item item-input search " >
+              <i class="icon ion-search placeholder-icon"></i>
+              <input style="color: grey;  font-weight: 500; padding-bottom: 2px; " ng-model="search" type="search" placeholder="Search">
+          </label>
+        </div> -->
+        <div class="row">
+          <div style="margin-left:5%;" class="col">
+            <label  class="item item-input  search sid-search " >
+              <i class="icon ion-search "></i>
+              <input align="center"style="color: white;  font-weight: 500; padding-bottom: 2px; " ng-model="search" type="search" placeholder="Search">
+          </label>
+          </div>
+        </div>
+      </ion-header-bar  >
+      <ion-content class="sidemenu-bg" >
+         <ion-list>
+            <ion-item menu-close=""  id="sd" class=" sidemenu-bg "     style="font-color:white !important;" href="#/app/portlet-create">Create Portlet</ion-item>
+            <ion-item menu-close="" id="sd"  class="sidemenu-bg " href="#/app/page-explore">Discover</ion-item>
+            <ion-item menu-close=""  id="sd" class="sidemenu-bg " href="#/app/portfolio">Portfolio</ion-item>
+            <ion-item menu-close="" id="sd" class="sidemenu-bg "  href="#/app/portlet">Settings</ion-item>
+         </ion-list>
+      </ion-content>
+   </ion-side-menu>
 </ion-side-menus>

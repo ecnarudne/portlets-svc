@@ -7,7 +7,48 @@
 @seventypx:70px;
 @x:150px;
 
+.sidemenu-bg{
+	filter:progid:DXImageTransform.Microsoft.gradient(GradientType=1,startColorstr=#5188b1, endColorstr=#ae676d);
+	background-image:-moz-linear-gradient(left, #5188b1 26%, #ae676d 92%);
+	background-image:-webkit-linear-gradient(left, #5188b1 26%, #ae676d 92%);
+	background-image:-ms-linear-gradient(left, #5188b1 26%, #ae676d 92%);
+	background-image:linear-gradient(left, #5188b1 26%, #ae676d 92%);
+	background-image:-o-linear-gradient(left, #5188b1 26%, #ae676d 92%);
+	background-image:-webkit-gradient(linear, left bottom, right bottom, color-stop(26%,#5188b1), color-stop(92%,#ae676d));
+	padding:0px;
+	background-repeat:inherit !important;
 
+
+}
+#sidemenu-search{
+	input[type="text"]{
+			background-color: none
+			color: white;
+			padding: 10px;
+			border:1px;
+		}	
+		::-webkit-input-placeholder { color:white }
+	::-moz-placeholder { color:white } /* firefox 19+ */
+	:-ms-input-placeholder { color:white} /* ie */
+	input:-moz-placeholder { color:white }
+
+
+}
+
+.sid-search{
+	background-color:transparent  !important;
+	color :white !important;
+}
+
+#sd{
+	padding:8px;
+	color:@white;
+	border-style:none;
+	text-shadow:none;
+	margin:0px !important;
+
+
+}
 .plus-icon{
 	position: relative;
     top: 30px; 
@@ -71,7 +112,7 @@
 .text-inline-padding{
 	display:inline;
 	padding:@tenpx;
-}1
+}
 
 .text-alignment{
 	text-align: justify ; 
