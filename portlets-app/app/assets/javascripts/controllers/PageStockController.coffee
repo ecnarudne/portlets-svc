@@ -1,7 +1,7 @@
 'use strict'
-angular.module('PortfolioCtrl',['Api'])
+angular.module('PageStockCtrl',['Api'])
 .controller(
-    'PortfolioCtrl'
+    'PageStockCtrl'
     [
         "$scope"
         "$log"
@@ -10,29 +10,32 @@ angular.module('PortfolioCtrl',['Api'])
         "portletApi"
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
-            $log.debug('PortfolioCtrl controller called')
-            plotGraph()
-            portletApi.getPortfolioDetails(
-                {
+            $log.debug('PageStockCtrl controller called')
+            new (TradingView.MediumWidget)(
+              'container_id': 'tv-medium-widget-fb788'
+              'symbols': [ [
+                'Apple'
+                'AAPL '
+              ] ]
+              'gridLineColor': '#E9E9EA'
+              'fontColor': '#83888D'
+              'underLineColor': '#dbeffb'
+              'trendLineColor': '#4bafe9'
+              'width': '100%'
+              'height': '400px'
+              'chartOnly': true)
+            
+            portletApi.getStockDetails(
                   before: ->
                     $log.debug('Fetching table data.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
-                    $scope.data = data[0]
-                    $scope.portfolio = $scope.data.portfolio 
-                    $log.debug 'table Item:     ' + JSON.stringify(data.tableItems)
-                    $scope.arrow = undefined
-                    dailyReturn = parseFloat $scope.portfolio.dailyReturn
-                    if dailyReturn < 0
-                        $scope.arrow = 'fa-sort-down'
-                    else
-                        $scope.arrow = 'fa-sort-up'
-
+                    $scope.stock = data[0].stock
+                    $scope.stockStat = data[0].stockStat
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  table data')                   
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete of getPortfolioDetails()')
-                }
             )
             
     ]

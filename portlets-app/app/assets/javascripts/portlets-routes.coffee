@@ -32,7 +32,11 @@ do ->
         
         templateUrl: '/assets/angular/ui/page-portlet.html'
 
-        controller: 'PagePortletCtrl').when('/404',
+        controller: 'PagePortletCtrl').when('/page-stock',
+        
+        templateUrl: '/assets/angular/ui/page-stock.html'
+
+        controller: 'PageStockCtrl').when('/404',
         
         templateUrl: '/assets/angular/ui/error-400.html').when('/500',
         

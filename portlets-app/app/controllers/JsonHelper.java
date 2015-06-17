@@ -11,6 +11,7 @@ import service.JsonTester;
 public class JsonHelper extends Controller{
 	 	public static Result getPortfoliodetail(){
 	    	JsonNode json=	JsonTester.getJsonObject("public/jsonFiles/portfolio.json");
+	    	
 	    	return ok(json);
 	    }
 	 	
@@ -21,6 +22,26 @@ public class JsonHelper extends Controller{
 	    
 	    public static Result getPortletPageDetails(){    	    		    	
 	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/pagePortlet.json");    	
+	    	return ok(portletInfoData);
+	    }
+	    
+	    
+	    public static Result getStocks(){
+	    	System.out.println("getstock method is called....................");
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/stocks.json");    	
+	    	System.out.println(portletInfoData);
+	    	return ok(portletInfoData);
+	    }
+	    public static Result getStockExchange(){
+	    	System.out.println("getstockExchange method is called....................");
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/stockExchange.json");    	
+	    	System.out.println(portletInfoData);
+	    	return ok(portletInfoData);
+	    }
+	    public static Result getStockDetails(){
+	    	System.out.println("getstockDetails method is called....................");
+	    	JsonNode portletInfoData = JsonTester.getJsonObject("public/jsonFiles/stock.json");    	
+	    	System.out.println(portletInfoData);
 	    	return ok(portletInfoData);
 	    }
 }

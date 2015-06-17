@@ -4,7 +4,7 @@
             <div class="row">
               <div class="userbox">
                 <div class="col-xs-6 col-sm-2">
-                  <div class="profile-avatar"><img src="/assets/images/avatars/avatar-2-lg.jpg" alt="Profile Image" class="profile-avatar-img img-rounded"></div>
+                  <div class="profile-avatar"><img src="{{data.user.imgURL}}" alt="Profile Image" class="profile-avatar-img img-rounded"></div>
                   <!-- /.profile-avatar-->
                 </div>
                 <!-- /.col-->
@@ -45,16 +45,16 @@
                   <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
                     <ul class="list-inline numbers">
                       <li>
-                        <h2><span ng-bind="data.portlet.portfolioValue"></span><small>Portfolio Value</small></h2>
+                        <h2><span ng-bind="data.portfolio.portfolioValue"></span><small>Portfolio Value</small></h2>
                       </li>
-                      <li class="icon"><i id="daily_return_icon_fund" class="fa fa-sort-up"></i>
+                      <li class="icon"><i id="daily_return_icon_fund" class="fa {{arrow}}"></i>
                         <h2>
-                          <div id="daily_performance"> <span ng-bind="data.portlet.dailyReturn"></span>%</div><small>Daily Return</small>
+                          <div id="daily_performance"> <span ng-bind="data.portfolio.dailyReturn"></span>%</div><small>Daily Return</small>
                         </h2>
                       </li>
                       <li>
                         <h2>
-                          <div id="yearly_performance"><span ng-bind="data.portlet.yearlyReturn"></span>%</div><small>1Y Return</small>
+                          <div id="yearly_performance"><span ng-bind="data.portfolio.yearlyReturn"></span>%</div><small>1Y Return</small>
                         </h2>
                       </li>
                     </ul>
@@ -72,7 +72,7 @@
                     <label id="lastweekninetynine" class="btn btn-primary">
                       <input id="lastweekninetynine" type="radio" name="options" autocomplete="off">1M
                     </label>
-                    <label id="latenineties" class="btn btn-primary">
+                    <label id="latenineties" class="btn btn-primary active">
                       <input id="latenineties" type="radio" name="options" autocomplete="off">3M
                     </label>
                     <label id="ninetyninequarters" class="btn btn-primary">
@@ -81,7 +81,7 @@
                     <label id="oneyear" class="btn btn-primary">
                       <input id="ninetynine" type="radio" name="options" autocomplete="off" checked="">1Y
                     </label>
-                    <label id="whole" class="btn btn-primary active">
+                    <label id="whole" class="btn btn-primary">
                       <input id="whole" type="radio" name="options" autocomplete="off">3Y
                     </label>
                   </div>
@@ -99,11 +99,11 @@
             <div class="portfolio-details top-20">
               <ul class="list-inline">
                 <li><a href="javascript:;">
-                    <h4>Portfolio Portlets <span class="badge badge-primary demo-element">7</span></h4></a></li>
+                    <h4>Portfolio Portlets <span class="badge badge-primary demo-element">{{portfolio.portlets}}</span></h4></a></li>
                 <li><a href="javascript:;">
-                    <h4>Followed Portlets <span class="badge badge-default demo-element">3</span></h4></a></li>
+                    <h4>Followed Portlets <span class="badge badge-default demo-element">{{portfolio.followedPortlets}}</span></h4></a></li>
                 <li><a href="javascript:;">
-                    <h4>Created Portlets <span class="badge badge-default demo-element">5</span></h4></a></li>
+                    <h4>Created Portlets <span class="badge badge-default demo-element">{{portfolio.createdPortlets}}</span></h4></a></li>
               </ul>
             </div>
             <div class="row">
@@ -132,8 +132,8 @@
                       </tfoot>
                       <tbody>
                         <tr ng-repeat="item in data.tableItems">
-                          <td><a href="/page-portlet.html">{{item.name}} </a></td>
-                          <td class="mpt-v3"></td>
+                          <td><a href="#/page-portlet">{{item.name}} </a></td>
+                          <td class="{{item.volatility}}"></td>
                           <td>{{item.totalReturn}}% </td>
                           <td id="tblrow-price">{{item.dailyReturn}}%</td>
                           <td id="tblrow-gain" class="hide_column_fd">{{item.oneYearReturn}}%</td>
