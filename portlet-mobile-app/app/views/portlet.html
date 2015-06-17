@@ -1,13 +1,13 @@
 <ion-view view-title="Portlet" name="portlet-view" ng-controller="PortletCtrl">
-    <ion-content class="portlet-bg">
+    <ion-content class="portlet-bg myfont ">
     <div class="row">
-      <div  style="margin-left:20px;" class="col-90 ">
-        <a id="add-portfolio" menu-toggle="left" href="#" class="ion-navicon pull-left"></a>
+      <div class="col-90 toggle-bar">
+        <a id="add-portfolio"   menu-toggle="left" href="#" class="ion-navicon pull-left menu-btn-padd"></a>
         <a id="add-portfolio"  href="#" class="pull-right ion-ios-upload-outline "></a> 
        <h4 align="center" class="page-text" ng-bind="portlet.name"></h4>
       </div>
     </div> 
-        <div class="content myfont {{portlet.volatility}}">
+        <div class="content  {{portlet.volatility}}">
             <div style="padding:0px;" class="jumbotron mpt-pt-head  portlet-bg ">
                 <div class="container">
                     <div class="row">
@@ -48,7 +48,7 @@
                             <h3 >Portfolio Perfomance (%)</h3>
                          
                               <div class="panel-body">
-                                <div id="portlet-graph" class="chart-holder-300" style="height:300px;width:900px"></div>
+                                <div id="portlet-graph" style="height:300px;width:100%"></div>
                               </div>
                             <div  class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
                                 <div class="btn-group btn-group-justified " data-toggle=
@@ -83,7 +83,8 @@
                     </div>
                 </div><!-- /.container-->
             </div>
-            <div class="container" id="main">
+            </div>  
+            <div class="container" style="background-color:white;"  id="main">
                 <div class="row">
                     <div class="col-xs-8 col-sm-10 col-md-10">
                         <h4>DESCRIPTION</h4>
@@ -124,6 +125,10 @@
                     </table>
                 </div>
             </div>
-        </div>  
+        
     </ion-content>
+    <ion-footer-bar align="center" style="border-top:1px solid #858585;padding:0px;"  class="bar myfont    ">
+        <a href="#" style="width:50%;padding-top:15px; border-right: 1px solid #858585;color: #858585;">Follow</a>
+        <a align="center" style="color:#858585;width:50%;padding-top:15px;" href="">Copy</a>
+    </ion-footer-bar>
 </ion-view>

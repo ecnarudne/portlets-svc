@@ -1,18 +1,21 @@
 
 <ion-view view-title="Portlet-create" name="Portlet-create" ng-controller="PortletCreateCtrl">
-  <ion-content class="portfolio-bg padding">
-  	<div class="row">
-  		<div class="col-90 toggle-bar">
-      <a id="add-portfolio" style="margin-left:-30px;" href="#/app/portlet-create" class="ion-ios-arrow-back pull-left"></a>
-  		<a href="#/app/portlet-create2" class="pull-right"><h4> Done</h4></a>	
-  		<h4 align="center" class="page-text">Add Stocks</h4>
-  		</div>
-  	</div>
-  
-  	<label class="item item-input search" >
-  		  <i class="icon ion-search placeholder-icon"></i>
-  		  <input style="color: grey" ng-model="search" type="search" placeholder="Search">
-    </label>
+  <ion-content class="portfolio-bg ">
+    	<div style="background: rgba(255,255,255,0.15);">
+        <div class="row">
+      		<div class="col-90 toggle-bar">
+          <a id="add-portfolio"  href="#/app/portlet-create" class="ion-ios-arrow-back pull-left menu-btn-padd"></a>
+      		<a href="#/app/portlet-create2" class="pull-right"><h4> Done</h4></a>	
+      		<h4 align="center" class="page-text">Add Stocks</h4>
+      		</div>
+      	</div>
+        <div class="padding">
+        	<label class="item item-input search " >
+        		  <i class="icon ion-search placeholder-icon"></i>
+        		  <input style="color: grey;  font-weight: 500; padding-bottom: 2px; " ng-model="search" type="search" placeholder="Search">
+          </label>
+        </div>
+      </div>
     <div class="table-striped">
         <table class="table table-content" style="margin-top:20px">
             <tr ng-repeat="stock in stocks  | filter : search">
