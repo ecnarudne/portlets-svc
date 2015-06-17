@@ -24,12 +24,17 @@
 
      <div>
       
-     <ion-list class="portfolio-bg white-color" ng-init="index=1">
-        <ion-item  ng-repeat="stockWeightage in stockWeightages"  style="border:1px;"  class="portfolio-bg transparent " >
-        <div ng-if=$even ></div>
+     <ion-list  class="portfolio-bg white-color" ng-init="index=1">
+        <ion-item  ng-repeat="stockWeightage in stockWeightages"  style="border:1px;font-size:18px;"  class="portfolio-bg transparent " >
+       <!--  <div ng-if=$even ></div>
         <span><h2 style="display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2>
-        <input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></span>
-
+        <div><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text">%</div></span>
+ -->
+        <div style="margin-left:1px;" class="row">
+            <div class="col-50"><h2 style="font-size:20px;display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2></div>
+            <div class ="col-30    "><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></div>
+            <div style="margin-left:-20px;color:white;padding-top:10px;"><h2>%</h2></div>
+        </div>
         <ion-option-button class="button-assertive button"ng-click="showDelete(stockWeightage)">Delete</ion-option-button>
         </ion-item>
       </ion-list>
