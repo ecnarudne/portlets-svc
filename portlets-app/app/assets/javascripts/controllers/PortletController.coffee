@@ -9,7 +9,9 @@ angular.module('PortletCtrl',['Api'])
         "$cookies"
         "portletApi"
         "$location"
-        ($scope,$log,$http,$cookies,portletApi,$location)->
+        "$document"
+        "$window"
+        ($scope,$log,$http,$cookies,portletApi,$location,$document,$window)->
             $log.debug('PortletCtrl controller called')
             #retrive cookies
             cookieVal = $cookies.cookieVal
@@ -80,6 +82,8 @@ angular.module('PortletCtrl',['Api'])
                             console.log "stock fetched succesfully."
                             $scope.stocks = data
                             console.log JSON.stringify($scope.stocks)
+                            $scope.isDisabled = true
+
                         error: (data, status, headers, config) ->
                             $log.error('Something went wrong! ' + data)
                         forbidden: (data, status, headers, config) ->
