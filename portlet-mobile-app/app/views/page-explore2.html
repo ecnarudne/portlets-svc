@@ -1,0 +1,28 @@
+<ion-view view-title="Discover" name="discover-view" ng-controller="PageExploreCtrl">
+  	<ion-content class = "portfolio-bg">
+	  	<div class="row mpt-vprimary">
+	  		<div class="container">
+	    		<div class="col-xs-12">
+	      			<div class="main clearfix">
+	        			<form id="nl-form" class="nl-form">
+	          				<select>
+	            				<option value="1" selected="">Everything</option>
+	            				<option ng-repeat="portlet in data" ng-bind="portlet.name"></option>
+	          				</select> sorted by
+	          				<select>
+	            				<option value="1" selected="">popularity</option>
+	            				<option value="2">returns</option>
+	            				<option value="3">ratings</option>
+			            		<option value="4">creation date</option>
+			          		</select>
+			          		<div class="nl-submit-wrap">
+			            		<button type="submit" class="nl-submit">Filter</button>
+			          		</div>
+			          		<div class="nl-overlay"></div>
+			        	</form>
+			      	</div>
+			    </div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
