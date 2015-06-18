@@ -27,8 +27,18 @@
       <div class="main clearfix">
         <form id="nl-form" class="nl-form">
           <select>
-            <option value="1" selected="">Everything</option> 
-            <option ng-repeat=" sector in sectors " value = "{{sector.name}}" >{{sector.name}}</option>
+            <option value="1" selected="">Everything</option>
+            <option value="2">Basic Material</option>
+            <option value="3">Energy</option>
+            <option value="4">Financial</option>
+            <option value="5">Healthcare</option>
+            <option value="6">Industrials</option>
+            <option value="7">Real Estate</option>
+            <option value="8">Technology</option>
+            <option value="9">Telecommunication</option>
+            <option value="10">Utilities</option>
+            <option value="11">Consumer         </option> 
+            <!-- <option ng-repeat=" sector in sectors " value = "{{}}" >{{sector.name}}</option> -->
           </select> sorted by
           <select>
             <option value="1" selected="">popularity</option>
@@ -48,7 +58,14 @@
 <div id="main" class="container">
   <div class="row">
     <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets">
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><span><span class="text-capitalize mpt-v3-text" ng-bind="portlet.volatility"></span style='color:#000000'> Volatility</span><span class="mpt-returns" ng-bind="portlet.returns"></span><span></span> <span class="label label-skeleton">Followers <span ng-bind="portlet.followers"></span> </span></a>
+      <div class="panel panel-default mpt-portlet">
+        <a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}">
+          <span class="{{portlet.volatility}}">
+            <span class="text-capitalize " ng-bind="portlet.volatility"></span>   Volatility 
+          </span> 
+          <span class="mpt-returns"><span ng-bind="portlet.returns"></span>%</span>
+          <span class="label label-skeleton">Followers <span ng-bind="portlet.followers"></span> </span>
+        </a>
         <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.imageURL}}" class="img-circle">
         <strong ng-bind="portlet.creator"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastUpdated"></span></div>
         <div class="panel-body mpt-portlet-body">

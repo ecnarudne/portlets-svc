@@ -32,6 +32,36 @@
 							"imageURL" : "/assets/images/avatars/avatar-2-lg.jpg",
 							"portletName" : "Bear International Market" ,
 							"desc" : "Investors expecting a selloff in markets outside the US may find this motif worth a closer look."
+						},
+						{
+							"volatility" : "low",
+							"returns" : 9.6,
+							"followers" : 252,
+							"lastUpdated" : "17.03.92",
+							"creator" : "Ramdas",
+							"imageURL" : "/assets/images/avatars/avatar-2-lg.jpg",
+							"portletName" : "Bear International Market" ,
+							"desc" : "Investors expecting a selloff in markets outside the US may find this motif worth a closer look."
+						},
+						{
+							"volatility" : "moderate",
+							"returns" : 9.6,
+							"followers" : 252,
+							"lastUpdated" : "17.03.92",
+							"creator" : "Ramdas",
+							"imageURL" : "/assets/images/avatars/avatar-2-lg.jpg",
+							"portletName" : "Bear International Market" ,
+							"desc" : "Investors expecting a selloff in markets outside the US may find this motif worth a closer look."
+						},
+						{
+							"volatility" : "very-high",
+							"returns" : 9.6,
+							"followers" : 252,
+							"lastUpdated" : "17.03.92",
+							"creator" : "Ramdas",
+							"imageURL" : "/assets/images/avatars/avatar-2-lg.jpg",
+							"portletName" : "Bear International Market" ,
+							"desc" : "Investors expecting a selloff in markets outside the US may find this motif worth a closer look."
 						}
 
 

@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://localhost:9000'
+      domain = 'http://192.168.1.112:9000'
       
       # We need to set cookie after login. Hardcoaded cookie   
       

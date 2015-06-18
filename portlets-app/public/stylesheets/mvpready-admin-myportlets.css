@@ -3156,7 +3156,7 @@ span.mpt-v5-text{ color: #6A2727;}
   display: block;
   color: #ffffff;
   overflow: hidden;
-  padding: 20px 10px;
+  padding: 5px 5px;
 }
 .category-container>.category-link a:hover{
   border: 1px solid #ffffff;
@@ -3191,4 +3191,71 @@ span.mpt-v5-text{ color: #6A2727;}
   color: #ffffff;
   font-size: 1.2em;
   opacity: 0.5;
+}
+/* !Landing Page */
+/* ----------------------------------------------- */
+#section-two, #section-three, #section-four {
+}
+#v1-hero.jumbotron {margin-bottom: 0px;}
+#v1-hero.jumbotron p, #v1-hero.jumbotron h1, #v1-hero.jumbotron h2, #v1-hero.jumbotron h3{ 
+  text-align: center;
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+}
+#v1-hero.jumbotron h1 {
+  margin-bottom: .5em;
+}
+#v1-hero {
+  background: rgba(47,168,236,0.80); /* Old browsers */
+  background: -moz-linear-gradient(left,  rgba(47,168,236,0.80) 0%, rgba(47,168,236,0.80) 20%, rgba(249,137,112,0.80) 80%, rgba(234,86,86,0.80) 100%), url(/assets/images/spark-bg.jpg); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(47,168,236,0.80)), color-stop(20%,rgba(47,168,236,0.80)), color-stop(80%,rgba(249,137,112,0.80)), color-stop(100%,rgba(234,86,86,0.80))), url(/assets/images/spark-bg.jpg); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left,  rgba(47,168,236,0.80) 0%,rgba(47,168,236,0.80) 20%,rgba(249,137,112,0.80) 80%,rgba(234,86,86,0.80) 100%), url(/assets/images/spark-bg.jpg); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left,  rgba(47,168,236,0.80) 0%,rgba(47,168,236,0.80) 20%,rgba(249,137,112,0.80) 80%,rgba(234,86,86,0.80) 100%), url(/assets/images/spark-bg.jpg); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left,  rgba(47,168,236,0.80) 0%,rgba(47,168,236,0.80) 20%,rgba(249,137,112,0.80) 80%,rgba(234,86,86,0.80) 100%), url(/assets/images/spark-bg.jpg); /* IE10+ */
+  background: linear-gradient(to right,  rgba(47,168,236,0.80) 0%,rgba(47,168,236,0.80) 20%,rgba(249,137,112,0.80) 80%,rgba(234,86,86,0.70) 100%), url(/assets/images/spark-bg.jpg); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d85c4', endColorstr='#ea5656',GradientType=1 ); /* IE6-9 */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; 
+}
+#landing-hero .inside-hero{
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+#section-two{
+  background-color: #e96d65;
+  min-height: 254px;
+}
+#carousel-quotes{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+#section-two .carousel-caption{
+    color:#ffffff;
+    text-shadow: none;
+    position:static;
+}
+#carousel-quotes h2{
+  font-size: 20px;
+}
+.sign-up button{
+  font-size: 16px;
+  border: 1px solid #FFFFFF;
+  color: #ffffff;
+  background-color: rgba(255,255,255,0.15 );
+}
+.sign-up button a {
+  color: #ffffff;
+}
+@media (min-width: 768px){
+  #landing-hero .inside-hero{
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+  #section-two{
+    min-height: 230px;
+  }
+  #carousel-quotes h2{
+    font-size: 26px;
+  }
 }
