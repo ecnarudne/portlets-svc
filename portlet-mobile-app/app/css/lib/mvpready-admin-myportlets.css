@@ -59,6 +59,8 @@ a:hover,a:focus,a:active{
 }
 #main{
   margin-top: 20px;
+  background-color: white;
+  color:black;
 }
 .mpt-myportlets {
   font-family: "mpt";

@@ -9,47 +9,36 @@
     </div>
       <div class="row">
         <div align="center" class="col-xs-12 col-md-12">
-  		      <a id="add-stock" href="#/app/portlet-create3" class="ion-ios-plus-outline button"> Add Stocks</a>
+  		      <a id="add-stock" href="#/app/portlet-create3" class="ion-ios-plus-outline button"></a>
+            <a id="add-stock" style="margin-left:-20px;font-size:16px;" href="#/app/portlet-create3" class="button">Add Stocks</a>
         </div>
       </div>
-  			<table class="table" >
-          <tbody class = 'table-content'>
-            <tr>
-            <td>Stocks</td>
-            <td >Weightage</td>
-            <td></td>
-            </tr>
-        </tbody>
-      </table>
+  			
+      <div class="row" >
+        <h5 style="margin-left:4%;display:inline;">Stocks</h5>
+        <h5 style="margin-left:48%;diplay:inline">Weightage</h5>
+      </div>
+      <hr style="margin:0px;">    
 
      <div>
       
      <ion-list  class="portfolio-bg white-color" ng-init="index=1">
-        <ion-item  ng-repeat="stockWeightage in stockWeightages"  style="border:1px;font-size:18px;"  class="portfolio-bg transparent " >
-       <!--  <div ng-if=$even ></div>
-        <span><h2 style="display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2>
-        <div><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text">%</div></span>
- -->
-        <div style="margin-left:1px;" class="row">
-            <div class="col-50"><h2 style="font-size:20px;display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2></div>
-            <div class ="col-30    "><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></div>
-            <div style="margin-left:-20px;color:white;padding-top:10px;"><h2>%</h2></div>
+        <ion-item  ng-repeat="stockWeightage in stockWeightages"  style="border:1px;font-size:18px;"  class="portfolio-bg transparent list-padd" >
+        <div  class="row">
+            <div class="col-xs-8"><h2 style="font-size:20px;display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2></div>
+            <div class="col-xs-4"><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></div>
+            <div style="color:white;padding-top:10px;margin-left:-50px"><h2>%</h2></div>
+            <div class="col-xs-2"><a href="#" id="add-stock" class="ion-ios-minus-outline button"></a></div>
         </div>
-        <ion-option-button class="button-assertive button"ng-click="showDelete(stockWeightage)">Delete</ion-option-button>
+        <ion-option-button  class="button-assertive button"ng-click="showDelete(stockWeightage)">Delete</ion-option-button>   
         </ion-item>
       </ion-list>
       </div> 
-      
-
-
-           <!--  <tr ng-repeat="stockWeightage in stockWeightages" style="vertical-align:center; background: transpirent; border: 0px">
-              <td style="font-size:20px;font-weight:medium" ng-bind="stockWeightage.name"></td>
-              <td><input  size='5' style ="  text-align:right ; font-size: 18px; line-height: 20px;border: 1px solid #ffffff;border-radius: 5px;background: transparent;"ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text">
-              </td>
-              <td><button ng-click="showDelete(stockWeightage)" type="button" class="ion-ios-minus-outline button" style="font-size: 25px;background: transparent;color:#ffffff; border: 0px;display:inline;"></button> <button ng-show='delete'  class ="button button-assertive">delete</button></td>
-            </tr>  -->
-        
-    <div align="center" >
-      <label class="page-text">Available weightage :<span ng-bind="available"></span>%</label> 
-    </div>
   </ion-content>
+  <ion-footer-bar style="background-repeat:repeat;background-size:100%;border-top:1px solid white;" class="portfolio-bg">
+    <div class="row">
+        <div class="col-xs-7 col-md-10" style="margin:0px;"><h4  style="margin:0px;">Available Weightage:</h4></div>
+        <div class="col-xs-5 col-md-5"><h4 style="margin:0px;">{{available}}%</h4></div>
+    </div>  
+  </ion-footer-bar>
+</ion-view>
