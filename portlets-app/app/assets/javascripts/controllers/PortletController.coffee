@@ -82,14 +82,26 @@ angular.module('PortletCtrl',['Api'])
                             console.log "stock fetched succesfully."
                             $scope.stocks = data
                             console.log JSON.stringify($scope.stocks)
-                            $scope.isDisabled = true
+                            ###$scope.isDisabled = true###
 
                         error: (data, status, headers, config) ->
                             $log.error('Something went wrong! ' + data)
                         forbidden: (data, status, headers, config) ->
                             $log.error('Got error while Authentication Response: ' + data)
                     )
+            $scope.selectedStocks =  []
+            $scope.isShown = false
+            
+  
+            $scope.addStock = (stock)->
+                $scope.selectedStocks.push stock
+                console.log $scope.selectedStocks
 
+            $scope.showTable = (searchVal)->
+                if searchVal.val == '' 
+                    $scope.isShown = false
+                else
+                    $scope.isShown = true
     ]
 
 )
