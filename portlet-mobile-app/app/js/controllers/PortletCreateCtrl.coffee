@@ -29,24 +29,31 @@ appController.controller(
         }
       ]
 
+
       $scope.stockWeightages = [
         {
           'name': 'Apple'
           'weightage': ''
+          'exchange':'nasdaq'
         }
         {
           'name': 'Infosys'
           'weightage': ''
+          'exchange':'nyse'
         }
         {
           'name': 'google'
           'weightage': ''
+          'exchange':'nyse'
         }
         {
           'name': 'IBM'
           'weightage': ''
+          'exchange':'sse'
         }
       ]
+
+
       $scope.available = 100
       $scope.getAvailable = ->
         i = 0
