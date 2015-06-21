@@ -19,7 +19,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 			br = new BufferedReader(new FileReader(filepath));
 			String line;
 			while ((line = br.readLine()) != null) {
-				//symbol,date,open,high,low,close,volume[,openinterest]
+				//CSV Columns Assumed: symbol,date,open,high,low,close,volume[,openinterest]
 				String[] split = line.split(CSV_SPLIT_BY);
 				Logger.debug(
 						"-symbol=" + split[0] + 

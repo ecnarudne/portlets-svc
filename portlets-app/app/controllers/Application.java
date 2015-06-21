@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 
+import models.Category;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
@@ -51,6 +52,28 @@ public class Application extends Controller {
     	return ok(Json.toJson(list));
     }
 
+    public static Result categories() {
+        return ok(categories.render(getLocalUser(session())));
+    }
+    
+    public static Result listCategories() {
+    	List<Category> list = Category.find.all();
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result addCategory() {
+    	Category newCategory = Form.form(Category.class).bindFromRequest().get();
+    	final User localUser = getLocalUser(session());
+    	if(localUser != null) {
+			newCategory.setCreatedOn(new Date());
+	    	newCategory.save();
+    	} else {
+            flash(FLASH_ERROR_KEY, "Please login first");
+    		Logger.error("Please login first");
+    	}
+    	return redirect(routes.Application.categories());
+    }
+
     public static Result portlets() {
         return ok(portlets.render(getLocalUser(session())));
     }
@@ -67,8 +90,8 @@ public class Application extends Controller {
     	return redirect(routes.Application.stocksInPortlet(newPortletStock.getPortlet().getId()));
     }
 
-    public static Result listPortletStocks() {
-    	List<PortletStock> list = PortletStock.find.all();
+    public static Result listPortletStocks(Long portletId) {
+    	List<PortletStock> list = PortletStock.find.where().eq("portlet_id", portletId).findList();
     	return ok(Json.toJson(list));
     }
 

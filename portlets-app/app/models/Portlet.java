@@ -20,6 +20,8 @@ public class Portlet extends Model {
 	private String name;
 	@ManyToOne
 	private User owner;
+	@ManyToOne
+	private Category category;
 	private String pictureUrl;
 	private String notes;
 	private PortletValidityState validity;
@@ -29,11 +31,13 @@ public class Portlet extends Model {
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
 	public Portlet(){}
-	public Portlet(String name, User owner, String pictureUrl) {
+	public Portlet(String name, User owner, String pictureUrl, Category category) {
 		super();
 		this.name = name;
 		this.owner = owner;
 		this.pictureUrl = pictureUrl;
+		this.category = category;
+		this.createdOn = new Date();
 	}
 
 	public static Portlet findByName(String name) {
@@ -64,6 +68,12 @@ public class Portlet extends Model {
 	}
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public String getNotes() {
 		return notes;
