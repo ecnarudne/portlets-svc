@@ -13,6 +13,20 @@ angular.module('DiscoverCtrl',['Api'])
             $log.debug('DiscoverCtrl controller called')
             nlform = new NLForm(document.getElementById('nl-form'))
 
+            portletApi.getCategories(
+                {
+                  before: ->
+                    $log.debug('Fetching categories page details.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'Categories fetched successfully.' + JSON.stringify(data)
+                    $scope.categories = data
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while feching Categories')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('Categories fetched')
+                }
+            )
+
             portletApi.getDiscoverPageDetails(
                 {
                   before: ->

@@ -24,6 +24,8 @@ import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import views.html.*;
+
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
 
@@ -32,7 +34,11 @@ public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
-
+    
+    public static Result preflight(String path) {
+		return ok("");
+	}
+    
 	public static Result index() {
 		printSession();
         //return ok(index.render(getLocalUser(session())));
