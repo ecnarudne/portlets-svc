@@ -31,33 +31,63 @@
                 <h4>Portlet Selection</h4>
                 <hr>
                 <div class="form-group col-lg-8 col-md-8 col-sm-12">
-                  <label for="stockExchange" class="col-md-3 control-label">Stock Exchange</label>
+                  <label for="stockExchange" class="col-md-3 control-label">Select Exchange</label>
                   <div class="col-md-9">
-                    <select id="stockExchange" ng-disabled="isDisabled" ng-model="portlet.stockExchange" name="stockExchange" data-required="true" class="form-control parsley-validated">
+                    <select id="stockExchange" ng-disabled="isDisabled" ng-change="getStocks()" ng-model="portlet.stockExchange" name="stockExchange" data-required="true" class="form-control parsley-validated">
                       <option value="">Please Select</option>
                       <option ng-repeat=" stockexchange in stockExchanges " value = "{{stockexchange}}" >{{stockexchange}}</option>
                     </select>
                     <div class = "top-20">
-                      <a class="btn btn-primary" ng-click="getStocks()">Add Stocks</a>
                     </div>
                   </div>
                 </div>
-                <!-- /.form-group-->
+                  
                 <div class="form-group col-lg-8 col-md-8 col-sm-12">
-                  <label for="addStock" class="col-md-3 control-label">Stocks and weightage</label>
+                  <label for="stockExchange" class="col-md-3 control-label">Select Stock</label>
                   <div class="col-md-9">
-                    <div class="row">
-                      <div>
-                        <select data-placeholder="Choose a stock..." ng-model= "portlet.stock" multiple="" style="width:350px;" tabindex="4" class="chosen-select">
-                          <option value=""></option>
-                          <option ng-repeat="stock in stocks">{{stock}}</option>
-                        </select>
-                      </div>
-                      <div class="top-20">
-                        <button type="submit" class="btn btn-primary">Create Portlet</a></button> <span style="display:inline-block">You have selected<span class="badge badge-secondary">0</span>stock(s) in your portlet</span>
-                      </div>
+                    <input type="search" placeholder = "Search..." class="form-control" ng-change="showTable(this)" ng-model="search">
+                        <table ng-show = "isShown" class="table table-striped">
+                          <tr ng-repeat="stock in stocks | filter : search " >
+                            <td> {{stock}} </td>
+                            <!-- <td> <input  type = 'text' class="input" ng-model="percentage">  </td> -->
+                            <td><a class="btn btn-success" ng-click="addStock(stock, percentage, this)">Add</a></td> 
+                          </tr>
+                        </table>
+                    <div class = "top-20">
                     </div>
                   </div>
+                </div> 
+                <div ng-show="showSelected" class="form-group col-lg-8 col-md-8 col-sm-12">
+                  <label for="stockExchange" class="col-md-3 control-label">Selected Stock</label>
+                  <div class="col-md-9">
+                    <table class="table table-striped">
+                          <tr ng-repeat="selectedStock in selectedStocks">
+                            <td> {{selectedStock}} </td>
+                            <td> <input placeholder ='Weightage' type='text'class="input" ng-model= 'percentage'></a> </td>
+                            <td><a class="btn btn-danger" ng-click="deleteStock(selectedStock)">Delete</a></td> 
+                          </tr>
+                        </table>
+                    <div class = "top-20">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- /.form-group-->
+                 <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                  <label for="addStock" class="col-md-3 control-label"></label>
+                  <div class="col-md-9">
+                    <div class="row">
+                      <!-- <div>
+                        <select data-placeholder="Choose a stock..." ng-model= "portlet.stock" multiple="" style="width:350px;" tabindex="4" class="chosen-select">
+                          <option value=""></option>
+                          <option ng-repeat="stock in stocks" ng-click="addStock()">{{stock}}</option>
+                        </select> 
+                      </div> -->
+                      <div class="top-20">
+                        <button type="submit" class="btn btn-primary">Create Portlet</a></button> <span style="display:inline-block">You have selected<span class="badge badge-secondary"><span ng-bind='size'></span></span>stock(s) in your portlet</span>
+                      </div>
+                    </div>
+                  </div> 
                 </div>
               </div>  <!-- /.form-group-->
             </div>
@@ -95,7 +125,7 @@
         <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
         <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
         <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-        <p>	 Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
+        <p>  Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>
         <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
         <p>Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
         <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.</p>

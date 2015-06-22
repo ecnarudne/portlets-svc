@@ -81,21 +81,47 @@ angular.module('PortletCtrl',['Api'])
                         success: (data, status, headers, config) ->
                             console.log "stock fetched succesfully."
                             $scope.stocks = data
-                            console.log JSON.stringify($scope.stocks)
-                            ###$scope.isDisabled = true###
-
+                            
                         error: (data, status, headers, config) ->
                             $log.error('Something went wrong! ' + data)
                         forbidden: (data, status, headers, config) ->
                             $log.error('Got error while Authentication Response: ' + data)
                     )
             $scope.selectedStocks =  []
+
+            $scope.size = 0
             $scope.isShown = false
             
   
-            $scope.addStock = (stock)->
-                $scope.selectedStocks.push stock
+            $scope.addStock = (stock , percentage, add)->
+                console.log percentage
+                if $scope.selectedStocks.indexOf(stock) <= -1
+                    $scope.selectedStocks.push stock
+                    $scope.isDisabled = true
+                    $scope.showSelected = true
+
+                $scope.size = $scope.selectedStocks.filter((value) ->
+                        value != ''
+                        ).length
+                console.log $scope.size
                 console.log $scope.selectedStocks
+
+            $scope.deleteStock = (stock)->
+                console.log 'in delete stock ' + stock
+                if $scope.selectedStocks.indexOf(stock) <= -1
+                    console.log 'stock is not present....'
+                else 
+                    $scope.selectedStocks.splice($scope.selectedStocks.indexOf(stock),1)
+                    $scope.size = $scope.selectedStocks.filter((value) ->
+                        value != ''
+                        ).length
+
+                
+
+                                
+                   
+                
+                
 
             $scope.showTable = (searchVal)->
                 if searchVal.val == '' 
