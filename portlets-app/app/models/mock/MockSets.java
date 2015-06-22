@@ -5,24 +5,26 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.Category;
 import models.Portlet;
 import models.PortletStock;
 import models.User;
 import play.db.ebean.Model;
 
 public class MockSets {
+	public static final String CATEGORY_MOCK_NAME = "Technology";
 	public Map<String, MockSet> map;
-	Portlet portletMock1 = new Portlet("Software Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
-	Portlet portletMock2 = new Portlet("Big Data Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
-	Portlet portletMock3 = new Portlet("Mobile Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
-	Portlet portletMock4 = new Portlet("Robotics Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png"); 
+	Category cat;
+	Portlet portletMock1;
+	Portlet portletMock2;
+	Portlet portletMock3;
+	Portlet portletMock4;
 
 	public MockSets() {
+		persistMockPortlets();
 		map = new HashMap<String, MockSet>();
 		map.put("Dummy2s",
 				new MockSet(new ArrayList<Model>(Arrays.asList(
-						portletMock1, 
-						portletMock2, 
 						new PortletStock(portletMock1, "MSFT", 50), 
 						new PortletStock(portletMock1, "GOOG", 50), 
 						new PortletStock(portletMock2, "AMZN", 50), 
@@ -30,10 +32,6 @@ public class MockSets {
 		))));
 		map.put("Dummy4s",
 				new MockSet(new ArrayList<Model>(Arrays.asList(
-						portletMock1, 
-						portletMock2, 
-						portletMock3, 
-						portletMock4, 
 						new PortletStock(portletMock1, "MSFT", 25), 
 						new PortletStock(portletMock1, "GOOG", 25), 
 						new PortletStock(portletMock1, "AMZN", 25), 
@@ -61,13 +59,38 @@ public class MockSets {
 		}
 		return toPersist;
 	}
+	private void persistMockPortlets() {
+		this.cat = ensureCategoryExists(new Category(CATEGORY_MOCK_NAME));
+		this.portletMock1 = ensurePortletExists(new Portlet("Software Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat));
+		this.portletMock2 = ensurePortletExists(new Portlet("Big Data Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
+		this.portletMock3 = ensurePortletExists(new Portlet("Mobile Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
+		this.portletMock4 = ensurePortletExists(new Portlet("Robotics Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
+	}
+	private Portlet ensurePortletExists(Portlet p) {
+		Portlet fetched = Portlet.findByName(p.getName());
+		if(fetched != null) {
+			return fetched;
+		} else {
+			p.save();
+			return Portlet.findByName(p.getName());
+		}
+	}
+	private Category ensureCategoryExists(Category c) {
+		Category fetched = Category.findByName(c.getName());
+		if(fetched != null) {
+			return fetched;
+		} else {
+			c.save();
+			return Category.findByName(c.getName());
+		}
+	}
 	private User getAdminUser() {
-		User rooted = User.find.byId(User.ROOTED_ADMIN_ID);
+		User rooted = User.findByName(User.ROOTED_ADMIN_NAME);
 		if(rooted == null) {
 			rooted = new User();
-			rooted.setId(User.ROOTED_ADMIN_ID);
 			rooted.setFullName(User.ROOTED_ADMIN_NAME);
 			rooted.save();
+			rooted = User.findByName(User.ROOTED_ADMIN_NAME);
 		}
 		return rooted;
 	}
