@@ -25,3 +25,4 @@ portlet-mobile-app/platforms/
 portlet-mobile-app/plugins/
 node_modules/
 target/
+dump.rdb

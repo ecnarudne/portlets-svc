@@ -20,7 +20,6 @@ angular.module('PortfolioCtrl',['Api'])
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
                     $scope.data = data[0]
                     $scope.portfolio = $scope.data.portfolio 
-                    $log.debug 'table Item:     ' + JSON.stringify(data.tableItems)
                     $scope.arrow = undefined
                     dailyReturn = parseFloat $scope.portfolio.dailyReturn
                     if dailyReturn < 0

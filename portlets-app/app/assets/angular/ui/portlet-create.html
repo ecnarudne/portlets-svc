@@ -25,9 +25,18 @@
                     <textarea id="portletDesc" name="notes" ng-required = "true" ng-model="portlet.notes" style="resize: none; min-height: 100px" placeholder="Tell us what your portlet is about" class="form-control"></textarea>
                   </div>
                 </div>
+                <div class="form-group col-lg-8 col-md-8">
+                  <label for="portletDesc" class="col-md-3 control-label">Select Category</label>
+                  <div class="col-md-9">
+                    <select id="category" ng-model="portlet.category" name="category" data-required="true" class="form-control parsley-validated">
+                      <option value="">Please Select</option>
+                      <option ng-repeat=" category in categories " value = "{{category}}" >{{category.name}}</option>
+                    </select>
+                  </div>
+                </div>
                 
               </div>
-              <div class="row col-sm-12">
+              <div class="row col-sm-12 top-20">
                 <h4>Portlet Selection</h4>
                 <hr>
                 <div class="form-group col-lg-8 col-md-8 col-sm-12">
