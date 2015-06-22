@@ -8,13 +8,13 @@
     </div>
     <div class="row text-center">
       
-      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="sector in sectors">
+      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="category in categories">
         <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
             <div class="category-name">
-              <div class="h4" ng-bind="sector.name"></div>
+              <div class="h4" ng-bind="category.name"></div>
             </div>
             <div class="category-project-count">
-              <div class="h4 bold" ><span ng-bind="portlet.total"></span> Portlets</div>
+              <div class="h4 bold" ><span ng-bind="category.total"></span> Portlets</div>
             </div></a></div>
       </div>      
     </div>
