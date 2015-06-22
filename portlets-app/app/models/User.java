@@ -19,7 +19,6 @@ import play.Logger;
 public class User extends Model {
 
 	private static final long serialVersionUID = 1L;
-	public static final long ROOTED_ADMIN_ID = 0L;
 	public static final String ROOTED_ADMIN_NAME = "ROOTED_ADMIN";
 	@Id
 	private Long id;
@@ -121,6 +120,15 @@ public class User extends Model {
 		if(authUser == null)
 			return false;
 		return (findByProvider(authUser.getProvider(), authUser.getId()) != null);
+	}
+	public static User findByName(String name) {
+		if(name == null)
+			return null;
+		List<User> roots = find.where().eq("fullName", ROOTED_ADMIN_NAME).findList();
+		if(roots != null && !roots.isEmpty())
+			return roots.get(0);
+		else
+			return null;
 	}
 	public static void addLinkedAccount(AuthUser oldUser, AuthUser newUser) {
 		// TODO Auto-generated method stub

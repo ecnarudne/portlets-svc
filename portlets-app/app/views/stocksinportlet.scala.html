@@ -1,7 +1,7 @@
 @(user: models.User, portletId: Long)
 
 @main(user) {
-<script src="@routes.Assets.at("javascripts/stocksInPortlet.js")" type="text/javascript"></script>
+<script src='@routes.Assets.at("javascripts/stocksInPortlet.js?portletId="+portletId)' type="text/javascript"></script>
 <h1>Stocks In Portlet</h1>
 <ul id="list"></ul>
 <h3>Add Stock to Portlet</h3>

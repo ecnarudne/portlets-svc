@@ -40,6 +40,12 @@ public class PortletStock extends Model {
 		return find.where().eq("portlet", portlet).findList();
 	}
 
+	public static List<PortletStock> findByPortletAndStock(Portlet portlet, String stock) {
+		if(portlet == null || stock == null)
+			return null;
+		return find.where().eq("portlet", portlet).eq("stock", stock).findList();
+	}
+
 	/* Boiler-plates */
 	public Long getId() {
 		return id;

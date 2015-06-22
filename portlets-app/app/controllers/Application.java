@@ -3,13 +3,16 @@ package controllers;
 import java.util.Date;
 import java.util.List;
 
+import com.feth.play.module.pa.PlayAuthenticate;
+
+import models.Category;
 import models.Portlet;
 import models.PortletStock;
+import models.PortletValidityState;
 import models.Stock;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
-
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -20,12 +23,8 @@ import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
-import views.html.index;
-import views.html.mystocks;
-import views.html.portfolio;
-import views.html.portlets;
-import views.html.stocksinportlet;
-import views.html.users;
+import views.html.*;
+
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
@@ -35,25 +34,17 @@ public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
-    
-    public static Result preflight(String path) {
-		return ok("");
-	}
-    
+
 	public static Result index() {
 		printSession();
+        //return ok(index.render(getLocalUser(session())));
         return ok(index.render());
     }
 
     public static Result users() {
         return ok(users.render(getLocalUser(session())));
     }
-    
-    public static Result login() {    	
-    	JsonNode json = request().body().asJson();    	    	
-        return ok(users.render(getLocalUser(session())));
-    }
-    
+
     public static Result addUser() {
     	User newUser = Form.form(User.class).bindFromRequest().get();
     	newUser.setEmailVerified(false);
@@ -65,6 +56,28 @@ public class Application extends Controller {
     public static Result listUsers() {
     	List<User> list = User.find.all();
     	return ok(Json.toJson(list));
+    }
+
+    public static Result categories() {
+        return ok(categories.render(getLocalUser(session())));
+    }
+    
+    public static Result listCategories() {
+    	List<Category> list = Category.find.all();
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result addCategory() {
+    	Category newCategory = Form.form(Category.class).bindFromRequest().get();
+    	final User localUser = getLocalUser(session());
+    	if(localUser != null) {
+			newCategory.setCreatedOn(new Date());
+	    	newCategory.save();
+    	} else {
+            flash(FLASH_ERROR_KEY, "Please login first");
+    		Logger.error("Please login first");
+    	}
+    	return redirect(routes.Application.categories());
     }
 
     public static Result portlets() {
@@ -83,8 +96,8 @@ public class Application extends Controller {
     	return redirect(routes.Application.stocksInPortlet(newPortletStock.getPortlet().getId()));
     }
 
-    public static Result listPortletStocks() {
-    	List<PortletStock> list = PortletStock.find.all();
+    public static Result listPortletStocks(Long portletId) {
+    	List<PortletStock> list = PortletStock.find.where().eq("portlet_id", portletId).findList();
     	return ok(Json.toJson(list));
     }
 
@@ -137,7 +150,7 @@ public class Application extends Controller {
     }
 
     public static Result addPortlet() {
-    	/*Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
+    	Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
     	newPortlet.setCreatedOn(new Date());
     	
     	final User localUser = getLocalUser(session());
@@ -148,11 +161,8 @@ public class Application extends Controller {
     	} else {
             flash(FLASH_ERROR_KEY, "Please login first");
     		Logger.error("Please login first");
-    	}*/
-    	JsonNode json = request().body().asJson();
-    	System.out.println("Json data got is "+ json);
-    	return ok("Hello");
-    	//return redirect(routes.Application.portlets());
+    	}
+    	return redirect(routes.Application.portlets());
     }
 
     public static Result portfolio() {

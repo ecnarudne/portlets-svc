@@ -1,5 +1,5 @@
 $ ->
-	$.get "/listportletstocks", (data) ->
+	$.get "/listportletstocks/1", (data) ->
 		$.each data, (index, item) ->
 			$("#list").append $("<li>").text item.portlet.name+'-'+item.stock+'-'+item.percent
 $ ->
