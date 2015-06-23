@@ -5,16 +5,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.Category;
+import models.Sector;
 import models.Portlet;
 import models.PortletStock;
 import models.User;
 import play.db.ebean.Model;
 
 public class MockSets {
-	public static final String CATEGORY_MOCK_NAME = "Technology";
+	public static final String SECTOR_MOCK_NAME = "Technology";
 	public Map<String, MockSet> map;
-	Category cat;
+	Sector cat;
 	Portlet portletMock1;
 	Portlet portletMock2;
 	Portlet portletMock3;
@@ -60,7 +60,7 @@ public class MockSets {
 		return toPersist;
 	}
 	private void persistMockPortlets() {
-		this.cat = ensureCategoryExists(new Category(CATEGORY_MOCK_NAME));
+		this.cat = ensureSectorExists(new Sector(SECTOR_MOCK_NAME));
 		this.portletMock1 = ensurePortletExists(new Portlet("Software Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat));
 		this.portletMock2 = ensurePortletExists(new Portlet("Big Data Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
 		this.portletMock3 = ensurePortletExists(new Portlet("Mobile Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
@@ -75,13 +75,13 @@ public class MockSets {
 			return Portlet.findByName(p.getName());
 		}
 	}
-	private Category ensureCategoryExists(Category c) {
-		Category fetched = Category.findByName(c.getName());
+	private Sector ensureSectorExists(Sector c) {
+		Sector fetched = Sector.findByName(c.getName());
 		if(fetched != null) {
 			return fetched;
 		} else {
 			c.save();
-			return Category.findByName(c.getName());
+			return Sector.findByName(c.getName());
 		}
 	}
 	private User getAdminUser() {

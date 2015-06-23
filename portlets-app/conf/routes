@@ -11,11 +11,12 @@ GET     /listportlets               controllers.Application.listPortlets()
 
 POST    /buyPortlet                 controllers.Application.buyPortlet()
 GET     /listmyportlets             controllers.Application.listMyPortlets()
+GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()
 
-GET     /listcategories             controllers.Application.listCategories()
-GET     /categories                  controllers.Application.categories()
-POST    /addcategory                controllers.Application.addCategory()
+GET     /listsectors             controllers.Application.listSectors()
+GET     /sectors                  controllers.Application.sectors()
+POST    /addsector                controllers.Application.addSector()
 
 POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
 POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()

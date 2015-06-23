@@ -10,6 +10,8 @@ import javax.persistence.ManyToOne;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
+import models.Sector;
+
 @Entity
 public class Portlet extends Model {
 
@@ -21,25 +23,30 @@ public class Portlet extends Model {
 	@ManyToOne
 	private User owner;
 	@ManyToOne
-	private Category category;
+	private Sector sector;
 	private String pictureUrl;
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
 	private Date lastRebalancedOn;
+	private Date createdOn;
+
+	/* Calculated attributes */
 	private long followerCount;
 	private double volatility;
-	private Date createdOn;
+	private double totalReturn;
+	private double dailyReturn;
+	private double annualReturn;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
 	public Portlet(){}
-	public Portlet(String name, User owner, String pictureUrl, Category category) {
+	public Portlet(String name, User owner, String pictureUrl, Sector sector) {
 		super();
 		this.name = name;
 		this.owner = owner;
 		this.pictureUrl = pictureUrl;
-		this.category = category;
+		this.sector = sector;
 		this.createdOn = new Date();
 	}
 
@@ -50,6 +57,16 @@ public class Portlet extends Model {
 		List<Portlet> list = find.where().eq("name", name).findList();
 		if(list != null && !list.isEmpty())
 			return list.get(0);
+		return null;
+	}
+
+	public static List<Portlet> findBySector(String sector) {
+		//TODO must cache
+		if(sector == null)
+			return null;
+		List<Portlet> list = find.where().eq("sector", sector).findList();
+		if(list != null && !list.isEmpty())
+			return list;
 		return null;
 	}
 
@@ -72,11 +89,11 @@ public class Portlet extends Model {
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
-	public Category getCategory() {
-		return category;
+	public Sector getSector() {
+		return sector;
 	}
-	public void setCategory(Category category) {
-		this.category = category;
+	public void setSector(Sector sector) {
+		this.sector = sector;
 	}
 	public String getNotes() {
 		return notes;
@@ -125,5 +142,23 @@ public class Portlet extends Model {
 	}
 	public void setVolatility(double volatility) {
 		this.volatility = volatility;
+	}
+	public double getTotalReturn() {
+		return totalReturn;
+	}
+	public void setTotalReturn(double totalReturn) {
+		this.totalReturn = totalReturn;
+	}
+	public double getDailyReturn() {
+		return dailyReturn;
+	}
+	public void setDailyReturn(double dailyReturn) {
+		this.dailyReturn = dailyReturn;
+	}
+	public double getAnnualReturn() {
+		return annualReturn;
+	}
+	public void setAnnualReturn(double annualReturn) {
+		this.annualReturn = annualReturn;
 	}
 }

@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 
-import models.Category;
+import models.Portfolio;
+import models.Sector;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
@@ -52,26 +53,26 @@ public class Application extends Controller {
     	return ok(Json.toJson(list));
     }
 
-    public static Result categories() {
-        return ok(categories.render(getLocalUser(session())));
+    public static Result sectors() {
+        return ok(sectors.render(getLocalUser(session())));
     }
     
-    public static Result listCategories() {
-    	List<Category> list = Category.find.all();
+    public static Result listSectors() {
+    	List<Sector> list = Sector.find.all();
     	return ok(Json.toJson(list));
     }
 
-    public static Result addCategory() {
-    	Category newCategory = Form.form(Category.class).bindFromRequest().get();
+    public static Result addSector() {
+    	Sector newSector = Form.form(Sector.class).bindFromRequest().get();
     	final User localUser = getLocalUser(session());
     	if(localUser != null) {
-			newCategory.setCreatedOn(new Date());
-	    	newCategory.save();
+			newSector.setCreatedOn(new Date());
+	    	newSector.save();
     	} else {
             flash(FLASH_ERROR_KEY, "Please login first");
     		Logger.error("Please login first");
     	}
-    	return redirect(routes.Application.categories());
+    	return redirect(routes.Application.sectors());
     }
 
     public static Result portlets() {
@@ -166,6 +167,12 @@ public class Application extends Controller {
     public static Result listMyPortlets() {
     	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
     	return ok(Json.toJson(list));
+    }
+
+    public static Result myPortfolio() {
+    	Portfolio portfolio = new Portfolio();
+    	portfolio.setOwner(getLocalUser(session()));
+    	return ok(Json.toJson(portfolio));
     }
 
     public static Result buyPortlet() {
