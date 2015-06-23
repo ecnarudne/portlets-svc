@@ -26,6 +26,9 @@ public class Portlet extends Model {
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private Date lastRebalancedOn;
+	private long followerCount;
+	private double volatility;
 	private Date createdOn;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
@@ -104,5 +107,23 @@ public class Portlet extends Model {
 	}
 	public void setValidity(PortletValidityState validity) {
 		this.validity = validity;
+	}
+	public Date getLastRebalancedOn() {
+		return lastRebalancedOn;
+	}
+	public void setLastRebalancedOn(Date lastRebalancedOn) {
+		this.lastRebalancedOn = lastRebalancedOn;
+	}
+	public long getFollowerCount() {
+		return followerCount;
+	}
+	public void setFollowerCount(long followerCount) {
+		this.followerCount = followerCount;
+	}
+	public double getVolatility() {
+		return volatility;
+	}
+	public void setVolatility(double volatility) {
+		this.volatility = volatility;
 	}
 }

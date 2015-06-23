@@ -20,6 +20,8 @@ public class Category extends Model {
 	private String notes;
 	private Category parent;
 	private Date createdOn;
+	private int portletsCount;
+	private Date portletsCountedOn;
 	public static Finder<Long, Category> find = new Finder<Long, Category>(Long.class, Category.class);
 
 	public Category(){}
@@ -72,5 +74,17 @@ public class Category extends Model {
 	}
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
+	}
+	public int getPortletsCount() {
+		return portletsCount;
+	}
+	public void setPortletsCount(int portletsCount) {
+		this.portletsCount = portletsCount;
+	}
+	public Date getPortletsCountedOn() {
+		return portletsCountedOn;
+	}
+	public void setPortletsCountedOn(Date portletsCountedOn) {
+		this.portletsCountedOn = portletsCountedOn;
 	}
 }
