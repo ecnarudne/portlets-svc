@@ -28,9 +28,9 @@
                 <div class="form-group col-lg-8 col-md-8">
                   <label for="portletDesc" class="col-md-3 control-label">Select Category</label>
                   <div class="col-md-9">
-                    <select id="category" ng-model="portlet.category" name="category" data-required="true" class="form-control parsley-validated">
+                    <select id="category" ng-model="portlet.categoryId" name="category" data-required="true" class="form-control parsley-validated">
                       <option value="">Please Select</option>
-                      <option ng-repeat=" category in categories " value = "{{category}}" >{{category.name}}</option>
+                      <option ng-repeat=" category in categories " value = "{{category.id}}" >{{category.name}}</option>
                     </select>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                           <tr ng-repeat="stock in stocks | filter : search " >
                             <td> {{stock}} </td>
                             <!-- <td> <input  type = 'text' class="input" ng-model="percentage">  </td> -->
-                            <td><a class="btn btn-success" ng-click="addStock(stock, percentage, this)">Add</a></td> 
+                            <td><a class="btn btn-success" ng-click="addStock(stock)">Add</a></td> 
                           </tr>
                         </table>
                     <div class = "top-20">
@@ -70,10 +70,10 @@
                   <label for="stockExchange" class="col-md-3 control-label">Selected Stock</label>
                   <div class="col-md-9">
                     <table class="table table-striped">
-                          <tr ng-repeat="selectedStock in selectedStocks">
-                            <td> {{selectedStock}} </td>
-                            <td> <input placeholder ='Weightage' type='text'class="input" ng-model= 'percentage'></a> </td>
-                            <td><a class="btn btn-danger" ng-click="deleteStock(selectedStock)">Delete</a></td> 
+                          <tr ng-repeat="selectedStock in selectedStocks track by $index">
+                            <td> {{selectedStock.name}} </td>
+                            <td> <input ng-placeholder="Weightage"  ng-required = 'true' type='text'class="input" ng-model= 'percentage' ng-change = 'setWeightage(selectedStock.name , percentage)' ></td>
+                            <td><a class="btn btn-danger" ng-click="deleteStock(selectedStock.name)">Delete</a></td> 
                           </tr>
                         </table>
                     <div class = "top-20">
@@ -93,7 +93,7 @@
                         </select> 
                       </div> -->
                       <div class="top-20">
-                        <button type="submit" class="btn btn-primary">Create Portlet</a></button> <span style="display:inline-block">You have selected<span class="badge badge-secondary"><span ng-bind='size'></span></span>stock(s) in your portlet</span>
+                        <button type="submit"  class="btn btn-primary">Create Portlet</a></button> <span style="display:inline-block">You have selected<span class="badge badge-secondary"><span ng-bind='size'></span></span>stock(s) in your portlet</span>
                       </div>
                     </div>
                   </div> 
