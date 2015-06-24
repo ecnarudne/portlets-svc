@@ -1,16 +1,16 @@
 [
 	{
-		"company" : "Apple",
+		"name" : "Apple",
 		"ticker" : "APPL",
 		"price": 32.53
 	},
 	{
-		"company" : "IBM",
+		"name" : "IBM",
 		"ticker" : "IBM",
 		"price": 44
 	},
 	{
-		"company" : "INFOSYS",
+		"name" : "INFOSYS",
 		"ticker" : "INFY",
 		"price": 25
 	}			
