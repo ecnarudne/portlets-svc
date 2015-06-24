@@ -5,11 +5,11 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
-
 import models.Sector;
 
 @Entity
@@ -22,8 +22,8 @@ public class Portlet extends Model {
 	private String name;
 	@ManyToOne
 	private User owner;
-	@ManyToOne
-	private Sector sector;
+	@ManyToMany
+	private List<Sector> sectors;
 	private String pictureUrl;
 	private String notes;
 	private PortletValidityState validity;
@@ -41,12 +41,12 @@ public class Portlet extends Model {
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
 	public Portlet(){}
-	public Portlet(String name, User owner, String pictureUrl, Sector sector) {
+	public Portlet(String name, User owner, String pictureUrl, List<Sector> sectors) {
 		super();
 		this.name = name;
 		this.owner = owner;
 		this.pictureUrl = pictureUrl;
-		this.sector = sector;
+		this.sectors = sectors;
 		this.createdOn = new Date();
 	}
 
@@ -89,11 +89,11 @@ public class Portlet extends Model {
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
-	public Sector getSector() {
-		return sector;
+	public List<Sector> getSectors() {
+		return sectors;
 	}
-	public void setSector(Sector sector) {
-		this.sector = sector;
+	public void setSectors(List<Sector> sectors) {
+		this.sectors = sectors;
 	}
 	public String getNotes() {
 		return notes;

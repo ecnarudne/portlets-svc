@@ -81,7 +81,7 @@ public class Admin extends Controller {
         DynamicForm requestData = Form.form().bindFromRequest();
         String nick = requestData.get("nick");
     	Logger.debug("nick: " + nick);
-    	MockSet mockSet = new MockSets().persist(nick);
+    	MockSet mockSet = new MockSets().persist(nick, getLocalUser(session()));
     	Logger.debug("Persisted mockSet: " + mockSet);
     	return redirect(routes.Admin.mockSets());
     }
