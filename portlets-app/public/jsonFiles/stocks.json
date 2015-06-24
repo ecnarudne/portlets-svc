@@ -1,1 +1,17 @@
-["Apple","IBM","INFOSYS" , "TATA MOTARS", "BIRLA CEMENT"]
+[
+	{
+		"company" : "Apple",
+		"ticker" : "APPL",
+		"price": 32.53
+	},
+	{
+		"company" : "IBM",
+		"ticker" : "IBM",
+		"price": 44
+	},
+	{
+		"company" : "INFOSYS",
+		"ticker" : "INFY",
+		"price": 25
+	}			
+]

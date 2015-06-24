@@ -97,8 +97,6 @@ angular.module('PortletCtrl',['Api'])
                         )
 
             $scope.getStocks = () ->
-                console.log "get stocks function is called" + $scope.portlet.stockExchange
-                
                 if $scope.portlet.stockExchange == undefined
                         alert "please select Exchange"
                 else
@@ -109,7 +107,6 @@ angular.module('PortletCtrl',['Api'])
                         success: (data, status, headers, config) ->
                             console.log "stock fetched succesfully."
                             $scope.stocks = data
-                            
                         error: (data, status, headers, config) ->
                             $log.error('Something went wrong! ' + data)
                         forbidden: (data, status, headers, config) ->
@@ -117,8 +114,10 @@ angular.module('PortletCtrl',['Api'])
                     )
             
             $scope.addStock = (stock)->
-                if $scope.stocks1.indexOf(stock) <= -1
-                    $scope.stocks1.push stock
+                count =$scope.selectedStocks.filter((value) ->
+                        value.name == stock
+                        ).length
+                if count == 0
                     $scope.stockWithWeight = {}
                     $scope.stockWithWeight.name = stock
                     $scope.selectedStocks.push $scope.stockWithWeight
@@ -126,29 +125,28 @@ angular.module('PortletCtrl',['Api'])
                     $scope.showSelected = true
                 else
                     alert 'This Stock is already added'
-
                 $scope.size = $scope.selectedStocks.filter((value) ->
                         value.name != ''
                         ).length
-                console.log $scope.size
-                console.log $scope.stocks1
-
-
+             
             $scope.deleteStock = (stock)->
-
                  $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
                                                             x.name != stock
                                 )
-                 console.log "JSon array is :" + JSON.stringify $scope.selectedStocks
-                 $scope.stocks1.splice($scope.selectedStocks.indexOf(stock),1)
+                 console.log "Json array is :" + JSON.stringify $scope.selectedStocks
                  $scope.size = $scope.selectedStocks.filter((value) ->
                         value.name != ''
                         ).length
-
                  console.log 'size after delete' + $scope.size
                  if $scope.size == 0
-                    console.log 'in size if '
                     $scope.isDisabled = false
+                $scope.selectedStocks.forEach (s) -> 
+                    weight = 0
+                    if s.weightage == undefined
+                        weight = 0
+                    else
+                        weight = parseInt(s.weightage)
+                    $scope.totalWeight = $scope.totalWeight + weight
             
             $scope.setWeightage = (stock,percentage) ->
                 $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock

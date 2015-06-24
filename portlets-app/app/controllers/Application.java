@@ -154,6 +154,8 @@ public class Application extends Controller {
     }
 
     public static Result addPortlet() {
+    	JsonNode j =request().body().asJson();
+    	System.out.println("data to create portlet." + j);
     	Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
     	newPortlet.setCreatedOn(new Date());
     	
