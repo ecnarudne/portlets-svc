@@ -49,7 +49,7 @@ create table sector (
   picture_url               varchar(255),
   notes                     varchar(255),
   created_on                datetime,
-  portlets_count            integer,
+  portlet_count             integer,
   portlets_counted_on       datetime,
   constraint pk_sector primary key (id))
 ;

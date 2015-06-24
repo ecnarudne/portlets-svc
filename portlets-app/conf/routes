@@ -5,18 +5,22 @@
 # Home page
 GET     /                           controllers.Application.index()
 
+GET     /listexchanges/              controllers.Application.listExchanges()
 POST    /addPortlet                 controllers.Application.addPortlet()
 GET     /portlets                   controllers.Application.portlets()
 GET     /listportlets               controllers.Application.listPortlets()
+POST    /defineportletjs            controllers.Application.definePortletJson
 
 POST    /buyPortlet                 controllers.Application.buyPortlet()
 GET     /listmyportlets             controllers.Application.listMyPortlets()
 GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()
 
-GET     /listsectors             controllers.Application.listSectors()
-GET     /sectors                  controllers.Application.sectors()
-POST    /addsector                controllers.Application.addSector()
+GET     /listsectors                controllers.Application.listSectors()
+GET     /sectors                    controllers.Application.sectors()
+POST    /addsector                  controllers.Application.addSector()
+POST    /addsectorjs                controllers.Application.addSectorJson()
+
 
 POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
 POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
@@ -24,6 +28,8 @@ GET     /listportletstocks/:portletId          controllers.Application.listPortl
 GET     /listmystocks               controllers.Application.listMyStocks()
 GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
+GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(exchange: String)
+GET     /stockstats/:symbol          controllers.Application.stockStats(symbol: String)
 
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()

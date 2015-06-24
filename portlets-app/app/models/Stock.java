@@ -20,7 +20,7 @@ public class Stock extends Model {
 	@Required
 	private String symbol;
 	private String name;
-	private String primaryExchange = "NASDAQ";
+	private String primaryExchange = Exchange.NASDAQ;
 	private String type = "Equity";
 	private Set<String> labels;
 
@@ -40,6 +40,12 @@ public class Stock extends Model {
 		if(list != null && !list.isEmpty())
 			return list.get(0);
 		return null;
+	}
+	public static List<Stock> findByExchange(String primaryExchange) {
+		if(primaryExchange == null)
+			return null;
+		List<Stock> list = find.where().eq("primaryExchange", primaryExchange).findList();
+		return list;
 	}
 	
 	public static double currentPrice(String symbol) {

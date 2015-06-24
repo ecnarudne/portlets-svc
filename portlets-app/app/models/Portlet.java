@@ -60,7 +60,7 @@ public class Portlet extends Model {
 		return null;
 	}
 
-	public static List<Portlet> findBySector(String sector) {
+	public static List<Portlet> findBySector(Sector sector) {
 		//TODO must cache
 		if(sector == null)
 			return null;

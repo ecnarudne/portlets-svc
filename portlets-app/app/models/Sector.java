@@ -19,10 +19,18 @@ public class Sector extends Model {
 	private String pictureUrl;
 	private String notes;
 	private Date createdOn;
-	private int portletsCount;
+	private int portletCount;
 	private Date portletsCountedOn;
 	public static Finder<Long, Sector> find = new Finder<Long, Sector>(Long.class, Sector.class);
 
+	public static int updatePortletCount(Sector sector) {
+		int portletCount = Portlet.find.where().eq("sector", sector).findRowCount();
+		sector.setPortletCount(portletCount);
+		sector.setPortletsCountedOn(new Date());
+		sector.save();
+		return portletCount;
+	}
+	
 	public Sector(){}
 	public Sector(String name) {
 		super();
@@ -68,11 +76,11 @@ public class Sector extends Model {
 	public void setCreatedOn(Date createdOn) {
 		this.createdOn = createdOn;
 	}
-	public int getPortletsCount() {
-		return portletsCount;
+	public int getPortletCount() {
+		return portletCount;
 	}
-	public void setPortletsCount(int portletsCount) {
-		this.portletsCount = portletsCount;
+	public void setPortletCount(int portletCount) {
+		this.portletCount = portletCount;
 	}
 	public Date getPortletsCountedOn() {
 		return portletsCountedOn;

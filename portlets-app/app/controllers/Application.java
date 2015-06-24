@@ -1,16 +1,18 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import com.feth.play.module.pa.PlayAuthenticate;
-
+import models.Exchange;
 import models.Portfolio;
-import models.Sector;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
+import models.Sector;
 import models.Stock;
+import models.StockStats;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
@@ -25,6 +27,11 @@ import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import views.html.*;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.feth.play.module.pa.PlayAuthenticate;
+
+import data.CsvMarketDataLoader;
 
 public class Application extends Controller {
 
@@ -64,15 +71,60 @@ public class Application extends Controller {
 
     public static Result addSector() {
     	Sector newSector = Form.form(Sector.class).bindFromRequest().get();
-    	final User localUser = getLocalUser(session());
-    	if(localUser != null) {
-			newSector.setCreatedOn(new Date());
-	    	newSector.save();
-    	} else {
-            flash(FLASH_ERROR_KEY, "Please login first");
-    		Logger.error("Please login first");
-    	}
+    	if(!isLoggedIn(session()))
+			return forbidden();
+		newSector.setCreatedOn(new Date());
+    	newSector.save();
     	return redirect(routes.Application.sectors());
+    }
+
+    public static Result definePortletJson() {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+        	Portlet newPortlet = Json.fromJson(json, Portlet.class);
+			newPortlet.setCreatedOn(new Date());
+	    	newPortlet.save();
+	    	return ok();
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+
+    public static Result addSectorJson() {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            String name = json.findPath("name").textValue();
+            if(name != null) {
+            	Sector newSector = new Sector();
+    			newSector.setName(name);
+    			newSector.setCreatedOn(new Date());
+    	    	newSector.save();
+            	return ok();
+            } else {
+                return badRequest("Missing parameter [name]");
+            }
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+
+    public static Result listExchanges() {
+    	List<Exchange> list = new ArrayList<Exchange>(Arrays.asList(new Exchange(Exchange.NASDAQ)));
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result findByExchange(String exchange) {
+    	List<Stock> list = Stock.findByExchange(exchange);
+    	return ok(Json.toJson(list));
+    }
+    
+    public static Result stockStats(String symbol) {
+    	StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
+    	return ok(Json.toJson(stats));
     }
 
     public static Result portlets() {
@@ -199,6 +251,16 @@ public class Application extends Controller {
     public static User getLocalUser(final Session session) {
         final User localUser = User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
         return localUser;
+    }
+
+    private static boolean isLoggedIn(Session session) {
+    	final User localUser = getLocalUser(session);
+    	if(localUser == null) {
+            flash(FLASH_ERROR_KEY, "Please login first");
+    		Logger.error("Please login first");
+    		return false;
+    	}
+    	return true;
     }
 
     public static Result oAuthDenied(final String providerKey) {
