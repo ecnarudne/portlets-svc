@@ -22,6 +22,7 @@ public class StockStats implements Serializable {
 	private String avgVol;
 	private String mktcap;
 	private String date;
+	private String activity;
 
 	public Stock getStock() {
 		return stock;
@@ -82,5 +83,11 @@ public class StockStats implements Serializable {
 	}
 	public void setMktcap(String mktcap) {
 		this.mktcap = mktcap;
+	}
+	public String getActivity() {
+		return activity;
+	}
+	public void setActivity(String activity) {
+		this.activity = activity;
 	}
 }

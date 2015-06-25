@@ -16,6 +16,7 @@ import models.StockStats;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
+import models.api.UserPortletStockAPI;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -26,7 +27,13 @@ import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
-import views.html.*;
+import views.html.index;
+import views.html.mystocks;
+import views.html.portfolio;
+import views.html.portlets;
+import views.html.sectors;
+import views.html.stocksinportlet;
+import views.html.users;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
@@ -82,10 +89,10 @@ public class Application extends Controller {
     public static Result definePortletJson() {
     	if(!isLoggedIn(session()))
 			return forbidden();
-        JsonNode json = request().body().asJson();
-        if(json != null) {
-        	Portlet newPortlet = Json.fromJson(json, Portlet.class);
-			newPortlet.setCreatedOn(new Date());
+        JsonNode root = request().body().asJson();
+        if(root != null) {
+        	Portlet newPortlet = Portlet.fromJson(root);
+        	newPortlet.setCreatedOn(new Date());
 	    	newPortlet.save();
 	    	return ok();
         } else {
@@ -93,7 +100,7 @@ public class Application extends Controller {
         }
     }
 
-    public static Result addSectorJson() {
+	public static Result addSectorJson() {
     	if(!isLoggedIn(session()))
 			return forbidden();
         JsonNode json = request().body().asJson();
@@ -130,17 +137,14 @@ public class Application extends Controller {
     
     public static Result listMyStockStatsByPortlet(Long portletId) {
     	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
-    	List<StockStats> list = new ArrayList<StockStats>(stocks.size());
-    	for (UserPortletStock portletStock : stocks) {
-			StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(portletStock.getStock());
-			if(stats != null) {
-				list.add(stats);
-			} else {
-				Logger.warn("Missing Stats for: " + portletStock.getStock());
-				//TODO get stats
-			}
+    	Logger.debug("stocks.size(): " + stocks.size());
+    	ArrayList<UserPortletStockAPI> list = new ArrayList<UserPortletStockAPI>(stocks.size());
+    	for (UserPortletStock ups : stocks) {
+    		StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(ups.getStock());
+    		UserPortletStockAPI api = new UserPortletStockAPI(ups, stats);
+			list.add(api );
 		}
-    	return ok(Json.toJson(stocks));
+    	return ok(Json.toJson(list));
     }
 
     public static Result portlets() {

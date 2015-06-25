@@ -28,6 +28,8 @@ public class UserPortletStock extends Model {
 	//@Required
 	private double buyPrice;
 	//@Required
+	private double buyWeight;
+	//@Required
 	private long buyEpoch;
 
 	public UserPortletStock(){}
@@ -101,6 +103,12 @@ public class UserPortletStock extends Model {
 	}
 	public void setBuyPrice(double buyPrice) {
 		this.buyPrice = buyPrice;
+	}
+	public double getBuyWeight() {
+		return buyWeight;
+	}
+	public void setBuyWeight(double buyWeight) {
+		this.buyWeight = buyWeight;
 	}
 	public long getBuyEpoch() {
 		return buyEpoch;

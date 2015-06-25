@@ -60,10 +60,10 @@ public class MockSets {
 				model.save();
 			}
 		}
-		new UserPortletStock(user, portletMock1, "MSFT", 1, 1).save();
-		new UserPortletStock(user, portletMock1, "GOOG", 1, 1).save();
-		new UserPortletStock(user, portletMock1, "AMZN", 1, 1).save();
-		new UserPortletStock(user, portletMock1, "YHOO", 1, 1).save();
+		new UserPortletStock(user, portletMock1, "MSFT", 10, 41).save();
+		new UserPortletStock(user, portletMock1, "GOOG", 1, 520).save();
+		new UserPortletStock(user, portletMock1, "AMZN", 1, 370).save();
+		new UserPortletStock(user, portletMock1, "YHOO", 10, 44).save();
 		return toPersist;
 	}
 	private void persistMockPortlets() {
