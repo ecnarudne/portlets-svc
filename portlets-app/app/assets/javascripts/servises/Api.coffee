@@ -84,15 +84,19 @@ angular.module('Api', ['ngCookies'])
         return  
 
       api.prototype.getPortletPageDetails = (request) ->
-        get(actionUrl("/page/portlet/details"),request)
+        get(actionUrl("/portlet/1"),request)
         return
 
-      api.prototype.getStocks = (request) ->
-        get(actionUrl("/stocks/details"),request)
+      api.prototype.getStatTable = (request) ->
+        get(actionUrl("/listmystockstats/1"),request)
+        return
+
+      api.prototype.getStocks = (exchange,request) ->
+        get(actionUrl("/liststocksbyexchange/" + exchange ),request)
         return
 
       api.prototype.getStockExchange = (request) ->
-        get(actionUrl("/stocks/exchange"),request)
+        get(actionUrl("/listexchanges/"),request)
         return
 
       api.prototype.getStockDetails = (request) ->

@@ -1,3 +1,12 @@
+<style type="text/css">
+ /* tbody {
+    height: 200px;
+    
+    display: inline-block;
+    width: 100%;
+    overflow-y: auto;
+}*/
+</style>
 
 <div id="main" class="container">
   <div class="row">
@@ -55,12 +64,15 @@
                   <label for="stockExchange" class="col-md-3 control-label">Select Stock</label>
                   <div class="col-md-9">
                     <input type="search" placeholder = "Search..." class="form-control" ng-change="showTable(this)" ng-model="search">
-                        <table ng-show = "isShown" class="table table-striped">
-                          <tr ng-repeat="stock in stocks | filter : search " >
-                            <td> {{stock.name}} </td>
-                            <!-- <td> <input  type = 'text' class="input" ng-model="percentage">  </td> -->
-                            <td><a class="btn btn-success" ng-click="addStock(stock.name)">Add</a></td> 
-                          </tr>
+                        <table ng-show = "isShown" class="table">
+                          <tbody>
+                            <tr ng-repeat="stock in stocks | filter : search " >
+                              <td> {{stock.name}} </td>
+                              <td> {{stock.symbol}} </td>
+                              <!-- <td> <input  type = 'text' class="input" ng-model="percentage">  </td> -->
+                              <td><a class="btn btn-sm btn-success" ng-click="addStock(stock.name)">Add</a></td> 
+                            </tr>
+                          </tbody>
                         </table>
                     <div class = "top-20">
                     </div>
@@ -69,12 +81,19 @@
                 <div ng-show="showSelected" class="form-group col-lg-8 col-md-8 col-sm-12">
                   <label for="stockExchange" class="col-md-3 control-label">Selected Stock</label>
                   <div class="col-md-9">
-                    <table class="table table-striped">
-                          <tr ng-repeat="selectedStock in selectedStocks track by $index">
-                            <td> {{selectedStock.name}} </td>
-                            <td> <input ng-placeholder="Weightage"  ng-required = 'true' type='text'class="input" ng-model= 'percentage' ng-change = 'setWeightage(selectedStock.name , percentage)' ></td>
-                            <td><a class="btn btn-danger" ng-click="deleteStock(selectedStock.name)">Delete</a></td> 
-                          </tr>
+                    <table class="table">
+                          <thead>
+                            <td>Name</td>
+                            <td>Weightage</td>
+                            <td>Delete</td>
+                          </thead>
+                          <tbody>
+                            <tr ng-repeat="selectedStock in selectedStocks track by $index">
+                              <td> {{selectedStock.name}} </td>
+                              <td> <input ng-placeholder="Weightage" placeholder = "Weightage" ng-required = 'true' type='text' ng-model= 'percentage' ng-change = 'setWeightage(selectedStock.name , percentage)' ></td>
+                              <td><a class="btn btn-danger" ng-click="deleteStock(selectedStock.name)">Delete</a></td> 
+                            </tr>
+                          </tbody>
                         </table>
                     <div class = "top-20">
                     </div>
@@ -85,6 +104,7 @@
                  <div class="form-group col-lg-8 col-md-8 col-sm-12">
                   <label for="addStock" class="col-md-3 control-label"></label>
                   <div class="col-md-9">
+                  <h5 ng-show="showSelected">Available Weightage : <span ng-bind="availableWeightage"></span> </h5>
                     <div class="row">
                       <!-- <div>
                         <select data-placeholder="Choose a stock..." ng-model= "portlet.stock" multiple="" style="width:350px;" tabindex="4" class="chosen-select">
