@@ -26,7 +26,13 @@ import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
-import views.html.*;
+import views.html.index;
+import views.html.mystocks;
+import views.html.portfolio;
+import views.html.portlets;
+import views.html.sectors;
+import views.html.stocksinportlet;
+import views.html.users;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
@@ -81,10 +87,10 @@ public class Application extends Controller {
     public static Result definePortletJson() {
     	if(!isLoggedIn(session()))
 			return forbidden();
-        JsonNode json = request().body().asJson();
-        if(json != null) {
-        	Portlet newPortlet = Json.fromJson(json, Portlet.class);
-			newPortlet.setCreatedOn(new Date());
+        JsonNode root = request().body().asJson();
+        if(root != null) {
+        	Portlet newPortlet = Portlet.fromJson(root);
+        	newPortlet.setCreatedOn(new Date());
 	    	newPortlet.save();
 	    	return ok();
         } else {
@@ -92,7 +98,7 @@ public class Application extends Controller {
         }
     }
 
-    public static Result addSectorJson() {
+	public static Result addSectorJson() {
     	if(!isLoggedIn(session()))
 			return forbidden();
         JsonNode json = request().body().asJson();
@@ -139,7 +145,7 @@ public class Application extends Controller {
 				//TODO get stats
 			}
 		}
-    	return ok(Json.toJson(stocks));
+    	return ok(Json.toJson(list));
     }
 
     public static Result portlets() {

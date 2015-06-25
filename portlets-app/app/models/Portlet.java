@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -8,8 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import play.libs.Json;
 import models.Sector;
 
 @Entity
@@ -48,6 +52,17 @@ public class Portlet extends Model {
 		this.pictureUrl = pictureUrl;
 		this.sectors = sectors;
 		this.createdOn = new Date();
+	}
+	public static Portlet fromJson(JsonNode root) {
+		Portlet instance = Json.fromJson(root, Portlet.class);
+/* If Sectors do not get populated
+		Iterator<JsonNode> sectors = root.path("sectors").elements();
+		while (sectors.hasNext()) {
+			Sector sector = Json.fromJson(sectors.next(), Sector.class);
+			instance.getSectors().add(sector);
+		}
+*/
+		return instance;
 	}
 
 	public static Portlet findByName(String name) {
