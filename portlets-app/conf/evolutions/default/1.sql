@@ -9,6 +9,8 @@ create table category (
   picture_url               varchar(255),
   notes                     varchar(255),
   created_on                datetime,
+  portlets_count            integer,
+  portlets_counted_on       datetime,
   constraint pk_category primary key (id))
 ;
 
@@ -16,12 +18,18 @@ create table portlet (
   id                        bigint auto_increment not null,
   name                      varchar(255),
   owner_id                  bigint,
-  category_id               bigint,
+  sector_id                 bigint,
   picture_url               varchar(255),
   notes                     varchar(255),
   validity                  integer,
   visible_to_all            tinyint(1) default 0,
+  last_rebalanced_on        datetime,
   created_on                datetime,
+  follower_count            bigint,
+  volatility                double,
+  total_return              double,
+  daily_return              double,
+  annual_return             double,
   constraint ck_portlet_validity check (validity in (0,1,2,3)),
   constraint pk_portlet primary key (id))
 ;
@@ -33,6 +41,17 @@ create table portlet_stock (
   percent                   double,
   last_updated_on           datetime,
   constraint pk_portlet_stock primary key (id))
+;
+
+create table sector (
+  id                        bigint auto_increment not null,
+  name                      varchar(255),
+  picture_url               varchar(255),
+  notes                     varchar(255),
+  created_on                datetime,
+  portlet_count             integer,
+  portlets_counted_on       datetime,
+  constraint pk_sector primary key (id))
 ;
 
 create table stock (
@@ -62,6 +81,9 @@ create table user (
   validity                  integer,
   timezone                  integer,
   birthday                  varchar(255),
+  follower_count            integer,
+  following_count           integer,
+  portlet_created_count     integer,
   constraint ck_user_validity check (validity in (0,1,2,3)),
   constraint pk_user primary key (id))
 ;
@@ -79,8 +101,8 @@ create table user_portlet_stock (
 
 alter table portlet add constraint fk_portlet_owner_1 foreign key (owner_id) references user (id) on delete restrict on update restrict;
 create index ix_portlet_owner_1 on portlet (owner_id);
-alter table portlet add constraint fk_portlet_category_2 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_portlet_category_2 on portlet (category_id);
+alter table portlet add constraint fk_portlet_sector_2 foreign key (sector_id) references sector (id) on delete restrict on update restrict;
+create index ix_portlet_sector_2 on portlet (sector_id);
 alter table portlet_stock add constraint fk_portlet_stock_portlet_3 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
 create index ix_portlet_stock_portlet_3 on portlet_stock (portlet_id);
 alter table user_portlet_stock add constraint fk_user_portlet_stock_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
@@ -99,6 +121,8 @@ drop table category;
 drop table portlet;
 
 drop table portlet_stock;
+
+drop table sector;
 
 drop table stock;
 

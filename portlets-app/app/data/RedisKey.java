@@ -2,7 +2,8 @@ package data;
 
 public enum RedisKey {
     SEPARATOR(":"),
-    LAST_MARKET_PRICE_HASH("PxH:"),
+    LAST_MARKET_PRICE_STATS("PxS:"),
+    LAST_MARKET_PRICE_STATS_JSON("PSJ:"),
     LAST_MARKET_PRICE_FLOAT("PxF:")
     ;
 

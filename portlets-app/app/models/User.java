@@ -41,6 +41,11 @@ public class User extends Model {
 	private Integer timezone;
 	private String birthday;
 
+	/* Calculated attributes */
+	private int followerCount;
+	private int followingCount;
+	private int portletCreatedCount;
+	
 	/* Constructors */
 	public User() {}
 	public User(String provider, String providerId) {
@@ -261,6 +266,24 @@ public class User extends Model {
 	}
 	public void setTimezone(Integer timezone) {
 		this.timezone = timezone;
+	}
+	public int getFollowerCount() {
+		return followerCount;
+	}
+	public void setFollowerCount(int followerCount) {
+		this.followerCount = followerCount;
+	}
+	public int getFollowingCount() {
+		return followingCount;
+	}
+	public void setFollowingCount(int followingCount) {
+		this.followingCount = followingCount;
+	}
+	public int getPortletCreatedCount() {
+		return portletCreatedCount;
+	}
+	public void setPortletCreatedCount(int portletCreatedCount) {
+		this.portletCreatedCount = portletCreatedCount;
 	}
 	@Override
 	public String toString() {

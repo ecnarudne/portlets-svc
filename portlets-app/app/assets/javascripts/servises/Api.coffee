@@ -76,7 +76,7 @@ angular.module('Api', ['ngCookies'])
         return 
 
       api.prototype.getCategories = (request) ->
-        get(actionUrl("/listcategories"),request)
+        get(actionUrl("/listsectors"),request)
         return
       
       api.prototype.getDiscoverPageDetails = (request) ->

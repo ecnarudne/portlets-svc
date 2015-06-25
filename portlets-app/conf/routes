@@ -5,19 +5,22 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-#POST     /user/login                 controllers.Application.login()
-
+GET     /listexchanges/              controllers.Application.listExchanges()
 POST    /addPortlet                 controllers.Application.addPortlet()
 GET     /portlets                   controllers.Application.portlets()
 GET     /listportlets               controllers.Application.listPortlets()
+POST    /defineportletjs            controllers.Application.definePortletJson
 
 POST    /buyPortlet                 controllers.Application.buyPortlet()
 GET     /listmyportlets             controllers.Application.listMyPortlets()
+GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()
 
-GET     /listcategories             controllers.Application.listCategories()
-GET     /categories                  controllers.Application.categories()
-POST    /addcategory                controllers.Application.addCategory()
+GET     /listsectors                controllers.Application.listSectors()
+GET     /sectors                    controllers.Application.sectors()
+POST    /addsector                  controllers.Application.addSector()
+POST    /addsectorjs                controllers.Application.addSectorJson()
+
 
 POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
 POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
@@ -25,6 +28,8 @@ GET     /listportletstocks/:portletId          controllers.Application.listPortl
 GET     /listmystocks               controllers.Application.listMyStocks()
 GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
+GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(exchange: String)
+GET     /stockstats/:symbol          controllers.Application.stockStats(symbol: String)
 
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()
@@ -42,10 +47,9 @@ GET     /page/portlet/details           controllers.JsonHelper.getPortletPageDet
 GET     /stocks/details					controllers.JsonHelper.getStocks()
 GET     /stocks/exchange				controllers.JsonHelper.getStockExchange()
 POST    /stock/details				controllers.JsonHelper.getStockDetails()
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
-# TO resolve Access-Control-Allow-Origin
-#OPTIONS	/*path    controllers.Application.preflight(path: String)
 
 # Play Authenticate
 GET     /logout                     com.feth.play.module.pa.controllers.Authenticate.logout
