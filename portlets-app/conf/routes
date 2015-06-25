@@ -30,6 +30,8 @@ GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
 GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(exchange: String)
 GET     /stockstats/:symbol          controllers.Application.stockStats(symbol: String)
+GET     /portlet/:portletId         controllers.Application.portlet(portletId: Long)
+GET     /listmystockstats/:portletId  controllers.Application.listMyStockStatsByPortlet(portletId: Long)
 
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()

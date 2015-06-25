@@ -127,6 +127,21 @@ public class Application extends Controller {
     	StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
     	return ok(Json.toJson(stats));
     }
+    
+    public static Result listMyStockStatsByPortlet(Long portletId) {
+    	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
+    	List<StockStats> list = new ArrayList<StockStats>(stocks.size());
+    	for (UserPortletStock portletStock : stocks) {
+			StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(portletStock.getStock());
+			if(stats != null) {
+				list.add(stats);
+			} else {
+				Logger.warn("Missing Stats for: " + portletStock.getStock());
+				//TODO get stats
+			}
+		}
+    	return ok(Json.toJson(stocks));
+    }
 
     public static Result portlets() {
         return ok(portlets.render(getLocalUser(session())));
@@ -142,6 +157,11 @@ public class Application extends Controller {
     	newPortletStock.setLastUpdatedOn(new Date());
     	newPortletStock.save();
     	return redirect(routes.Application.stocksInPortlet(newPortletStock.getPortlet().getId()));
+    }
+
+    public static Result portlet(Long portletId) {
+    	Portlet portlet = Portlet.find.byId(portletId);
+    	return ok(Json.toJson(portlet));
     }
 
     public static Result listPortletStocks(Long portletId) {

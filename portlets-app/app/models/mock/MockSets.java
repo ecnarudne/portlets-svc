@@ -9,12 +9,15 @@ import models.Sector;
 import models.Portlet;
 import models.PortletStock;
 import models.User;
+import models.UserPortletStock;
 import play.db.ebean.Model;
 
 public class MockSets {
-	public static final String SECTOR_MOCK_NAME = "Technology";
+	public static final String SECTOR_MOCK_TECH = "Technology";
+	public static final String SECTOR_MOCK_INT = "Internet";
 	public Map<String, MockSet> map;
 	Sector cat;
+	Sector cat2;
 	Portlet portletMock1;
 	Portlet portletMock2;
 	Portlet portletMock3;
@@ -23,13 +26,13 @@ public class MockSets {
 	public MockSets() {
 		persistMockPortlets();
 		map = new HashMap<String, MockSet>();
-		map.put("Dummy2s",
+/*		map.put("Dummy2s",
 				new MockSet(new ArrayList<Model>(Arrays.asList(
 						new PortletStock(portletMock1, "MSFT", 50), 
 						new PortletStock(portletMock1, "GOOG", 50), 
 						new PortletStock(portletMock2, "AMZN", 50), 
 						new PortletStock(portletMock2, "YHOO", 50)
-		))));
+		))));*/
 		map.put("Dummy4s",
 				new MockSet(new ArrayList<Model>(Arrays.asList(
 						new PortletStock(portletMock1, "MSFT", 25), 
@@ -50,21 +53,26 @@ public class MockSets {
 						new PortletStock(portletMock4, "YHOO", 25)
 		))));
 	}
-	public MockSet persist(String nick) {
+	public MockSet persist(String nick, User user) {
 		MockSet toPersist = map.get(nick);
 		if(toPersist != null) {
 			for (Model model : toPersist.models) {
 				model.save();
 			}
 		}
+		new UserPortletStock(user, portletMock1, "MSFT", 1, 1).save();
+		new UserPortletStock(user, portletMock1, "GOOG", 1, 1).save();
+		new UserPortletStock(user, portletMock1, "AMZN", 1, 1).save();
+		new UserPortletStock(user, portletMock1, "YHOO", 1, 1).save();
 		return toPersist;
 	}
 	private void persistMockPortlets() {
-		this.cat = ensureSectorExists(new Sector(SECTOR_MOCK_NAME));
-		this.portletMock1 = ensurePortletExists(new Portlet("Software Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat));
-		this.portletMock2 = ensurePortletExists(new Portlet("Big Data Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
-		this.portletMock3 = ensurePortletExists(new Portlet("Mobile Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
-		this.portletMock4 = ensurePortletExists(new Portlet("Robotics Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", cat)); 
+		this.cat = ensureSectorExists(new Sector(SECTOR_MOCK_TECH));
+		this.cat2 = ensureSectorExists(new Sector(SECTOR_MOCK_INT));
+		this.portletMock1 = ensurePortletExists(new Portlet("Software Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", Arrays.asList(cat, cat2)));
+		this.portletMock2 = ensurePortletExists(new Portlet("Big Data Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", Arrays.asList(cat, cat2))); 
+		this.portletMock3 = ensurePortletExists(new Portlet("Mobile Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", Arrays.asList(cat, cat2))); 
+		this.portletMock4 = ensurePortletExists(new Portlet("Robotics Giants", getAdminUser(), "https://www.google.com.sg/images/srpr/logo11w.png", Arrays.asList(cat, cat2))); 
 	}
 	private Portlet ensurePortletExists(Portlet p) {
 		Portlet fetched = Portlet.findByName(p.getName());

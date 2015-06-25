@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -29,10 +30,20 @@ public class UserPortletStock extends Model {
 	//@Required
 	private long buyEpoch;
 
+	public UserPortletStock(){}
+	public UserPortletStock(User user, Portlet portlet, String stock,
+			double qty, double buyPrice) {
+		super();
+		this.user = user;
+		this.portlet = portlet;
+		this.stock = stock;
+		this.qty = qty;
+		this.buyPrice = buyPrice;
+		this.buyEpoch = (new Date()).getTime();
+	}
 	public static Finder<Long, UserPortletStock> find = new Finder<Long, UserPortletStock>(Long.class, UserPortletStock.class);
 
 	public static List<UserPortletStock> findByUser(User user) {
-		//TODO must cache
 		if(user == null)
 			return null;
 		return find.where().eq("user", user).findList();
@@ -46,6 +57,12 @@ public class UserPortletStock extends Model {
 		if(list != null && !list.isEmpty())
 			return list.get(0);
 		return null;
+	}
+
+	public static List<UserPortletStock> findByUserAndPortlet(User user, Long portletId) {
+		if(user == null || portletId == null)
+			return null;
+		return find.where().eq("user", user).eq("portlet_id", portletId).findList();
 	}
 
 	/* Boiler-plates */
