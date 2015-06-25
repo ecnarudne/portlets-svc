@@ -94,6 +94,7 @@ create table user_portlet_stock (
   stock                     varchar(255),
   qty                       double,
   buy_price                 double,
+  buy_weight                double,
   buy_epoch                 bigint,
   constraint pk_user_portlet_stock primary key (id))
 ;

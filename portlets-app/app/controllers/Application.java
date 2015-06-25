@@ -16,6 +16,7 @@ import models.StockStats;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
+import models.api.UserPortletStockAPI;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -135,15 +136,12 @@ public class Application extends Controller {
     
     public static Result listMyStockStatsByPortlet(Long portletId) {
     	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
-    	List<StockStats> list = new ArrayList<StockStats>(stocks.size());
-    	for (UserPortletStock portletStock : stocks) {
-			StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(portletStock.getStock());
-			if(stats != null) {
-				list.add(stats);
-			} else {
-				Logger.warn("Missing Stats for: " + portletStock.getStock());
-				//TODO get stats
-			}
+    	Logger.debug("stocks.size(): " + stocks.size());
+    	ArrayList<UserPortletStockAPI> list = new ArrayList<UserPortletStockAPI>(stocks.size());
+    	for (UserPortletStock ups : stocks) {
+    		StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(ups.getStock());
+    		UserPortletStockAPI api = new UserPortletStockAPI(ups, stats);
+			list.add(api );
 		}
     	return ok(Json.toJson(list));
     }
