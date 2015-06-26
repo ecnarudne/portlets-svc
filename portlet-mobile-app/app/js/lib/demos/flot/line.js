@@ -55,8 +55,16 @@ function plotPortletGraph(){
   var holder = $('#portlet-graph')
 
 if (holder.length) {
-
-    $.plot(holder, data, chartOptions )
+    var chm = Object.create(chartOptions);
+      chm.xaxis={
+        mode: "time",
+        minTickSize: [1, "year"],
+        min: (new Date(1996, 0, 1)).getTime(),
+        max: (new Date(2000, 0, 1)).getTime(),
+        tickLength: 0
+      }
+      $.plot(holder, data, chm);
+    /*$.plot(holder, data, chartOptions )*/
       
     $("#whole").click(function () {
       var chm = Object.create(chartOptions);
