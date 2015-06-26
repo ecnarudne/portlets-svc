@@ -18,8 +18,7 @@ angular.module('PortfolioCtrl',['Api'])
                     $log.debug('Fetching table data.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
-                    $scope.data = data[0]
-                    $scope.portfolio = $scope.data.portfolio 
+                    $scope.portfolio = data
                     $scope.arrow = undefined
                     dailyReturn = parseFloat $scope.portfolio.dailyReturn
                     if dailyReturn < 0

@@ -46,7 +46,15 @@ angular.module('PagePortletCtrl',['Api'])
                   before: ->
                     $log.debug('Fetching data for StatTable.')
                   success: (data, status, headers, config) ->
-                    ###$log.debug 'Data fetched successfully.' + JSON.stringify(data)###
+                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
+                    console.log 'company name: ' + data[0].stats.stock.name
+                    console.log 'Ticker: ' + data[0].stats.stock.symbol
+                    console.log 'Activity: ' + data[0].stats.activity
+                    console.log 'Weight: ' + data[0].buyWeight
+                    console.log 'buyPrice: ' + data[0].buyPrice
+                    console.log 'price: ' + data[0].stats.closePrice
+                    console.log 'Total return: ' + data[0].totalReturn
+                    console.log 'dailyReturn: ' + data[0].dailyReturn
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  table data')                   
                   complete: (data, status, headers, config) ->

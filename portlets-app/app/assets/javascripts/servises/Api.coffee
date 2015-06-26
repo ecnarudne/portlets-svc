@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://192.168.1.104:9000'
+      domain = 'http://localhost:9000'
       
       # We need to set cookie after login. Hardcoaded cookie   
       
@@ -72,7 +72,7 @@ angular.module('Api', ['ngCookies'])
         return
       
       api.prototype.getPortfolioDetails = (request) ->
-        get(actionUrl("/page/portfolio/details"),request)
+        get(actionUrl("/myPortfolio"),request)
         return 
 
       api.prototype.getCategories = (request) ->
