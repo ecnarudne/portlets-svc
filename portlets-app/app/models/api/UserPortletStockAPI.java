@@ -11,6 +11,7 @@ public class UserPortletStockAPI {
 	private StockStats stats;
 	private double qty;
 	private double buyPrice;
+	private double buyWeight;
 	private long buyEpoch;
 	private double totalReturn;
 	private double dailyReturn;
@@ -24,6 +25,7 @@ public class UserPortletStockAPI {
 		this.stats = stats;
 		this.qty = ups.getQty();
 		this.buyPrice = ups.getBuyPrice();
+		this.buyWeight = ups.getBuyWeight();
 		this.buyEpoch = ups.getBuyEpoch();
 		try {
 			this.totalReturn = ((100*(ups.getBuyPrice() - Double.parseDouble(stats.getClosePrice())))/ups.getBuyPrice());
@@ -90,5 +92,11 @@ public class UserPortletStockAPI {
 	}
 	public void setDailyReturn(double dailyReturn) {
 		this.dailyReturn = dailyReturn;
+	}
+	public double getBuyWeight() {
+		return buyWeight;
+	}
+	public void setBuyWeight(double buyWeight) {
+		this.buyWeight = buyWeight;
 	}
 }
