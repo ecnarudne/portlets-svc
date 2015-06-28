@@ -13,6 +13,7 @@ POST    /defineportletjs            controllers.Application.definePortletJson
 
 POST    /buyPortlet                 controllers.Application.buyPortlet()
 GET     /listmyportlets             controllers.Application.listMyPortlets()
+GET     /listmyportletstocks        controllers.Application.listMyPortletStocks()
 GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()
 
@@ -24,13 +25,14 @@ POST    /addsectorjs                controllers.Application.addSectorJson()
 
 POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
 POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
-GET     /listportletstocks/:portletId          controllers.Application.listPortletStocks(portletId: Long)
+GET     /listportletstocks/:portletId  controllers.Application.listPortletStocks(portletId: Long)
 GET     /listmystocks               controllers.Application.listMyStocks()
 GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
 GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(exchange: String)
 GET     /stockstats/:symbol          controllers.Application.stockStats(symbol: String)
 GET     /portlet/:portletId         controllers.Application.portlet(portletId: Long)
+GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystockstats/:portletId  controllers.Application.listMyStockStatsByPortlet(portletId: Long)
 
 POST    /newuser                    controllers.Application.addUser()

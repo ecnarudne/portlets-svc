@@ -15,6 +15,7 @@ import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import play.libs.Json;
 import models.Sector;
+import models.api.VolatilityClass;
 
 @Entity
 public class Portlet extends Model {
@@ -83,6 +84,16 @@ public class Portlet extends Model {
 		if(list != null && !list.isEmpty())
 			return list;
 		return null;
+	}
+
+	public String getVolatilityClass() {
+		if(volatility < 2) {//Daily
+			return VolatilityClass.LOW.getDisplayName();
+		} else if(volatility < 4) {
+			return VolatilityClass.MEDIUM.getDisplayName();
+		} else {
+			return VolatilityClass.HIGH.getDisplayName();
+		}
 	}
 
 	/* Boiler-plates */
