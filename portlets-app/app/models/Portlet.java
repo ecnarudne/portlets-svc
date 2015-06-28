@@ -1,14 +1,20 @@
 package models;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import play.libs.Json;
+import models.Sector;
 
 @Entity
 public class Portlet extends Model {
@@ -20,20 +26,43 @@ public class Portlet extends Model {
 	private String name;
 	@ManyToOne
 	private User owner;
+	@ManyToMany
+	private List<Sector> sectors;
 	private String pictureUrl;
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private Date lastRebalancedOn;
 	private Date createdOn;
+
+	/* Calculated attributes */
+	private long followerCount;
+	private double volatility;
+	private double totalReturn;
+	private double dailyReturn;
+	private double annualReturn;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
 	public Portlet(){}
-	public Portlet(String name, User owner, String pictureUrl) {
+	public Portlet(String name, User owner, String pictureUrl, List<Sector> sectors) {
 		super();
 		this.name = name;
 		this.owner = owner;
 		this.pictureUrl = pictureUrl;
+		this.sectors = sectors;
+		this.createdOn = new Date();
+	}
+	public static Portlet fromJson(JsonNode root) {
+		Portlet instance = Json.fromJson(root, Portlet.class);
+/* If Sectors do not get populated
+		Iterator<JsonNode> sectors = root.path("sectors").elements();
+		while (sectors.hasNext()) {
+			Sector sector = Json.fromJson(sectors.next(), Sector.class);
+			instance.getSectors().add(sector);
+		}
+*/
+		return instance;
 	}
 
 	public static Portlet findByName(String name) {
@@ -43,6 +72,16 @@ public class Portlet extends Model {
 		List<Portlet> list = find.where().eq("name", name).findList();
 		if(list != null && !list.isEmpty())
 			return list.get(0);
+		return null;
+	}
+
+	public static List<Portlet> findBySector(Sector sector) {
+		//TODO must cache
+		if(sector == null)
+			return null;
+		List<Portlet> list = find.where().eq("sector", sector).findList();
+		if(list != null && !list.isEmpty())
+			return list;
 		return null;
 	}
 
@@ -64,6 +103,12 @@ public class Portlet extends Model {
 	}
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
+	}
+	public List<Sector> getSectors() {
+		return sectors;
+	}
+	public void setSectors(List<Sector> sectors) {
+		this.sectors = sectors;
 	}
 	public String getNotes() {
 		return notes;
@@ -94,5 +139,41 @@ public class Portlet extends Model {
 	}
 	public void setValidity(PortletValidityState validity) {
 		this.validity = validity;
+	}
+	public Date getLastRebalancedOn() {
+		return lastRebalancedOn;
+	}
+	public void setLastRebalancedOn(Date lastRebalancedOn) {
+		this.lastRebalancedOn = lastRebalancedOn;
+	}
+	public long getFollowerCount() {
+		return followerCount;
+	}
+	public void setFollowerCount(long followerCount) {
+		this.followerCount = followerCount;
+	}
+	public double getVolatility() {
+		return volatility;
+	}
+	public void setVolatility(double volatility) {
+		this.volatility = volatility;
+	}
+	public double getTotalReturn() {
+		return totalReturn;
+	}
+	public void setTotalReturn(double totalReturn) {
+		this.totalReturn = totalReturn;
+	}
+	public double getDailyReturn() {
+		return dailyReturn;
+	}
+	public void setDailyReturn(double dailyReturn) {
+		this.dailyReturn = dailyReturn;
+	}
+	public double getAnnualReturn() {
+		return annualReturn;
+	}
+	public void setAnnualReturn(double annualReturn) {
+		this.annualReturn = annualReturn;
 	}
 }

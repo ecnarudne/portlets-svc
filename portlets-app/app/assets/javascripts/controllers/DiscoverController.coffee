@@ -11,6 +11,21 @@ angular.module('DiscoverCtrl',['Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('DiscoverCtrl controller called')
+            nlform = new NLForm(document.getElementById('nl-form'))
+
+            portletApi.getCategories(
+                {
+                  before: ->
+                    $log.debug('Fetching categories page details.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'Categories fetched successfully.' + JSON.stringify(data)
+                    $scope.categories = data
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while feching Categories')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('Categories fetched')
+                }
+            )
 
             portletApi.getDiscoverPageDetails(
                 {
@@ -18,7 +33,8 @@ angular.module('DiscoverCtrl',['Api'])
                     $log.debug('Fetching Discover page details.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Discover page details fetched successfully.' + JSON.stringify(data)
-                    $scope.data = data
+                    $scope.sectors = data[0].sectors
+                    $scope.portlets = data[0].portlets
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while discover page details')                   
                   complete: (data, status, headers, config) ->

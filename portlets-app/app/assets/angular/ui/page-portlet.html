@@ -1,40 +1,45 @@
 
-  <div class="jumbotron mpt-pt-head mpt-v3 top-60">
+  <div class="jumbotron mpt-pt-head mpt-v3 top-60 {{data.portlet.volatility}}">
     <div class="container">
       <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-6">
           <div class="row">
-            <div class="col-xs-12 mpt-performance"><span class="mpt-v3-text">Medium Volatility</span></div>
+            <div class="col-xs-12 mpt-performance"><span class="mpt-v3-text" ng-bind='data.volatility' ></span></div>
           </div>
           <div class="row">
             <div class="col-xs-12 mpt-performance">
               <div><span>Total Return</span></div>
-              <h1 > <span ng-bind="data.portlet.totalReturn"></span>%</h1>
+              <h1 > <span ng-bind="portlet.totalReturn"></span>%</h1>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
               <div><span>Daily Return</span></div>
-              <h2><span ng-bind="data.portlet.dailyReturn"></span>%</h2>
+              <h2><span ng-bind="portlet.dailyReturn"></span>%</h2>
             </div>
             <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
               <div><span>1 Year Return</span></div>
-              <h2><span ng-bind="data.portlet.oneYearReturn"></span>%</h2>
+              <h2><span ng-bind="portlet.annualReturn"></span>%</h2>
             </div>
           </div>
           <div class="row">
             <div class="col-xs-12">
-              <h4>Created by : <span ng-bind="data.portlet.createdBy"></span></h4>
-              <h4>Created Since : <span ng-bind="data.portlet.createdSince"></span></h4>
-              <h4>Followers : <span ng-bind="data.portlet.followers"></span></h4>
+              <h4>Created by : <span ng-bind="portlet.owner.fullName"></span></h4>
+              <h4>Created Since : <span ng-bind="createdOn"></span></h4>
+              <h4>Followers : <span ng-bind="portlet.followerCount"></span></h4>
             </div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-6">
           <div class="mpt-lead">
-            <h2>High-Yield Dividends</h2>
-            <p>With high yields and a 10-year track record of not cutting dividends, these stocks separate themselves from the pack.</p>
-            <div> <span class="label label-skeleton">Energy &amp; Utilites</span> <span class="label label-skeleton">Financials</span> <span class="label label-skeleton">Consumer Products and Services</span> <span class="label label-skeleton">Telecommunications</span> <span class="label label-skeleton">Basic Material</span></div>
+            <h2 ng-bind="portlet.name"></h2>
+            <p ng-bind="portlet.notes"></p>
+            <div> 
+              <span  ng-repeat="sector in portlet.sectors"> 
+                  <span class="label label-skeleton" ng-bind="sector.name"></span >
+              </span> 
+            <!-- <span class="label label-skeleton">Financials</span> <span class="label label-skeleton">Consumer Products and Services</span> <span class="label label-skeleton">Telecommunications</span> <span class="label label-skeleton">Basic Material</span> -->
+            </div>
             <div role="group" class="btn-group btn-group-justified top-20"><a type="button" class="btn mpt-btn">Follow</a><a type="button" class="btn mpt-btn">Copy</a></div>
           </div>
         </div>

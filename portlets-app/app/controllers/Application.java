@@ -1,15 +1,22 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import models.Exchange;
+import models.Portfolio;
 import models.Portlet;
 import models.PortletStock;
+import models.PortletValidityState;
+import models.Sector;
 import models.Stock;
+import models.StockStats;
 import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
-
+import models.api.UserPortletStockAPI;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -24,36 +31,30 @@ import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
 import views.html.portlets;
+import views.html.sectors;
 import views.html.stocksinportlet;
 import views.html.users;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
 
+import data.CsvMarketDataLoader;
 
 public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
-    
-    public static Result preflight(String path) {
-		return ok("");
-	}
-    
+
 	public static Result index() {
 		printSession();
-        return ok(index.render());
+        //return ok(index.render(getLocalUser(session())));
+		return ok(index.render());
     }
 
     public static Result users() {
         return ok(users.render(getLocalUser(session())));
     }
-    
-    public static Result login() {    	
-    	JsonNode json = request().body().asJson();    	    	
-        return ok(users.render(getLocalUser(session())));
-    }
-    
+
     public static Result addUser() {
     	User newUser = Form.form(User.class).bindFromRequest().get();
     	newUser.setEmailVerified(false);
@@ -64,6 +65,85 @@ public class Application extends Controller {
     
     public static Result listUsers() {
     	List<User> list = User.find.all();
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result sectors() {
+        return ok(sectors.render(getLocalUser(session())));
+    }
+    
+    public static Result listSectors() {
+    	List<Sector> list = Sector.find.all();
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result addSector() {
+    	Sector newSector = Form.form(Sector.class).bindFromRequest().get();
+    	if(!isLoggedIn(session()))
+			return forbidden();
+		newSector.setCreatedOn(new Date());
+    	newSector.save();
+    	return redirect(routes.Application.sectors());
+    }
+
+    public static Result definePortletJson() {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode root = request().body().asJson();
+        if(root != null) {
+        	Portlet newPortlet = Portlet.fromJson(root);
+        	newPortlet.setCreatedOn(new Date());
+	    	newPortlet.save();
+	    	return ok();
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+
+	public static Result addSectorJson() {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            String name = json.findPath("name").textValue();
+            if(name != null) {
+            	Sector newSector = new Sector();
+    			newSector.setName(name);
+    			newSector.setCreatedOn(new Date());
+    	    	newSector.save();
+            	return ok();
+            } else {
+                return badRequest("Missing parameter [name]");
+            }
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+
+    public static Result listExchanges() {
+    	List<Exchange> list = new ArrayList<Exchange>(Arrays.asList(new Exchange(Exchange.NASDAQ)));
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result findByExchange(String exchange) {
+    	List<Stock> list = Stock.findByExchange(exchange);
+    	return ok(Json.toJson(list));
+    }
+    
+    public static Result stockStats(String symbol) {
+    	StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
+    	return ok(Json.toJson(stats));
+    }
+    
+    public static Result listMyStockStatsByPortlet(Long portletId) {
+    	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
+    	Logger.debug("stocks.size(): " + stocks.size());
+    	ArrayList<UserPortletStockAPI> list = new ArrayList<UserPortletStockAPI>(stocks.size());
+    	for (UserPortletStock ups : stocks) {
+    		StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(ups.getStock());
+    		UserPortletStockAPI api = new UserPortletStockAPI(ups, stats);
+			list.add(api );
+		}
     	return ok(Json.toJson(list));
     }
 
@@ -83,8 +163,13 @@ public class Application extends Controller {
     	return redirect(routes.Application.stocksInPortlet(newPortletStock.getPortlet().getId()));
     }
 
-    public static Result listPortletStocks() {
-    	List<PortletStock> list = PortletStock.find.all();
+    public static Result portlet(Long portletId) {
+    	Portlet portlet = Portlet.find.byId(portletId);
+    	return ok(Json.toJson(portlet));
+    }
+
+    public static Result listPortletStocks(Long portletId) {
+    	List<PortletStock> list = PortletStock.find.where().eq("portlet_id", portletId).findList();
     	return ok(Json.toJson(list));
     }
 
@@ -137,7 +222,7 @@ public class Application extends Controller {
     }
 
     public static Result addPortlet() {
-    	/*Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
+    	Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
     	newPortlet.setCreatedOn(new Date());
     	
     	final User localUser = getLocalUser(session());
@@ -148,11 +233,8 @@ public class Application extends Controller {
     	} else {
             flash(FLASH_ERROR_KEY, "Please login first");
     		Logger.error("Please login first");
-    	}*/
-    	JsonNode json = request().body().asJson();
-    	System.out.println("Json data got is "+ json);
-    	return ok("Hello");
-    	//return redirect(routes.Application.portlets());
+    	}
+    	return redirect(routes.Application.portlets());
     }
 
     public static Result portfolio() {
@@ -162,6 +244,12 @@ public class Application extends Controller {
     public static Result listMyPortlets() {
     	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
     	return ok(Json.toJson(list));
+    }
+
+    public static Result myPortfolio() {
+    	Portfolio portfolio = new Portfolio();
+    	portfolio.setOwner(getLocalUser(session()));
+    	return ok(Json.toJson(portfolio));
     }
 
     public static Result buyPortlet() {
@@ -188,6 +276,16 @@ public class Application extends Controller {
     public static User getLocalUser(final Session session) {
         final User localUser = User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
         return localUser;
+    }
+
+    private static boolean isLoggedIn(Session session) {
+    	final User localUser = getLocalUser(session);
+    	if(localUser == null) {
+            flash(FLASH_ERROR_KEY, "Please login first");
+    		Logger.error("Please login first");
+    		return false;
+    	}
+    	return true;
     }
 
     public static Result oAuthDenied(final String providerKey) {

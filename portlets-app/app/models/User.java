@@ -19,7 +19,6 @@ import play.Logger;
 public class User extends Model {
 
 	private static final long serialVersionUID = 1L;
-	public static final long ROOTED_ADMIN_ID = 0L;
 	public static final String ROOTED_ADMIN_NAME = "ROOTED_ADMIN";
 	@Id
 	private Long id;
@@ -42,6 +41,11 @@ public class User extends Model {
 	private Integer timezone;
 	private String birthday;
 
+	/* Calculated attributes */
+	private int followerCount;
+	private int followingCount;
+	private int portletCreatedCount;
+	
 	/* Constructors */
 	public User() {}
 	public User(String provider, String providerId) {
@@ -121,6 +125,15 @@ public class User extends Model {
 		if(authUser == null)
 			return false;
 		return (findByProvider(authUser.getProvider(), authUser.getId()) != null);
+	}
+	public static User findByName(String name) {
+		if(name == null)
+			return null;
+		List<User> roots = find.where().eq("fullName", ROOTED_ADMIN_NAME).findList();
+		if(roots != null && !roots.isEmpty())
+			return roots.get(0);
+		else
+			return null;
 	}
 	public static void addLinkedAccount(AuthUser oldUser, AuthUser newUser) {
 		// TODO Auto-generated method stub
@@ -253,6 +266,24 @@ public class User extends Model {
 	}
 	public void setTimezone(Integer timezone) {
 		this.timezone = timezone;
+	}
+	public int getFollowerCount() {
+		return followerCount;
+	}
+	public void setFollowerCount(int followerCount) {
+		this.followerCount = followerCount;
+	}
+	public int getFollowingCount() {
+		return followingCount;
+	}
+	public void setFollowingCount(int followingCount) {
+		this.followingCount = followingCount;
+	}
+	public int getPortletCreatedCount() {
+		return portletCreatedCount;
+	}
+	public void setPortletCreatedCount(int portletCreatedCount) {
+		this.portletCreatedCount = portletCreatedCount;
 	}
 	@Override
 	public String toString() {

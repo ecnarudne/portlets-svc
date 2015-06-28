@@ -72,17 +72,37 @@ angular.module('Api', ['ngCookies'])
         return
       
       api.prototype.getPortfolioDetails = (request) ->
-        get(actionUrl("/page/portfolio/details"),request)
+        get(actionUrl("/myPortfolio"),request)
         return 
+
+      api.prototype.getCategories = (request) ->
+        get(actionUrl("/listsectors"),request)
+        return
       
       api.prototype.getDiscoverPageDetails = (request) ->
         get(actionUrl("/page/discover/details"),request)
         return  
 
       api.prototype.getPortletPageDetails = (request) ->
-        get(actionUrl("/page/portlet/details"),request)
+        get(actionUrl("/portlet/1"),request)
         return
 
+      api.prototype.getStatTable = (request) ->
+        get(actionUrl("/listmystockstats/1"),request)
+        return
+
+      api.prototype.getStocks = (exchange,request) ->
+        get(actionUrl("/liststocksbyexchange/" + exchange ),request)
+        return
+
+      api.prototype.getStockExchange = (request) ->
+        get(actionUrl("/listexchanges/"),request)
+        return
+
+      api.prototype.getStockDetails = (request) ->
+        post(actionUrl("/stock/details"),request)
+        return
+          
       isLogin = () ->
         if($cookies.cookieVal == undefined)
           $log.debug('User is not logedin redirecting to sign-up.')

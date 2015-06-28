@@ -8,18 +8,19 @@
     </div>
     <div class="row text-center">
       
-      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="portlet in data">
+      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="category in categories">
         <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
             <div class="category-name">
-              <div class="h4" ng-bind="portlet.name"></div>
+              <div class="h4" ng-bind="category.name"></div>
             </div>
             <div class="category-project-count">
-              <div class="h4 bold" ><span ng-bind="portlet.total"></span> Portlets</div>
+              <div class="h4 bold" ><span ng-bind="category.total"></span> Portlets</div>
             </div></a></div>
       </div>      
     </div>
   </div>
 </div>
+
 <div class="row mpt-vprimary">
   <div class="container">
     <div class="col-xs-12">
@@ -27,8 +28,17 @@
         <form id="nl-form" class="nl-form">
           <select>
             <option value="1" selected="">Everything</option>
-            <option ng-repeat="portlet in data"
-            ng-bind="portlet.name"></option>
+            <option value="2">Basic Material</option>
+            <option value="3">Energy</option>
+            <option value="4">Financial</option>
+            <option value="5">Healthcare</option>
+            <option value="6">Industrials</option>
+            <option value="7">Real Estate</option>
+            <option value="8">Technology</option>
+            <option value="9">Telecommunication</option>
+            <option value="10">Utilities</option>
+            <option value="11">Consumer         </option> 
+            <!-- <option ng-repeat=" sector in sectors " value = "{{}}" >{{sector.name}}</option> -->
           </select> sorted by
           <select>
             <option value="1" selected="">popularity</option>
@@ -47,56 +57,25 @@
 </div>
 <div id="main" class="container">
   <div class="row">
-    <div class="col-md-4 col-sm-6">
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v3"><span class="text-uppercase mpt-v3-text">Medium Volatility</span><span class="mpt-returns">3.5%</span><span class="label label-skeleton">89 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>J.Livermoore</strong><span class="pull-right">Last update: 2013.05.13</span></div>
+    <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets">
+      <div class="panel panel-default mpt-portlet">
+        <a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}">
+          <span class="{{portlet.volatility}}">
+            <span class="text-capitalize " ng-bind="portlet.volatility"></span>   Volatility 
+          </span> 
+          <span class="mpt-returns"><span ng-bind="portlet.returns"></span>%</span>
+          <span class="label label-skeleton">Followers <span ng-bind="portlet.followers"></span> </span>
+        </a>
+        <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.imageURL}}" class="img-circle">
+        <strong ng-bind="portlet.creator"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastUpdated"></span></div>
         <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">High-Yield Dividends</a></h3>With high yields and a 10-year track record of not cutting dividends, these stocks separate themselves from the pack.
+          <h3><a href="#" ng-bind="portlet.portletName"></a></h3> <p ng-bind="portlet.desc"> </p>
         </div>
         <div class="mpt-portlet-body"><a role="button" href="#/page-portlet" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
       </div>
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v5"><span class="text-uppercase mpt-v5-text">Very High Volatility</span><span class="mpt-returns">-10.8%</span><span class="label label-skeleton">0 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>M.Maddy</strong><span class="pull-right">Last update: 2014.05.13</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">Market Movers</a></h3>This will be the greatest portlets. Period
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div>
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v2"><span class="text-uppercase mpt-v2-text">Moderate Volatility</span><span class="mpt-returns">3.5%</span><span class="label label-skeleton">19090 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>Bill Ackman</strong><span class="pull-right">Last update: 2015.02.22</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">Utilities Pay the bill</a></h3>With high yields and a 10-year track record of not cutting dividends, these stocks separate themselves from the pack.
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div>
     </div>
     <!-- /.end col-->
-    <div class="col-md-4 col-sm-6">
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet2.html" class="text-center mpt-portlet-color mpt-v4"><span class="text-uppercase mpt-v4-text">High Volatility</span><span class="mpt-returns">25.0%</span><span class="label label-skeleton">72 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>C.Ichan</strong><span class="pull-right">Last update: 2013.05.13</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">Bear International Market</a></h3>Investors expecting a selloff in markets outside the US may find this motif worth a closer look.
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div>
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v1"><span class="text-uppercase mpt-v1-text">Low Volatility</span><span class="mpt-returns">2.0%</span><span class="label label-skeleton">129 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>W.Buffett</strong><span class="pull-right">Last update: 2013.05.13</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">U.S. Treasury Ladder</a></h3>Volatile equity markets and more money-printing by the Fed could continue to drive demand for US government debt.
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div>
-    </div>
-    <!-- /.end col-->
-    <div class="col-md-4 col-sm-6">
-      <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color mpt-v5"><span class="text-uppercase mpt-v5-text">Very High Volatility</span><span class="mpt-returns">129.8%</span><span class="label label-skeleton">223 Followers</span></a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=70" class="img-circle"><strong>C.Coleman</strong><span class="pull-right">Last update: 2013.05.13</span></div>
-        <div class="panel-body mpt-portlet-body">
-          <h3><a href="#">China Internet</a></h3>Great Wall? Meh. What&#8217;s really been great is the internet market. China is the world&#8217;s largest, with room to grow.
-        </div>
-        <div class="mpt-portlet-body"><a role="button" href="./page-portlet.html" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
-      </div>
-    </div>
+    
   </div>
   <!-- /.end row-->
 </div>
