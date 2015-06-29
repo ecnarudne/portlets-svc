@@ -46,6 +46,8 @@ public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
+	private static final int LIST_DEFAULT_LIMIT = 10;
+	private static final int LIST_MAX_LIMIT = 100;
 
 	public static Result index() {
 		printSession();
@@ -154,6 +156,15 @@ public class Application extends Controller {
     
     public static Result listPortlets() {
     	List<Portlet> list = Portlet.find.all();
+    	return ok(Json.toJson(list));
+    }
+    
+    public static Result listRecentPortlets(Integer limit) {
+    	if(limit == null || limit == 0)
+    		limit = LIST_DEFAULT_LIMIT;
+    	else if (limit > LIST_MAX_LIMIT)
+    		limit = LIST_MAX_LIMIT;
+    	List<Portlet> list = Portlet.findRecent(limit);
     	return ok(Json.toJson(list));
     }
 

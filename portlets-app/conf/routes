@@ -34,6 +34,7 @@ GET     /stockstats/:symbol          controllers.Application.stockStats(symbol: 
 GET     /portlet/:portletId         controllers.Application.portlet(portletId: Long)
 GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystockstats/:portletId  controllers.Application.listMyStockStatsByPortlet(portletId: Long)
+GET     /listrecentportlets/:limit  controllers.Application.listRecentPortlets(limit: Int)
 
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()
