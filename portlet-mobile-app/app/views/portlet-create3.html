@@ -4,10 +4,23 @@
     	<div style="background: rgba(255,255,255,0.15);">
         <div class="row">
       		<div class="col-90 toggle-bar">
+          <a id="add-portfolio"  href="#/app/portlet-create" class="pull-left menu-btn-padd"><h4>Back</h4></a>
       		<a href="#/app/portlet-create2" class="pull-right"><h4> Done</h4></a>	
       		<h4 align="center" class="page-text">Add Stocks</h4>
       		</div>
       	</div>
+        <center>
+          <div class="row">
+            <div class="col-xs-12 col-md-12">
+              <select style="background-color:transparent;color:white;"  name="stockExchange" data-required="true" class="form-control" ng-model="model">
+                  <option style="background-color:grey;color:white;" value="">Please Select</option>
+                  <option style="background-color:grey;color:white;" value="nasdaq">NASDAQ</option>
+                  <option style="background-color:grey;color:white;" value="nyse">New York Stock Exchange</option>
+                  <option style="background-color:grey;color:white;" value="sse">Singapore Stock Exchange</option>
+              </select>
+            </div>
+          </div>
+        </center>
         <div class="padding">
         	<label class="item item-input search " >
         		  <i class="icon ion-search placeholder-icon"></i>
@@ -17,7 +30,7 @@
       </div>
     <div class="table-striped">
         <table class="table table-content" style="margin-top:20px">
-            <tr ng-repeat="stock in stocks  | filter : search">
+            <tr ng-repeat="stock in stocks  | filter : search ">
               <td ng-bind="stock.name"></td>
               <td ng-bind="stock.ticker"></td>
               <td ><button style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>

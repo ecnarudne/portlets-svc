@@ -2,23 +2,12 @@
   <ion-content class="portfolio-bg">
   	<div class="row">
       <div align="center" class="col-90 toggle-bar">
-      <a id="add-portfolio"  href="#/app/portlet-create" class="pull-left menu-btn-padd"><h4>Back</h4></a>
+      <a id="add-portfolio"  href="#/app/portlet-create3" class="pull-left menu-btn-padd"><h4>Back</h4></a>
       <a href="#" class="pull-right" ng-click="checkStocks() "><h4>Create</h4></a> 
       <h4 align="center" class='page-text'>Create Portlet</h4>
       </div>
     </div>
-    <center>
-    <div class="row">
-      <div class="col-xs-12 col-md-12">
-        <select style="background-color:transparent;color:white;"  name="stockExchange" data-required="true" class="form-control" ng-model="model">
-            <option style="background-color:grey;color:white;" value="">Please Select</option>
-            <option style="background-color:grey;color:white;" value="nasdaq">NASDAQ</option>
-            <option style="background-color:grey;color:white;" value="nyse">New York Stock Exchange</option>
-            <option style="background-color:grey;color:white;" value="sse">Singapore Stock Exchange</option>
-        </select>
-      </div>
-    </div>
-    </center>
+    
       <div class="row">
         <div align="center" class="col-xs-12 col-md-12">
   		      <a id="add-stock" href="#/app/portlet-create3" class="ion-ios-plus-outline button"></a>
@@ -35,7 +24,7 @@
      <div>
       
      <ion-list  class="portfolio-bg white-color" ng-init="index=1;tockExchange.name=;x=stockExchange.name;">
-        <ion-item  ng-repeat="stockWeightage in stockWeightages | filter:stockWeightage.exchange=model"  style="border:1px;font-size:18px;"  class="portfolio-bg transparent list-padd" >
+        <ion-item  ng-repeat="stockWeightage in stockWeightages "  style="border:1px;font-size:18px;"  class="portfolio-bg transparent list-padd" >
         <div  class="row">
             <div class="col-xs-8"><h2 style="font-size:20px;display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2></div>
             <div class="col-xs-4"><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></div>
