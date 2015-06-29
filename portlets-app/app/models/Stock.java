@@ -30,7 +30,7 @@ public class Stock extends Model {
 		this.symbol = symbol;
 	}
 
-	public static Finder<String, Stock> find = new Finder<String, Stock>(String.class, Stock.class);
+	public static Finder<Long, Stock> find = new Finder<Long, Stock>(Long.class, Stock.class);
 
 	public static Stock findBySymbol(String symbol) {
 		//TODO must cache

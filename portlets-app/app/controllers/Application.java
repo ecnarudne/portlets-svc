@@ -3,7 +3,9 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import models.Exchange;
 import models.Portfolio;
@@ -163,6 +165,11 @@ public class Application extends Controller {
     	return redirect(routes.Application.stocksInPortlet(newPortletStock.getPortlet().getId()));
     }
 
+    public static Result stock(Long stockId) {
+    	Stock stock = Stock.find.byId(stockId);
+    	return ok(Json.toJson(stock));
+    }
+
     public static Result portlet(Long portletId) {
     	Portlet portlet = Portlet.find.byId(portletId);
     	return ok(Json.toJson(portlet));
@@ -242,6 +249,15 @@ public class Application extends Controller {
     }
 
     public static Result listMyPortlets() {
+    	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(session()));
+    	Set<Portlet> portlets = new HashSet<Portlet>();
+    	for (UserPortletStock ups : portletStocks) {
+    		portlets.add(ups.getPortlet());
+		}
+    	return ok(Json.toJson(portlets));
+    }
+
+    public static Result listMyPortletStocks() {
     	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
     	return ok(Json.toJson(list));
     }
