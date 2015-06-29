@@ -9,7 +9,8 @@ angular.module('PagePortletCtrl',['Api'])
         "$cookies"
         "portletApi"
         "$location"
-        ($scope,$log,$http,$cookies,portletApi,$location)->
+        "$routeParams"
+        ($scope,$log,$http,$cookies,portletApi,$location,$routeParams)->
             $log.debug('PagePortletCtrl controller called')
             plotGraph()
             formatDate = (date) ->
@@ -26,8 +27,9 @@ angular.module('PagePortletCtrl',['Api'])
                   month
                   day
                 ].join '/'
-
-            portletApi.getPortletPageDetails(
+            console.log 'Route parameters: ' + $routeParams.portletId
+            portletApi.getPortletDetails(
+                $routeParams.portletId  
                 {
                   before: ->
                     $log.debug('Fetching page portlet data.')
@@ -41,27 +43,35 @@ angular.module('PagePortletCtrl',['Api'])
                     $log.debug('In complete function')
                 }
             )
-            portletApi.getStatTable(
+            portletApi.getPortletStatTable(
+                $routeParams.portletId
                 {
                   before: ->
                     $log.debug('Fetching data for StatTable.')
                   success: (data, status, headers, config) ->
-                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
-                    console.log 'company name: ' + data[0].stats.stock.name
-                    console.log 'Ticker: ' + data[0].stats.stock.symbol
-                    console.log 'Activity: ' + data[0].stats.activity
-                    console.log 'Weight: ' + data[0].buyWeight
-                    console.log 'buyPrice: ' + data[0].buyPrice
-                    console.log 'price: ' + data[0].stats.closePrice
-                    console.log 'Total return: ' + data[0].totalReturn
-                    console.log 'dailyReturn: ' + data[0].dailyReturn
+                    stocks=[]
+                    data.filter((stock)->
+                      stockJson ={}
+                      stockJson.COMPANY = stock.stats.stock.name
+                      stockJson.TICKER = stock.stats.stock.symbol
+                      stockJson.ACTIVITY = stock.stats.activity
+                      stockJson.WEIGHT = stock.buyWeight
+                      stockJson.AVG_COST = stock.buyPrice
+                      stockJson.PRICE = stock.stats.closePrice
+                      stockJson.TOTAL_RETURN = stock.totalReturn
+                      stockJson.DAILY_RETURN = stock.dailyReturn
+                      stocks.push stockJson
+                      )
+                    console.log JSON.stringify stocks
+                    createTable(stocks)
+
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  table data')                   
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete function')
                 }
             )
-            createTable()
+           
             
     ]
 

@@ -98,7 +98,7 @@ angular.module('PortletCtrl',['Api'])
                         )
 
             $scope.getStocks = () ->
-                if $scope.portlet.stockExchange == undefined
+                if $scope.portlet.stockExchange.name == undefined
                         alert "please select Exchange"
                 else
                     portletApi.getStocks(
@@ -109,6 +109,7 @@ angular.module('PortletCtrl',['Api'])
                             success: (data, status, headers, config) ->
                                 console.log "stock fetched succesfully."
                                 $scope.stocks = data
+                                $log.debug('Stock fetched: ' + JSON.stringify data)
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                             forbidden: (data, status, headers, config) ->

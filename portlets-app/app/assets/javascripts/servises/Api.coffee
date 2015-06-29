@@ -75,20 +75,28 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/myPortfolio"),request)
         return 
 
+      api.prototype.getMyPortlets = (request) ->
+        get(actionUrl("/listmyportlets"),request)
+        return
+
       api.prototype.getCategories = (request) ->
         get(actionUrl("/listsectors"),request)
+        return
+
+      api.prototype.getPortlets = (request) ->
+        get(actionUrl("/listportlets"),request)
         return
       
       api.prototype.getDiscoverPageDetails = (request) ->
         get(actionUrl("/page/discover/details"),request)
         return  
 
-      api.prototype.getPortletPageDetails = (request) ->
-        get(actionUrl("/portlet/1"),request)
+      api.prototype.getPortletDetails = (portletId,request) ->
+        get(actionUrl("/portlet/" + portletId),request)
         return
 
-      api.prototype.getStatTable = (request) ->
-        get(actionUrl("/listmystockstats/1"),request)
+      api.prototype.getPortletStatTable = (portletId,request) ->
+        get(actionUrl("/listmystockstats/" + portletId),request)
         return
 
       api.prototype.getStocks = (exchange,request) ->
@@ -99,8 +107,12 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/listexchanges/"),request)
         return
 
-      api.prototype.getStockDetails = (request) ->
-        post(actionUrl("/stock/details"),request)
+      api.prototype.getStockDetails = (stockId,request) ->
+        get(actionUrl("/stock/" + stockId),request)
+        return
+
+      api.prototype.getStockStat = (symbol,request) ->
+        get(actionUrl("/stockstats/" + symbol),request)
         return
           
       isLogin = () ->

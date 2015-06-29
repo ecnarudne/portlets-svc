@@ -59,19 +59,19 @@
   <div class="row">
     <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets">
       <div class="panel panel-default mpt-portlet">
-        <a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}">
-          <span class="{{portlet.volatility}}">
-            <span class="text-capitalize " ng-bind="portlet.volatility"></span>   Volatility 
+        <a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatilityClass}}">
+          <span class="{{portlet.volatilityClass}}">
+            <span class="text-capitalize " ng-bind="portlet.volatilityClass"></span>   Volatility 
           </span> 
-          <span class="mpt-returns"><span ng-bind="portlet.returns"></span>%</span>
-          <span class="label label-skeleton">Followers <span ng-bind="portlet.followers"></span> </span>
+          <span class="mpt-returns"><span ng-bind="portlet.totalReturn"></span>%</span>
+          <span class="label label-skeleton">Followers <span ng-bind="portlet.followerCount"></span> </span>
         </a>
-        <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.imageURL}}" class="img-circle">
-        <strong ng-bind="portlet.creator"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastUpdated"></span></div>
+        <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.owner.profilePicture}}" class="img-circle">
+        <strong ng-bind="portlet.owner.fullName"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastRebalancedOn"></span></div>
         <div class="panel-body mpt-portlet-body">
-          <h3><a href="#" ng-bind="portlet.portletName"></a></h3> <p ng-bind="portlet.desc"> </p>
+          <h3><a href="#" ng-bind="portlet.name"></a></h3> <p ng-bind="portlet.notes"> </p>
         </div>
-        <div class="mpt-portlet-body"><a role="button" href="#/page-portlet" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
+        <div class="mpt-portlet-body"><a role="button" ng-click="viewMore(portlet.id)" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
       </div>
     </div>
     <!-- /.end col-->

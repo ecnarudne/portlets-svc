@@ -28,7 +28,7 @@ do ->
         
         templateUrl: '/assets/angular/ui/portfolio.html'
 
-        controller: 'PortfolioCtrl').when('/page-portlet',
+        controller: 'PortfolioCtrl').when('/page-portlet/:portletId',
         
         templateUrl: '/assets/angular/ui/page-portlet.html'
 

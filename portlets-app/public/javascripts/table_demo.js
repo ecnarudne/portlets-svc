@@ -1,18 +1,20 @@
-function createTable()
+function createTable(tableData1)
 {
     console.log('create table function is called.');
     $(function() {
+        console.log('create table data: ' + JSON.stringify( tableData1));
+
     $('#table-1').dataTable( {
-        "ajax": 'assets/javascripts/table_data.json',
+        "data": tableData1,
         "columns": [
             { "data": "COMPANY",        "title": "COMPANY"},
             { "data": "TICKER",         "title": "TICKER" },
             { "data": "ACTIVITY",       "title": "ACTIVITY" },
             { "data": "WEIGHT",         "title": "WEIGHT" },
-            { "data": "AVG COST",       "title": "AVG COST" },
+            { "data": "AVG_COST",       "title": "AVG COST" },
             { "data": "PRICE",          "title": "PRICE" },
-            { "data": "TOTAL RETURN",   "title": "TOTAL RETURN" },
-            { "data": "DAILY RETURN",   "title": "DAILY RETURN" }
+            { "data": "TOTAL_RETURN",   "title": "TOTAL RETURN" },
+            { "data": "DAILY_RETURN",   "title": "DAILY RETURN" }
         ],
         "pageLength": 10,
         "lengthChange": true,

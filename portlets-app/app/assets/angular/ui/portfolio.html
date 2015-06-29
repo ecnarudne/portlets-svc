@@ -131,13 +131,13 @@
                         </tr>
                       </tfoot>
                       <tbody>
-                        <tr ng-repeat="item in data.portletTable">
-                          <td><a href="#/page-portlet">{{item.name}} </a></td>
-                          <td class="{{item.volatility}}"></td>
-                          <td>{{item.totalReturn}}% </td>
-                          <td id="tblrow-price">{{item.dailyReturn}}%</td>
-                          <td id="tblrow-gain" class="hide_column_fd">{{item.oneYearReturn}}%</td>
-                          <td id="tblrow-daily" class="hide_column_fd">{{item.portletReturn}}%</td>
+                        <tr ng-repeat="portlet in portlets">
+                          <td><a href="#/page-portlet">{{portlet.name}} </a></td>
+                          <td class="{{portlet.volatilityClass}}"></td>
+                          <td>{{portlet.totalReturn}}% </td>
+                          <td id="tblrow-price">{{portlet.dailyReturn}}%</td>
+                          <td id="tblrow-gain" class="hide_column_fd">{{portlet.annualReturn}}%</td>
+                          <td id="tblrow-daily" class="hide_column_fd">{{portlet.portletReturn}}%</td>
                         </tr>
                       </tbody>
                     </table>

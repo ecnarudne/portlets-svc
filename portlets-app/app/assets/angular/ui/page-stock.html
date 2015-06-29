@@ -6,17 +6,17 @@
                 <div class="row">
                   <div class="col-xs-12 mpt-performance">
                     <div><span>Company</span></div>
-                    <h1 ng-bind="stock.company"></h1>
+                    <h1 ng-bind="stock.name"></h1>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
                     <div><span>Ticker</span></div>
-                    <h2 ng-bind="stock.ticker"></h2>
+                    <h2 ng-bind="stock.symbol"></h2>
                   </div>
                   <div class="col-xs-12 col-sm-6 col-md-6 mpt-performance">
                     <div><span>1 Year Return</span></div>
-                    <h2>{{stock.oneYearReturn}}%</h2>
+                    <h2>{{stock.annualReturn}}%</h2>
                   </div>
                 </div>
               </div>
@@ -26,9 +26,9 @@
                   <div class="row">
                     <div class="col-xs-6"> 
                       <ul class="list-group">
-                        <li class="list-group-item"><span class="badge" ng-bind="stockStat.open"></span>OPEN</li>
-                        <li class="list-group-item"><span class="badge" ng-bind="stockStat.high"></span>HIGH</li>
-                        <li class="list-group-item"><span class="badge" ng-bind="stockStat.low"></span>LOW</li>
+                        <li class="list-group-item"><span class="badge" ng-bind="stockStat.openPrice"></span>OPEN</li>
+                        <li class="list-group-item"><span class="badge" ng-bind="stockStat.highPrice"></span>HIGH</li>
+                        <li class="list-group-item"><span class="badge" ng-bind="stockStat.lowPrice"></span>LOW</li>
                       </ul>
                     </div>
                     <div class="col-xs-6">

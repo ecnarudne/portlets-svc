@@ -26,16 +26,32 @@ angular.module('PageStockCtrl',['Api'])
               'chartOnly': true)
             
             portletApi.getStockDetails(
+                stockId = 1
+                {
                   before: ->
                     $log.debug('Fetching table data.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
-                    $scope.stock = data[0].stock
-                    $scope.stockStat = data[0].stockStat
+                    $scope.stock = data
+                    portletApi.getStockStat(
+                      symbol = $scope.stock.symbol
+                      {
+                        before: ->
+                          $log.debug('Fetching table data.')
+                        success: (data, status, headers, config) ->
+                          $log.debug 'Stock stat Data fetched successfully.' + JSON.stringify(data)
+                          $scope.stockStat = data
+                        error: (data, status, headers, config, statusText) ->
+                          $log.error('Got error while getting  table data')                   
+                        complete: (data, status, headers, config) ->
+                          $log.debug('In complete of getPortfolioDetails()')
+                      }
+                    )
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  table data')                   
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete of getPortfolioDetails()')
+                }
             )
             
     ]
