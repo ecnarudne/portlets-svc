@@ -60,10 +60,12 @@
         </div>
       </div>
       <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
-        <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><span style="text-transform: capitalize;">{{portlet.volatility}} Volatility</span><span class="mpt-returns" ng-bind="portlet.returns"></span><span><span ng-bind="portlet.followers" ></span> Followers</span></a>        
+        <div class="panel panel-default mpt-portlet"><a href="#" class="text-center mpt-portlet-color {{portlet.volatilityClass}}"><span style="text-transform: capitalize;">{{portlet.volatilityClass}} Volatility</span></br>
+        <span class="mpt-totalReturn">25%</span>
+        <span><span ng-bind="portlet.followersCount" ></span> Followers</span></a>        
           <div class="panel-body mpt-portlet-body">
-            <h5><a href="#" ng-bind="portlet.portletName" ></a></h5>
-            <h5 ng-bind="portlet.desc"></h5>  
+            <h5><a href="#" ng-bind="portlet.name" ></a></h5>
+            <h5 ng-bind="portlet.notes"></h5>  
           </div>
         </div>
       </div>

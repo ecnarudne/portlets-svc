@@ -27,8 +27,10 @@ import play.mvc.Controller;
 import play.mvc.Http.Cookie;
 import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
+import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
+import service.CorsComposition.Cors;
 import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
@@ -41,7 +43,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
 
 import data.CsvMarketDataLoader;
-
+@Cors
 public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
@@ -323,5 +325,15 @@ public class Application extends Controller {
     		Logger.debug("session key: " + k + " -session Value: " + s.get(k));
 		}
     	Logger.debug("deb session: " + s.keySet());
+	}
+	
+	public static Result returnCorsOptions(String path) {
+		Response response = response();
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE");
+		response.setHeader("Access-Control-Max-Age", "3600");
+		response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, x-cookie-value, Content-Type, Accept, Authorization, X-Auth-Token");
+		response.setHeader("Access-Control-Allow-Credentials", "true");
+		return ok();
 	}
 }

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
+angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller', 'Api'])
 
 .controller(
   'InitController'

@@ -1,45 +1,56 @@
 'use strict'
-angular.module('PortfolioCtrl',['ionic'])
+angular.module('PortfolioCtrl',['ionic','Api'])
 .controller(
     'PortfolioCtrl'
     [
         "$scope"
         "$log"
         "$http"
+        "$cookies"
+        "portletApi"
         "$location"
-        ($scope,$log,$http,$location)->
+        ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PortfolioCtrl controller called')
+            portletApi.login(
+            	{
+                  before: ->
+                    $log.debug('Fetching data.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  table data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
 
-            $scope.portfolio = [ {
-								      'portlet':
-								        'dailyReturn': 0.56
-								        'yearlyReturn': 2.53
-								        'portfolioValue': 2.49
-								      
-								      'tableItems': [
-								        {
-								          'portletReturn': 0.5
-								          'totalReturn': -9.51
-								          'dailyReturn': -9.51
-								          'name': 'High-Yield Dividends'
-								          'oneYearReturn': 5.8
-								        }
-								        {
-								          'portletReturn': 0.5
-								          'totalReturn': -9.51
-								          'dailyReturn': -9.51
-								          'name': 'High-Yield Dividends'
-								          'oneYearReturn': 5.8
-								        }
-								        {
-								          'portletReturn': 0.5
-								          'totalReturn': -9.51
-								          'dailyReturn': -9.51
-								          'name': 'High-Yield Dividends'
-								          'oneYearReturn': 5.8
-								        }
-								      ]
-								    } ]
+            )
+            portletApi.getPortfolioDetails(
+                {
+                  before: ->
+                    $log.debug('Fetching table data.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
+                    $scope.portfolio = data
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  table data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
+            )
+
+            portletApi.getMyPortlets(
+                {
+                  before: ->
+                    $log.debug('Fetching table data.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'MyPortlets fetched successfully.' + JSON.stringify(data)
+                    $scope.portlets = data
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  table data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
+            )
 
 
     ]

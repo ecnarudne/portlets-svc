@@ -9,18 +9,17 @@
       		<h4 align="center" class="page-text">Add Stocks</h4>
       		</div>
       	</div>
-        <center>
-          <div class="row">
-            <div class="col-xs-12 col-md-12">
-              <select style="background-color:transparent;color:white;"  name="stockExchange" data-required="true" class="form-control" ng-model="model">
-                  <option style="background-color:grey;color:white;" value="">Please Select</option>
-                  <option style="background-color:grey;color:white;" value="nasdaq">NASDAQ</option>
-                  <option style="background-color:grey;color:white;" value="nyse">New York Stock Exchange</option>
-                  <option style="background-color:grey;color:white;" value="sse">Singapore Stock Exchange</option>
+        
+          
+            <select  style="background-color:transparent;" id="stockExchange.name" ng-disabled="isDisabled" ng-change="getStocks()" ng-model="portlet.stockExchange.name" name="stockExchange" data-required="true" class="form-control parsley-validated">
+              <!-- <select style="background-color:transparent;"  name="stockExchange" data-required="true" class="form-control" ng-model="model"> -->
+                  <option value="">Please Select</option>
+                      <option ng-repeat=" stockexchange in stockExchanges " value = "{{stockexchange.name}}" >{{stockexchange.name}}</option>
               </select>
-            </div>
-          </div>
-        </center>
+              
+            
+          
+        
         <div class="padding">
         	<label class="item item-input search " >
         		  <i class="icon ion-search placeholder-icon"></i>
