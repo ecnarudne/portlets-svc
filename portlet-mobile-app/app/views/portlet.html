@@ -7,7 +7,7 @@
        <h4 align="center" class="page-text" ng-bind="portlet.name"></h4>
       </div>
     </div> 
-        <div class="content  {{portlet.volatility}}">
+        <div class="content  {{portlet.volatilityClass}}">
             <div style="padding:0px;" class="jumbotron mpt-pt-head  portlet-bg ">
                 <div class="container">
                     <div class="row">
@@ -22,35 +22,37 @@
                                 </div>
                                 <div  class="row white-color">
                                   <div class="col-xs-12 ">
-                                     <h1>{{portlet.totalReturn}}%</h1>
+                                     <h1> <span ng-bind="portlet.totalReturn"></span>% </h1>
                                   </div>
                                 </div>
                                 <div  class="row white-color">
                                    <div class="col-xs-5 col-sm-4 col-md-2 ">
                                       <div>
                                         <span>Daily Return
-                                        <h3 style="size:50px">{{portlet.dailyReturn}}%</h3></span>
+                                        <h3 style="size:50px"><span ng-bind="portlet.dailyReturn"></span> %</h3></span>
                                       </div>
                                    </div>
                                     <div class="col-xs-4 col-sm-4 col-md-2">
                                       <span>1Y Return
-                                      <h3 style="size:50px">{{portlet.oneYearReturn}}%</h3></span>  
+                                      <h3 style="size:50px"><span ng-bind="portlet.annualReturn"></span>%</h3></span>  
                                     </div>
                                 </div>   
                                 <div class="row">
-                                  <div  class="col-xs-12 col-sm-12 col-md-9" style="text-transform :capitalize;" ><h5>{{portlet.volatility}} Volatility</h5></span>
+                                  <div  class="col-xs-12 col-sm-12 col-md-9" style="text-transform :capitalize;" ><h5><span ng-bind="portlet.volatilityClass"></span> Volatility</h5></span>
                                   </div>
                                 </div>
                           </div>  
                     </div>
-                    <div class="row">
+                    
+                    <div >
                         <div class="userbox portlet-bg">
                             <h3 >Portfolio Perfomance (%)</h3>
-                         
-                              <div class="panel-body">
-                                <div id="portlet-graph" style="height:300px;"></div>
-                              </div>
+                            <div class="panel-body">
+                                <div id="portlet-graph" class="chart-holder-300"></div>
+                            </div>
+                              
                             <div  class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 ">
+
                                 <div class="btn-group btn-group-justified " data-toggle=
                                 "buttons">
                                     <label class="btn   " id=
@@ -77,8 +79,8 @@
                     </div><!-- /.row-->
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                        <h5  class="text-inline white-color">Created Since : {{portlet.createdSince}}</h5>
-                        <h5  class="text-inline-padding white-color">Followers : {{portlet.followers}}</h5>
+                        <h5  class="text-inline white-color">Created Since : <span ng-bind="portlet.createdOn"></span></h5>
+                        <h5  class="text-inline-padding white-color">Followers : <span ng-bind="portlet.followerCount"></span></h5>
                         </div>
                     </div>
                 </div><!-- /.container-->
@@ -88,14 +90,13 @@
                 <div class="row">
                     <div class="col-xs-8 col-sm-10 col-md-10">
                         <h4>DESCRIPTION</h4>
-                        <p class="text-alignment" ng-bind="portlet.desc"></p>
+                        <p class="text-alignment" ng-bind="portlet.notes"></p>
                     </div>
                     <div class="col-xs-4 col-sm-2 col-md-3">
                         <center>
-                        <h4 class="twe" >CREATED BY</h4><img class="img-circle" src=
-                        "{{portlet.imgURL}}" style=
-                        "width:50px;height:50px;position:center;">
-                        <figcaption ng-bind="portlet.createdBy">
+                        <p>{{portlet.profilePicture}}</p>
+                        <h4 class="twe" >CREATED BY</h4><img class="img-circle" src="{{portlet.owner.profilePicture}}" style="width:50px; height:50px; position:center;" alt="{{portlet.profilePicture}}">
+                        <figcaption ng-bind="portlet.owner.fullName">
                             
                         </figcaption><br>
                         </center>
@@ -117,7 +118,7 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="stock in stocks">
-                                <td> <span ng-bind="stock.company"> </span></td>
+                                <td> <span ng-bind="stock.stats.stock.name"> </span></td>
                                 <td> <span ng-bind="stock.weight"> </span>%</td>
                                 <td> <span ng-bind="stock.return"> </span>%</td>
                             </tr>

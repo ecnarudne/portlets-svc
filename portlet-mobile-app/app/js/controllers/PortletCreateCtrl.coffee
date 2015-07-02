@@ -13,17 +13,28 @@ appController.controller(
         "$location"
         "$document"
         ($scope,$log,$http,$cookies,portletApi,$location,$document)->
-            $log.debug('PortletCtrl controller called')
-            #retrive cookies
-            cookieVal = $cookies.cookieVal
-            $scope.errorMessage = false
-            if(cookieVal == undefined)
-                $log.debug('User is not logged-in redirecting to login.')
-                $location.path("/login")
-            else
-                #$log.debug('User is already authenticated')
-                #$location.path("/create")
+            
+            $scope.setPortletData = ()->
+                console.log 'setPortlet data is clalled  '
+                console.log  $scope.notes + " " + $scope.notes + " " + $scope.name
 
+            portletApi.getCategories(
+                before: ->
+                    $log.debug('Fetching Categories')
+                success: (data, status, headers, config) ->
+                    $scope.sectors = data;
+                    console.debug 'categories fetched :' + JSON.stringify data
+                error: (data, status, headers, config) ->
+                    $log.error('Something went wrong! ' + data)
+                    $location.path("/portlet-create")
+                    #$scope.errorMessage = true
+                forbidden: (data, status, headers, config) ->
+                    $log.error('Got error while Authentication Response: ' + data)
+                    $scope.errorMessage = true
+                    $location.path("/login")
+                
+            )
+            ###console.log "data in root scope is " + JSON.stringify $rootScope.portlet
             $scope.portlet = {}
             $scope.selectedStocks =  []
             $scope.availableWeightage = 100
@@ -97,6 +108,10 @@ appController.controller(
                                 $location.path("/login")
                             
                         )
+            $scope.setPortletData = ()->
+                    console.log 'setPortlet data is clalled  '
+                    console.log  $scope.notes
+
 
             $scope.getStocks = () ->
                 if $scope.portlet.stockExchange.name == undefined
@@ -178,7 +193,7 @@ appController.controller(
                 if searchVal.val == '' 
                     $scope.isShown = false
                 else
-                    $scope.isShown = true
+                    $scope.isShown = true###
 
         
 

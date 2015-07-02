@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://localhost:9000'
+      domain = 'http://192.168.1.105:9000'
       
       # We need to set cookie after login. Hardcoaded cookie   
       
@@ -76,7 +76,7 @@ angular.module('Api', ['ngCookies'])
         return 
 
       api.prototype.getMyPortlets = (request) ->
-        get(actionUrl("/listmyportlets"),request)
+        get(actionUrl("/listportlets"),request)
         return
 
       api.prototype.getCategories = (request) ->
@@ -89,7 +89,15 @@ angular.module('Api', ['ngCookies'])
       
       api.prototype.getDiscoverPageDetails = (request) ->
         get(actionUrl("/page/discover/details"),request)
-        return  
+        return  getNewPortlets
+
+      api.prototype.getNewPortlets = (request) ->
+        get(actionUrl("/listrecentportlets/2"),request)
+        return
+
+      api.prototype.getTopPortlets = (request) ->
+        get(actionUrl("/listopportlets/3"),request)
+        return
 
       api.prototype.getPortletDetails = (portletId,request) ->
         get(actionUrl("/portlet/" + portletId),request)

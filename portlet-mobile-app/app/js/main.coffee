@@ -86,7 +86,7 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller', 'Api'])
       reload: true
     )
     .state('app.portlet',
-      url: '/portlet'
+      url: '/portlet/:portletId'
       views: 'menuContent':
         templateUrl: 'views/portlet.html'
       cache: false

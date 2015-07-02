@@ -11,48 +11,33 @@ angular.module('PortfolioCtrl',['ionic','Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PortfolioCtrl controller called')
-            portletApi.login(
-            	{
-                  before: ->
-                    $log.debug('Fetching data.')
-                  success: (data, status, headers, config) ->
-                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
-                  error: (data, status, headers, config, statusText) ->
-                    $log.error('Got error while getting  table data')                   
-                  complete: (data, status, headers, config) ->
-                    $log.debug('In complete of getPortfolioDetails()')
-                }
-
-            )
             portletApi.getPortfolioDetails(
                 {
                   before: ->
-                    $log.debug('Fetching table data.')
+                    $log.debug('Fetching Portfolio details.')
                   success: (data, status, headers, config) ->
-                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
+                    $log.debug 'Portfolio Details: ' + JSON.stringify(data)
                     $scope.portfolio = data
                   error: (data, status, headers, config, statusText) ->
-                    $log.error('Got error while getting  table data')                   
+                    $log.error('Got error while getting Portfolio details')                   
                   complete: (data, status, headers, config) ->
-                    $log.debug('In complete of getPortfolioDetails()')
+                    $log.debug('In complete of getPortfolioDetails')
                 }
             )
-
+            plotGraph()
             portletApi.getMyPortlets(
                 {
                   before: ->
-                    $log.debug('Fetching table data.')
+                    $log.debug('Fetching my portlets.')
                   success: (data, status, headers, config) ->
-                    $log.debug 'MyPortlets fetched successfully.' + JSON.stringify(data)
+                    $log.debug 'MyPortlets: ' + JSON.stringify(data)
                     $scope.portlets = data
                   error: (data, status, headers, config, statusText) ->
-                    $log.error('Got error while getting  table data')                   
+                    $log.error('Got error while getting  my portlets')                   
                   complete: (data, status, headers, config) ->
-                    $log.debug('In complete of getPortfolioDetails()')
+                    $log.debug('In complete of get My portlets.')
                 }
             )
-
-
     ]
 
 )

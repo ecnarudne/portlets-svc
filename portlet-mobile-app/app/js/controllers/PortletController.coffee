@@ -1,56 +1,78 @@
 'use strict'
-angular.module('PortletCtrl',['ionic'])
+angular.module('PortletCtrl',['ionic','Api'])
 .controller(
     'PortletCtrl'
     [
         "$scope"
         "$log"
         "$http"
+        "$cookies"
+        "portletApi"
         "$location"
-        ($scope,$log,$http,$location)->
-            $log.debug('PortletCtrl controller called')
+        "$routeParams"
+        ($scope,$log,$http,$cookies,portletApi,$location,$routeParams)->
+            $log.debug('PagePortletCtrl controller called')
             plotPortletGraph()
-            $scope.portletJson = [ { 'portlet':
-                                  'name' : 'China internet'
-                                  'volatility' : 'low'
-                                  'totalReturn': 9.05
-                                  'dailyReturn': 0.56
-                                  'oneYearReturn': 2.53
-                                  'createdBy': 'J.Liver more'
-                                  'createdSince': '1992.03.17'
-                                  'followers': 300
-                                  'imgURL' : '../img/avatars/avatar-1-xs.jpg'
-                                  'desc' : 'I    discovered how to create circular images using CSS3 the other day
-                                                and thought it was totally awesome. The only drawback is that the
-                                                image has to appear as a background image. You can’t really do this
-                                                effect directly to an image that is displayed using an image tag.
-                                                What this means is that no one will be able to actually click and
-                                                drag the image onto their desktop, but that might be totally okay
-                                                with you.' } ]
-            $scope.portlet = $scope.portletJson[0].portlet
-            $scope.stocksJson = [
-                                {
-                                  'company': 'Apple'
-                                  'weight': '23'
-                                  'return' : '45'
-                                }
-                                {
-                                  'company': 'Infosys'
-                                  'weight': '45'
-                                  'return' : '45'
-                                }
-                                {
-                                  'company': 'google'
-                                  'weight': '78'
-                                  'return' : '45'
-                                }
-                                {
-                                  'company': 'IBM'
-                                  'weight': '85'
-                                  'return' : '45'
-                                }
-                              ]
-            $scope.stocks = $scope.stocksJson
+            console.log 'route parameters: ' + $routeParams.portletId
+            formatDate = (date) ->
+                d = new Date(date)
+                month = '' + d.getMonth() + 1
+                day = '' + d.getDate()
+                year = d.getFullYear()
+                if month.length < 2
+                  month = '0' + month
+                if day.length < 2
+                  day = '0' + day
+                [
+                  year
+                  month
+                  day
+                ].join '/'
+            console.log 'Route parameters: ' + $routeParams.portletId
+            portletApi.getPortletDetails(
+                $routeParams.portletId = 5 
+                {
+                  before: ->
+                    $log.debug('Fetching page portlet data.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'Data fetched successfully.' + JSON.stringify(data)
+                    $scope.portlet = data
+                    $scope.portlet.createdOn = formatDate(new Date(data.createdOn))
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  portlet data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete function')
+                }
+            )
+            portletApi.getPortletStatTable(
+                $routeParams.portletId = 1
+                {
+                  before: ->
+                    $log.debug('Fetching data for StatTable.')
+                  success: (data, status, headers, config) ->
+                    $scope.stocks = data
+                    $log.debug 'Portlets stocks are fetched successfully' + JSON.stringify(data)
+                    ###data.filter((stock)->
+                      stockJson ={}
+                      stockJson.COMPANY = stock.stats.stock.name
+                      stockJson.TICKER = stock.stats.stock.symbol
+                      stockJson.ACTIVITY = stock.stats.activity
+                      stockJson.WEIGHT = stock.buyWeight
+                      stockJson.AVG_COST = stock.buyPrice
+                      stockJson.PRICE = stock.stats.closePrice
+                      stockJson.TOTAL_RETURN = stock.totalReturn
+                      stockJson.DAILY_RETURN = stock.dailyReturn
+                      stocks.push stockJson
+                      )
+                    console.log JSON.stringify stocks
+                    createTable(stocks)###
+
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  table data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete function')
+                }
+            )
             
     ]
 

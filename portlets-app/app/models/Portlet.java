@@ -86,6 +86,14 @@ public class Portlet extends Model {
 		return null;
 	}
 
+	public static List<Portlet> findRecent(int limit) {
+		//TODO must cache
+		List<Portlet> list = find.orderBy("createdOn").setMaxRows(limit).findList();
+		if(list != null && !list.isEmpty())
+			return list;
+		return null;
+	}
+
 	public String getVolatilityClass() {
 		if(volatility < 2) {//Daily
 			return VolatilityClass.LOW.getDisplayName();

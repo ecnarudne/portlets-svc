@@ -32,17 +32,17 @@
             <table style="font-size:18px;" class="table white-color"   >
               <tr>
                 <td align="center"  >
-                  <a class="white-color" href="#">Show All <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" ng-click="getPortlets()">Show All <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
                 <td align="center">
-                  <a class="white-color" href="#">Top Performing <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" ng-click="getTopPortlets()">Top Performing <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
                 <td align="center">
-                  <a class="white-color" href="#">Newly Added <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" ng-click="getNewPortlets()">Newly Added <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
@@ -60,7 +60,7 @@
         </div>
       </div>
       <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
-        <div class="panel panel-default mpt-portlet"><a href="#" class="text-center mpt-portlet-color {{portlet.volatilityClass}}"><span style="text-transform: capitalize;">{{portlet.volatilityClass}} Volatility</span></br>
+        <div class="panel panel-default mpt-portlet"><a ng-click = "viewMore(portlet.id)" class="text-center mpt-portlet-color {{portlet.volatilityClass}}"><span style="text-transform: capitalize;">{{portlet.volatilityClass}} Volatility</span></br>
         <span class="mpt-totalReturn">25%</span>
         <span><span ng-bind="portlet.followersCount" ></span> Followers</span></a>        
           <div class="panel-body mpt-portlet-body">

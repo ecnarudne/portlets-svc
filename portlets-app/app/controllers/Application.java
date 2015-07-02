@@ -48,6 +48,8 @@ public class Application extends Controller {
 
     public static final String FLASH_ERROR_KEY = "FLASH_ERROR";
     public static final String FLASH_SUCCESS_KEY = "FLASH_SUCCESS";
+	private static final int LIST_DEFAULT_LIMIT = 10;
+	private static final int LIST_MAX_LIMIT = 100;
 
 	public static Result index() {
 		printSession();
@@ -99,6 +101,47 @@ public class Application extends Controller {
         	newPortlet.setCreatedOn(new Date());
 	    	newPortlet.save();
 	    	return ok();
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+    public static Result subscribeToPortletJson(Long portletId) {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            double amount = json.findPath("amount").asDouble();
+            if(amount != 0) {
+            	Portlet portlet = Portlet.find.byId(portletId);
+            	List<PortletStock> stocks = PortletStock.findByPortlet(portlet);
+            	double remainingAmount = amount;
+            	for (PortletStock ps : stocks) {
+            		double currentPx = Stock.currentPrice(ps.getStock());
+
+            		//long shares = Math.round((amount * ps.getPercent())/(100 * currentPx));
+            		double shares = (amount * ps.getPercent())/(100 * currentPx);
+            		double spent = shares * currentPx;
+/*        			if(shares > 0 && remainingAmount < spent) {
+        				shares -= 1;
+        				spent = shares * currentPx;
+        			}
+*/
+            		if(shares > 0) {
+        	        	UserPortletStock newUserPortletStock = new UserPortletStock();
+        	    		newUserPortletStock.setPortlet(portlet);
+        		    	newUserPortletStock.setStock(ps.getStock());
+        		    	newUserPortletStock.setBuyPrice(currentPx);
+        		    	newUserPortletStock.setBuyWeight(ps.getPercent());
+        		    	newUserPortletStock.setQty(shares);
+        		    	newUserPortletStock.setUser(getLocalUser(session()));
+        		    	newUserPortletStock.save();
+                		remainingAmount -= spent;
+            		}
+				}
+            	return ok();
+            } else {
+                return badRequest("Please provide amount");
+            }
         } else {
             return badRequest("Expecting Json data");
         }
@@ -157,6 +200,25 @@ public class Application extends Controller {
     
     public static Result listPortlets() {
     	List<Portlet> list = Portlet.find.all();
+    	return ok(Json.toJson(list));
+    }
+    
+    public static Result listRecentPortlets(Integer limit) {
+    	if(limit == null || limit == 0)
+    		limit = LIST_DEFAULT_LIMIT;
+    	else if (limit > LIST_MAX_LIMIT)
+    		limit = LIST_MAX_LIMIT;
+    	List<Portlet> list = Portlet.findRecent(limit);
+    	return ok(Json.toJson(list));
+    }
+    
+    public static Result listTopPerformingPortlets(Integer limit) {
+    	//TODO track performance and return portlets by rating
+    	if(limit == null || limit == 0)
+    		limit = LIST_DEFAULT_LIMIT;
+    	else if (limit > LIST_MAX_LIMIT)
+    		limit = LIST_MAX_LIMIT;
+    	List<Portlet> list = Portlet.findRecent(limit);
     	return ok(Json.toJson(list));
     }
 
