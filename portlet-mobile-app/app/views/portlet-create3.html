@@ -35,24 +35,13 @@
 
      <div>
       
-     <ion-list  class="portfolio-bg white-color">
+     
         <table class = "table">
         <tr ng-repeat="selectedStock in portlet.selectedStocks"> 
           <td ng-bind="selectedStock.name"> </td> <td><input class="weightage" style="border-radius: 5px;
      border-style: solid; background-color:transparent;" size='5' type="text" ng-model="percentage" ng-change="setWeightage(selectedStock.name , percentage)" > </td> <td> <button type="button" ng-click="deleteStock(selectedStock.name)" class="btn btn-sm btn-danger" >Delete</button> </td>   
         </tr>
         </table>
-<!--
-        <ion-item  ng-repeat="selectedStock in selectedStocks "  style="border:1px;font-size:18px;"  class="portfolio-bg transparent list-padd" >
-
-
-         <div  class="row">
-            <div class="col-xs-8"><h2 style="font-size:20px;display:inline; " class="white-color" size='5'></h2></div>
-            <div class="col-xs-4"><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></div>
-            <div style="color:white;padding-top:10px;margin-left:-50px"><h2>%</h2></div>
-            <div class="col-xs-2"><a href="#" id="add-stock" class="ion-ios-minus-outline button"></a></div>
-        </div>
-        <ion-option-button  class="button-assertive button"ng-click="showDelete(stockWeightage)">Delete</ion-option-button>   --> 
         </ion-item>
       </ion-list>
       </div>

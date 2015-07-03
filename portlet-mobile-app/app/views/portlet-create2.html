@@ -10,17 +10,12 @@
       		<h4 align="center" class="page-text">Add Stocks</h4>
       		</div>
       	</div>
-        
-          
-            <select  style="background-color:transparent;" id="stockExchange.name" ng-disabled="isDisabled" ng-change="getStocks()" ng-model="stockExchangeName" name="stockExchange" data-required="true" class="form-control parsley-validated">
-              <!-- <select style="background-color:transparent;"  name="stockExchange" data-required="true" class="form-control" ng-model="model"> -->
+        <div class="padding">
+            <select style="background-color:transparent;" id="stockExchange.name" ng-disabled="isDisabled" ng-change="getStocks()" ng-model="stockExchangeName" name="stockExchange" data-required="true" class="form-control parsley-validated">
                   <option value="">Please Select</option>
                       <option ng-repeat=" stockexchange in stockExchanges " value = "{{stockexchange.name}}" >{{stockexchange.name}}</option>
               </select>
-              
-            
-          
-        
+        </div>
         <div class="padding">
         	<label class="item item-input search " >
         		  <i class="icon ion-search placeholder-icon"></i>

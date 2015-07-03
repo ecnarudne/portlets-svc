@@ -60,9 +60,12 @@
         </div>
       </div>
       <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
-        <div class="panel panel-default mpt-portlet"><a ng-click = "viewMore(portlet.id)" class="text-center mpt-portlet-color {{portlet.volatilityClass}}"><span style="text-transform: capitalize;">{{portlet.volatilityClass}} Volatility</span></br>
-        <span class="mpt-totalReturn">25%</span>
-        <span><span ng-bind="portlet.followersCount" ></span> Followers</span></a>        
+        <div class="panel panel-default mpt-portlet">
+          <a ng-click = "viewMore(portlet.id)" class="text-center mpt-portlet-color {{portlet.volatilityClass}}">
+            <span class="text-capitalize " ng-bind="portlet.volatilityClass"></span>   Volatility
+        <span class="mpt-returns"> <span ng-bind="portlet.totalReturn"> </span>%</span>
+        <span><span ng-bind="portlet.followerCount" ></span> Followers</span></a>        
+          
           <div class="panel-body mpt-portlet-body">
             <h5><a href="#" ng-bind="portlet.name" ></a></h5>
             <h5 ng-bind="portlet.notes"></h5>  
@@ -72,3 +75,4 @@
       </div>
   </ion-content>
 </ion-view>
+
