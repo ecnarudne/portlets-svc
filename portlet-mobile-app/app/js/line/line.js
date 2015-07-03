@@ -25,7 +25,7 @@ function plotGraph()
       lines: {
         show: true, 
         fill: false,
-        lineWidth: 3,
+        lineWidth: 1,
       },
       points: {
         show: false,

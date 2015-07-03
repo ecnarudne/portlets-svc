@@ -12,11 +12,16 @@ appController.controller(
         "portletApi"
         "$location"
         "$document"
-        ($scope,$log,$http,$cookies,portletApi,$location,$document)->
-            
-            $scope.setPortletData = ()->
-                console.log 'setPortlet data is clalled  '
-                console.log  $scope.notes + " " + $scope.notes + " " + $scope.name
+        "$rootScope"
+        ($scope,$log,$http,$cookies,portletApi,$location,$document,$rootScope)->
+            $scope.setPortletData = () ->
+                portlet = {}
+                portlet.name = $scope.name
+                portlet.notes = $scope.notes
+                portlet.sectorId = $scope.sectorId
+                $rootScope.portlet = portlet
+                $rootScope.portlet.selectedStocks = []
+                $rootScope.availableWeightage = 100 
 
             portletApi.getCategories(
                 before: ->
@@ -27,37 +32,9 @@ appController.controller(
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
                     $location.path("/portlet-create")
-                    #$scope.errorMessage = true
                 forbidden: (data, status, headers, config) ->
                     $log.error('Got error while Authentication Response: ' + data)
-                    $scope.errorMessage = true
                     $location.path("/login")
-                
-            )
-            ###console.log "data in root scope is " + JSON.stringify $rootScope.portlet
-            $scope.portlet = {}
-            $scope.selectedStocks =  []
-            $scope.availableWeightage = 100
-            $scope.size = 0
-            $scope.isShown = false
-
-            original = angular.copy($scope.portlet)
-            # Used to set ot reset form field after submitting
-            portletApi.getCategories(
-                before: ->
-                    $log.debug('Fetching Categories')
-                success: (data, status, headers, config) ->
-                    $scope.categories = data;
-                    console.debug 'categories fetched :' + JSON.stringify data
-                error: (data, status, headers, config) ->
-                    $log.error('Something went wrong! ' + data)
-                    $location.path("/portlet-create")
-                    #$scope.errorMessage = true
-                forbidden: (data, status, headers, config) ->
-                    $log.error('Got error while Authentication Response: ' + data)
-                    $scope.errorMessage = true
-                    $location.path("/login")
-                
             )
             portletApi.getStockExchange(
                 before: ->
@@ -69,20 +46,78 @@ appController.controller(
                     $log.error('Something went wrong! ' + data)
                 forbidden: (data, status, headers, config) ->
                     $log.error('Got error while fetching')
+                    $location.path("/login")
             )
 
-            $scope.revert = ->
-                $scope.portlet = angular.copy(original)
-                $scope.portlet_form.$setPristine()
+            $scope.getStocks = () ->
+                $rootScope.portlet.stockExchange = $scope.stockExchangeName
+                console.log 'getting Stocks of : ' + $scope.stockExchangeName
+                if $scope.stockExchangeName == ''
+                        alert "please select Exchange"
+                else
+                    portletApi.getStocks(
+                        $scope.stockExchangeName
+                        {
+                            before: ->
+                                $log.debug('submitting stock exchange data.')
+                            success: (data, status, headers, config) ->
+                                console.log "stock fetched succesfully."
+                                $rootScope.stocks = data
+                                $log.debug('Stock fetched: ' + JSON.stringify data)
+                            error: (data, status, headers, config) ->
+                                $log.error('Something went wrong! ' + data)
+                            forbidden: (data, status, headers, config) ->
+                                $log.error('Got error while Authentication Response: ' + data)
+                                $location.path("/login")
+                        }
+            )
+            console.log 'selected Stock are: ' + JSON.stringify $scope.selectedStocks
+            $scope.addStock = (stock)->
+                count =$rootScope.portlet.selectedStocks.filter((value) ->value.name == stock).length
+                if count == 0
+                    $rootScope.portlet.selectedStocks.push stock
+                    $rootScope.isDisabled = true
+                    $scope.showSelected = true
+                    console.log 'Added Stocks: ' + JSON.stringify $rootScope.portlet.selectedStocks
+                else
+                    alert 'This Stock is already added'
+                $scope.size = $rootScope.portlet.selectedStocks.filter((value) -> value.name != '').length
 
-            $scope.canRevert = ->
-                return !angular.equals($scope.portlet, original) || !$scope.portlet_form.$pristine
+            $scope.setWeightage = (stock,percentage) ->
+                $rootScope.portlet.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
+                console.log "JSon array with weight is :" + JSON.stringify $scope.portlet.selectedStocks
+                $scope.totalWeight = 0 
+                $rootScope.portlet.selectedStocks.forEach (s) -> 
+                    weight = 0
+                    if s.weightage == undefined
+                        weight = 0
+                    else
+                        weight = parseInt(s.weightage)
+                    $scope.totalWeight = $scope.totalWeight + weight
+                    $rootScope.availableWeightage = 100 - $scope.totalWeight
+                    if $scope.totalWeight > 100
+                        alert 'Total weightage must 100%'
+                console.log  'total weightage'+ $scope.totalWeight 
 
-            $scope.canSubmit = ->
-                return $scope.portlet_form.$valid && !angular.equals($scope.portlet, original)
+            $scope.deleteStock = (stock)->
+                $rootScope.portlet.selectedStocks = $.grep($rootScope.portlet.selectedStocks, (x) -> x.name != stock)
+                console.log "Json array is :" + JSON.stringify $rootScope.portlet.selectedStocks
+                $scope.size = $rootScope.portlet.selectedStocks.filter((value) -> value.name != '').length
+                if $scope.size == 0
+                    $rootScope.isDisabled = false
+                    $scope.availableWeightage = 100
+                $scope.totalWeight = 0
+                $rootScope.portlet.selectedStocks.forEach (s) -> 
+                    console.log "in delete stock for each loop"
+                    weight = 0
+                    if s.weightage == undefined or s.weightage == ''
+                        weight = 0
+                    else
+                        weight = parseInt(s.weightage)
+                        $scope.totalWeight = $scope.totalWeight + weight
+                    $rootScope.availableWeightage = 100 - $scope.totalWeight
 
             $scope.addPortlet = () ->
-                $scope.portlet.stocks = $scope.selectedStocks
                 if $scope.size < 3 
                     alert 'Portlet must have at least 9 stocks'
                 else
@@ -90,9 +125,9 @@ appController.controller(
                         alert 'weight must be 100 %'
                     else
                         portletApi.addPortlet(
-                            data: $scope.portlet
+                            data: $rootScope.portlet
                             before: ->
-                                $log.debug('submitting Portlet Data: ' + JSON.stringify $scope.portlet )
+                                $log.debug('submitting Portlet Data: ' + JSON.stringify $rootScope.portlet )
                             success: (data, status, headers, config) ->
                                 # Setting coockies
                                 console.log("Hi data submittes successfully")
@@ -101,101 +136,11 @@ appController.controller(
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
-                                #$scope.errorMessage = true
                             forbidden: (data, status, headers, config) ->
                                 $log.error('Got error while Authentication Response: ' + data)
                                 $scope.errorMessage = true
                                 $location.path("/login")
                             
                         )
-            $scope.setPortletData = ()->
-                    console.log 'setPortlet data is clalled  '
-                    console.log  $scope.notes
-
-
-            $scope.getStocks = () ->
-                if $scope.portlet.stockExchange.name == undefined
-                        alert "please select Exchange"
-                else
-                    portletApi.getStocks(
-                        $scope.portlet.stockExchange.name
-                        {
-                            before: ->
-                                $log.debug('submitting stock exchange data.')
-                            success: (data, status, headers, config) ->
-                                console.log "stock fetched succesfully."
-                                $scope.stocks = data
-                                $log.debug('Stock fetched: ' + JSON.stringify data)
-                            error: (data, status, headers, config) ->
-                                $log.error('Something went wrong! ' + data)
-                            forbidden: (data, status, headers, config) ->
-                                $log.error('Got error while Authentication Response: ' + data)
-                        }
-                    )
-            
-            $scope.addStock = (stock)->
-                count =$scope.selectedStocks.filter((value) ->
-                        value.name == stock
-                        ).length
-                if count == 0
-                    $scope.stockWithWeight = {}
-                    $scope.stockWithWeight.name = stock
-                    $scope.selectedStocks.push $scope.stockWithWeight
-                    $scope.isDisabled = true
-                    $scope.showSelected = true
-                else
-                    alert 'This Stock is already added'
-                $scope.size = $scope.selectedStocks.filter((value) ->
-                        value.name != ''
-                        ).length
-             
-            $scope.deleteStock = (stock)->
-                 $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
-                                                            x.name != stock
-                                )
-                 console.log "Json array is :" + JSON.stringify $scope.selectedStocks
-                 $scope.size = $scope.selectedStocks.filter((value) ->
-                        value.name != ''
-                        ).length
-                 console.log 'size after delete' + $scope.size
-                 if $scope.size == 0
-                    $scope.isDisabled = false
-                    $scope.availableWeightage = 100
-                 $scope.totalWeight = 0
-                 $scope.selectedStocks.forEach (s) -> 
-                    console.log "in delete stock for each loop"
-                    weight = 0
-                    if s.weightage == undefined
-                        weight = 0
-                    else
-                        weight = parseInt(s.weightage)
-                        $scope.totalWeight = $scope.totalWeight + weight
-                    $scope.availableWeightage = 100 - $scope.totalWeight
-            
-            $scope.setWeightage = (stock,percentage) ->
-                $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
-                console.log "JSon array with weight is :" + JSON.stringify $scope.selectedStocks
-                $scope.totalWeight = 0 
-                $scope.selectedStocks.forEach (s) -> 
-                    weight = 0
-                    if s.weightage == undefined
-                        weight = 0
-                    else
-                        weight = parseInt(s.weightage)
-                    $scope.totalWeight = $scope.totalWeight + weight
-                    $scope.availableWeightage = 100 - $scope.totalWeight
-                    if $scope.totalWeight > 100
-                        alert 'Total weightage must 100%'
-
-                console.log  'total weightage'+ $scope.totalWeight 
-            
-            $scope.showTable = (searchVal)->
-                if searchVal.val == '' 
-                    $scope.isShown = false
-                else
-                    $scope.isShown = true###
-
-        
-
 
 ])

@@ -1,27 +1,29 @@
-<ion-view view-title="Portlet-create" name="Portlet-create" ng-controller="PortletCreateCtrl">
-  <ion-content class="portfolio-bg myfont">
-    <div class="row">
-      <div   class="col-90 toggle-bar ">
-        <a id="add-portfolio" menu-toggle="left" href="#" class="ion-navicon pull-left menu-btn-padd"></a>
-        <a href="#/app/portlet-create3" class="pull-right" ><h4>Next</h4></a> 
-       <h4 align="center" class="page-text">Create Portlet</h4>
-      </div>
-    </div>  
-    <div class="padding">   
-      <row >
-        <span style="color:#ffffff;" class="input-label col col-90">Portlet Name</span> 
-        <input type="text" style="margin-left:5%;width:95%;" ng-model="name" placeholder="Give your portlet a name" />
-        <br/>
-        <span class="input-label col col-90" style="color:#ffffff;">Short Description</span>
-        <textarea ng-model= "notes" style="width:95%;margin-left:5%;color:#ffffff;" rows="4" placeholder="Tell us what your portlet is about" ></textarea>
-      </row>
-      <row>
-        <span class="input-label col col-90" style="color:#ffffff;">Select Exchange</span>
-          <select ng-change="setPortletData()" style="background-color:transparent;" ng-model="sectorId"  name="stockExchange" data-required="true" class="form-control" >
-              <option value="">Please Select</option>
-              <option ng-repeat=" sector in sectors " value = "{{sector.id}}" >{{sector.name}}</option>
-          </select>
-      </row>
-      </div>
+<ion-view view-title="Portlet-create" name="Portlet-create" >
+  <ion-content class="portfolio-bg myfont" >
+    <div ng-controller="PortletCreateCtrl">
+      <div class="row" >
+        <div   class="col-90 toggle-bar ">
+          <a id="add-portfolio" menu-toggle="left" href="#" class="ion-navicon pull-left menu-btn-padd"></a>
+          <a href="#/app/portlet-create2" class="pull-right" ><h4>Next</h4></a> 
+         <h4 align="center" class="page-text">Create Portlet</h4>
+        </div>
+      </div>  
+      <div class="padding">   
+        <row >
+          <span style="color:#ffffff;" class="input-label col col-90">Portlet Name</span> 
+          <input type="text" style="margin-left:5%;width:95%;" ng-model="name" placeholder="Give your portlet a name">
+          <br/>
+          <span class="input-label col col-90" style="color:#ffffff;">Short Description</span>
+          <textarea ng-model="notes" style="width:95%;margin-left:5%;color:#ffffff;" rows="4" placeholder="Tell us what your portlet is about" ></textarea>
+        </row>
+        <row>
+          <span class="input-label col col-90" style="color:#ffffff;">Select Exchange</span>
+            <select ng-change="setPortletData()" style="background-color:transparent;" ng-model="sectorId"  name="stockExchange" data-required="true" class="form-control" >
+                <option value="">Please Select</option>
+                <option ng-repeat="sector in sectors" value = "{{sector.id}}" >{{sector.name}}</option>
+            </select>
+        </row>
+      </div>      
+    </div>
   </ion-content>
 </ion-view>
