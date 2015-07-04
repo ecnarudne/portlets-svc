@@ -20,7 +20,7 @@ GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(e
 GET     /stockstats/:symbol         controllers.Application.stockStats(symbol: String)
 
 POST    /defineportletjs            controllers.Application.definePortletJson()
-POST    /subscribeportletjs         controllers.Application.subscribeToPortletJson()
+POST    /subscribeportletjs/:portletId controllers.Application.subscribeToPortletJson(portletId: Long)
 POST    /addPortlet                 controllers.Application.addPortlet()
 POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
 POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
