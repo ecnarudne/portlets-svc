@@ -1,7 +1,6 @@
 package models;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -33,6 +32,7 @@ public class Portlet extends Model {
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private String primaryExchange = Exchange.NASDAQ;
 	private Date lastRebalancedOn;
 	private Date createdOn;
 
@@ -194,5 +194,11 @@ public class Portlet extends Model {
 	}
 	public void setAnnualReturn(double annualReturn) {
 		this.annualReturn = annualReturn;
+	}
+	public String getPrimaryExchange() {
+		return primaryExchange;
+	}
+	public void setPrimaryExchange(String primaryExchange) {
+		this.primaryExchange = primaryExchange;
 	}
 }
