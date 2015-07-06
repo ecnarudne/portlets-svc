@@ -19,6 +19,7 @@ import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
 import models.api.UserPortletStockAPI;
+import models.mock.MockSets;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -135,6 +136,7 @@ public class Application extends Controller {
                 		remainingAmount -= spent;
             		}
 				}
+            	Logger.info("Remaining Amount: " + remainingAmount);
             	return ok();
             } else {
                 return badRequest("Please provide amount");
@@ -348,6 +350,10 @@ public class Application extends Controller {
     	Logger.info("Saving: " + newUserPortletStock);
     	newUserPortletStock.save();
     	return redirect(routes.Application.portfolio());
+    }
+
+    public static Result dailyPriceChartDataAll() {
+    	return ok(Json.toJson(MockSets.mockGraphData()));
     }
 
     public static User getLocalUser(final Session session) {

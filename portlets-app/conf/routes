@@ -42,6 +42,8 @@ POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()
 GET     /listusers                  controllers.Application.listUsers()
 
+GET     /dailypricechartall         controllers.Application.dailyPriceChartDataAll()
+
 GET     /admin/mocks                controllers.Admin.mockSets()
 GET     /admin/listmocks            controllers.Admin.listMockSets()
 POST    /admin/addmock              controllers.Admin.addMockSet()
