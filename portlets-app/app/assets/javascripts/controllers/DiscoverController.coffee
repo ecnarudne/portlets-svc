@@ -27,7 +27,7 @@ angular.module('DiscoverCtrl',['Api'])
                   month
                   day
                 ].join '/'
-            portletApi.getCategories(
+            portletApi.getSectors(
                 {
                   before: ->
                     $log.debug('Fetching categories page details.')

@@ -20,7 +20,11 @@ do ->
         
         templateUrl: '/assets/angular/ui/portlet-create.html'
         
-        controller: 'PortletCtrl').when('/page-explore',
+        controller: 'PortletCtrl').when('/copy-portlet/:portletId',
+        
+        templateUrl: '/assets/angular/ui/copy-portlet.html'
+        
+        controller: 'CopyPortletCtrl').when('/page-explore',
         
         templateUrl: '/assets/angular/ui/page-explore.html'
         

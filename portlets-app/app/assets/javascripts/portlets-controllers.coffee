@@ -7,4 +7,5 @@ app = angular.module('portlets-controller', [
   'DiscoverCtrl'
   'PagePortletCtrl'
   'PageStockCtrl'
+  'CopyPortletCtrl'
   ])

@@ -71,6 +71,9 @@ angular.module('PagePortletCtrl',['Api'])
                     $log.debug('In complete function')
                 }
             )
+            $scope.copyPortlet = (portletId) ->
+              console.log 'portlet Id: ' + portletId
+              $location.path("/copy-portlet/" + portletId)
            
             
     ]

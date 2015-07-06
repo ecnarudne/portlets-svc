@@ -79,7 +79,7 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/listmyportlets"),request)
         return
 
-      api.prototype.getCategories = (request) ->
+      api.prototype.getSectors = (request) ->
         get(actionUrl("/listsectors"),request)
         return
 

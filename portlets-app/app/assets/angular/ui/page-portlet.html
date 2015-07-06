@@ -38,9 +38,8 @@
               <span  ng-repeat="sector in portlet.sectors"> 
                   <span class="label label-skeleton" ng-bind="sector.name"></span >
               </span> 
-            <!-- <span class="label label-skeleton">Financials</span> <span class="label label-skeleton">Consumer Products and Services</span> <span class="label label-skeleton">Telecommunications</span> <span class="label label-skeleton">Basic Material</span> -->
             </div>
-            <div role="group" class="btn-group btn-group-justified top-20"><a type="button" class="btn mpt-btn">Follow</a><a type="button" class="btn mpt-btn">Copy</a></div>
+            <div role="group" class="btn-group btn-group-justified top-20"><a type="button"  class="btn mpt-btn">Follow</a><a type="button" class="btn mpt-btn" ng-click="copyPortlet(portlet.id)">Copy</a></div>
           </div>
         </div>
       </div>
