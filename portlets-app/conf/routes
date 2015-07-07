@@ -5,39 +5,44 @@
 # Home page
 GET     /                           controllers.Application.index()
 
-GET     /listexchanges/              controllers.Application.listExchanges()
-POST    /addPortlet                 controllers.Application.addPortlet()
-GET     /portlets                   controllers.Application.portlets()
-GET     /listportlets               controllers.Application.listPortlets()
-POST    /defineportletjs            controllers.Application.definePortletJson
-
-POST    /buyPortlet                 controllers.Application.buyPortlet()
-GET     /listmyportlets             controllers.Application.listMyPortlets()
-GET     /listmyportletstocks        controllers.Application.listMyPortletStocks()
-GET     /myPortfolio                controllers.Application.myPortfolio()
-GET     /portfolio                  controllers.Application.portfolio()
+GET     /listexchanges/             controllers.Application.listExchanges()
 
 GET     /listsectors                controllers.Application.listSectors()
 GET     /sectors                    controllers.Application.sectors()
 POST    /addsector                  controllers.Application.addSector()
 POST    /addsectorjs                controllers.Application.addSectorJson()
 
-
-POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
-POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
-GET     /listportletstocks/:portletId  controllers.Application.listPortletStocks(portletId: Long)
+GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystocks               controllers.Application.listMyStocks()
 GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
 GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(exchange: String)
-GET     /stockstats/:symbol          controllers.Application.stockStats(symbol: String)
+GET     /stockstats/:symbol         controllers.Application.stockStats(symbol: String)
+
+POST    /defineportletjs            controllers.Application.definePortletJson()
+POST    /subscribeportletjs/:portletId controllers.Application.subscribeToPortletJson(portletId: Long)
+POST    /addPortlet                 controllers.Application.addPortlet()
+POST    /addstocktoportlet          controllers.Application.addStockToPortlet()
+POST    /subscribetoportlet         controllers.Application.subscribeToPortlet()
+POST    /buyPortlet                 controllers.Application.buyPortlet()
+GET     /portlets                   controllers.Application.portlets()
+GET     /listportlets               controllers.Application.listPortlets()
+GET     /listmyportlets             controllers.Application.listMyPortlets()
+GET     /listmyportletstocks        controllers.Application.listMyPortletStocks()
 GET     /portlet/:portletId         controllers.Application.portlet(portletId: Long)
-GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
-GET     /listmystockstats/:portletId  controllers.Application.listMyStockStatsByPortlet(portletId: Long)
+GET     /listmystockstats/:portletId controllers.Application.listMyStockStatsByPortlet(portletId: Long)
+GET     /listrecentportlets/:limit  controllers.Application.listRecentPortlets(limit: Int)
+GET     /listopportlets/:limit      controllers.Application.listTopPerformingPortlets(limit: Int)
+GET     /listportletstocks/:portletId controllers.Application.listPortletStocks(portletId: Long)
+
+GET     /myPortfolio                controllers.Application.myPortfolio()
+GET     /portfolio                  controllers.Application.portfolio()
 
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()
 GET     /listusers                  controllers.Application.listUsers()
+
+GET     /dailypricechartall         controllers.Application.dailyPriceChartDataAll()
 
 GET     /admin/mocks                controllers.Admin.mockSets()
 GET     /admin/listmocks            controllers.Admin.listMockSets()
@@ -58,4 +63,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 # Play Authenticate
 GET     /logout                     com.feth.play.module.pa.controllers.Authenticate.logout
 GET     /authenticate/:provider     com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
-GET     /authenticate/:provider/denied     controllers.Application.oAuthDenied(provider: String)
+GET     /authenticate/:provider/denied controllers.Application.oAuthDenied(provider: String)

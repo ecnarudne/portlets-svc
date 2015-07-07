@@ -22,6 +22,7 @@ create table portlet (
   notes                     varchar(255),
   validity                  integer,
   visible_to_all            tinyint(1) default 0,
+  primary_exchange          varchar(255),
   last_rebalanced_on        datetime,
   created_on                datetime,
   follower_count            bigint,

@@ -1,7 +1,6 @@
 package models;
 
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -33,6 +32,7 @@ public class Portlet extends Model {
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private String primaryExchange = Exchange.NASDAQ;
 	private Date lastRebalancedOn;
 	private Date createdOn;
 
@@ -81,6 +81,14 @@ public class Portlet extends Model {
 		if(sector == null)
 			return null;
 		List<Portlet> list = find.where().eq("sector", sector).findList();
+		if(list != null && !list.isEmpty())
+			return list;
+		return null;
+	}
+
+	public static List<Portlet> findRecent(int limit) {
+		//TODO must cache
+		List<Portlet> list = find.orderBy("createdOn").setMaxRows(limit).findList();
 		if(list != null && !list.isEmpty())
 			return list;
 		return null;
@@ -186,5 +194,11 @@ public class Portlet extends Model {
 	}
 	public void setAnnualReturn(double annualReturn) {
 		this.annualReturn = annualReturn;
+	}
+	public String getPrimaryExchange() {
+		return primaryExchange;
+	}
+	public void setPrimaryExchange(String primaryExchange) {
+		this.primaryExchange = primaryExchange;
 	}
 }
