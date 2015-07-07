@@ -72,7 +72,7 @@
                     <label id="lastweekninetynine" class="btn btn-primary">
                       <input id="lastweekninetynine" type="radio" name="options" autocomplete="off">1M
                     </label>
-                    <label id="latenineties" class="btn btn-primary active">
+                    <label id="latenineties" class="btn btn-primary ">
                       <input id="latenineties" type="radio" name="options" autocomplete="off">3M
                     </label>
                     <label id="ninetyninequarters" class="btn btn-primary">
@@ -81,7 +81,7 @@
                     <label id="oneyear" class="btn btn-primary">
                       <input id="ninetynine" type="radio" name="options" autocomplete="off" checked="">1Y
                     </label>
-                    <label id="whole" class="btn btn-primary">
+                    <label id="whole" class="btn btn-primary active">
                       <input id="whole" type="radio" name="options" autocomplete="off">3Y
                     </label>
                   </div>
@@ -132,7 +132,7 @@
                       </tfoot>
                       <tbody>
                         <tr ng-repeat="portlet in portlets">
-                          <td><a href="#/page-portlet">{{portlet.name}} </a></td>
+                          <td><a href="#/page-portlet/{{portlet.id}}">{{portlet.name}} </a></td>
                           <td class="{{portlet.volatilityClass}}"></td>
                           <td>{{portlet.totalReturn}}% </td>
                           <td id="tblrow-price">{{portlet.dailyReturn}}%</td>

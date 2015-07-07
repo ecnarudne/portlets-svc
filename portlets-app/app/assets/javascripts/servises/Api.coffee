@@ -69,11 +69,15 @@ angular.module('Api', ['ngCookies'])
         
       api.prototype.addPortlet = (request) ->
         post(actionUrl("/addPortlet"),request)
-        return
+        return 
       
       api.prototype.getPortfolioDetails = (request) ->
         get(actionUrl("/myPortfolio"),request)
         return 
+
+      api.prototype.getPortfolioGraphData = (request) ->
+        get(actionUrl("/dailypricechartall"),request)
+        return
 
       api.prototype.getMyPortlets = (request) ->
         get(actionUrl("/listmyportlets"),request)

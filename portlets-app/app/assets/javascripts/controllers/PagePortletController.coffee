@@ -12,7 +12,20 @@ angular.module('PagePortletCtrl',['Api'])
         "$routeParams"
         ($scope,$log,$http,$cookies,portletApi,$location,$routeParams)->
             $log.debug('PagePortletCtrl controller called')
-            plotGraph()
+            portletApi.getPortfolioGraphData(
+                {
+                  before: ->
+                    $log.debug('Fetching graph data.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'MyPortlets fetched successfully.' + JSON.stringify(data)
+                    $scope.portlets = data
+                    plotGraph(data)
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  graph data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
+            )
             formatDate = (date) ->
                 d = new Date(date)
                 month = '' + d.getMonth() + 1

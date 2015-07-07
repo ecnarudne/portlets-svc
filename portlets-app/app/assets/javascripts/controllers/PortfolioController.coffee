@@ -11,11 +11,26 @@ angular.module('PortfolioCtrl',['Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PortfolioCtrl controller called')
-            plotGraph()
+            portletApi.getPortfolioGraphData(
+                {
+                  before: ->
+                    $log.debug('Fetching graph data.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'MyPortlets fetched successfully.' + JSON.stringify(data)
+                    $scope.portlets = data
+                    plotGraph(data)
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  graph data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
+            )
+            
+            
             portletApi.getPortfolioDetails(
                 {
                   before: ->
-                    $log.debug('Fetching table data.')
+                    $log.debug('Fetching Portfolio details.')
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
                     $scope.portfolio = data
@@ -27,7 +42,7 @@ angular.module('PortfolioCtrl',['Api'])
                         $scope.arrow = 'fa-sort-up'
 
                   error: (data, status, headers, config, statusText) ->
-                    $log.error('Got error while getting  table data')                   
+                    $log.error('Got error while getting Portfolio details')                   
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete of getPortfolioDetails()')
                 }
@@ -35,12 +50,12 @@ angular.module('PortfolioCtrl',['Api'])
             portletApi.getMyPortlets(
                 {
                   before: ->
-                    $log.debug('Fetching table data.')
+                    $log.debug('Fetching MyPortlets data.')
                   success: (data, status, headers, config) ->
                     $log.debug 'MyPortlets fetched successfully.' + JSON.stringify(data)
                     $scope.portlets = data
                   error: (data, status, headers, config, statusText) ->
-                    $log.error('Got error while getting  table data')                   
+                    $log.error('Got error while getting  MyPortlets.')                   
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete of getPortfolioDetails()')
                 }
