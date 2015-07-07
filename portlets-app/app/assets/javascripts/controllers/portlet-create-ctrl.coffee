@@ -31,12 +31,12 @@ angular.module('PortletCtrl',['Api'])
 
             original = angular.copy($scope.portlet)
             # Used to set ot reset form field after submitting
-            portletApi.getCategories(
+            portletApi.getSectors(
                 before: ->
-                    $log.debug('Fetching Categories')
+                    $log.debug('Fetching sectors')
                 success: (data, status, headers, config) ->
-                    $scope.categories = data;
-                    console.debug 'categories fetched :' + JSON.stringify data
+                    $scope.sectors = data;
+                    console.debug 'sectors fetched :' + JSON.stringify data
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
                     $location.path("/portlet-create")
@@ -94,7 +94,6 @@ angular.module('PortletCtrl',['Api'])
                                 $log.error('Got error while Authentication Response: ' + data)
                                 $scope.errorMessage = true
                                 $location.path("/login")
-                            
                         )
 
             $scope.getStocks = () ->
