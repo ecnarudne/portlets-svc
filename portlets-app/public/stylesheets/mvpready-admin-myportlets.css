@@ -3259,3 +3259,14 @@ span.mpt-v5-text{ color: #6A2727;}
     font-size: 26px;
   }
 }
+a.mpt-btn{
+  font-size: 20px;
+  padding: 6px;
+  border: 1px solid #FFFFFF;
+  color: #ffffff;
+  background-color: rgba(255,255,255,0.15 );
+}
+a.mpt-btn:hover{
+  background-color: #ffffff;
+  color: #e96d65;
+}
