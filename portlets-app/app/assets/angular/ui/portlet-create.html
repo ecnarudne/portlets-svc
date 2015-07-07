@@ -90,7 +90,7 @@
                           <tbody>
                             <tr ng-repeat="selectedStock in selectedStocks track by $index">
                               <td> {{selectedStock.name}} </td>
-                              <td> <input ng-placeholder="Weightage" placeholder = "Weightage" ng-required = 'true' type='text' ng-model= 'percentage' ng-change = 'setWeightage(selectedStock.name , percentage)' ></td>
+                              <td> <input ng-placeholder="Weightage" placeholder = "Weightage" ng-required = 'true' type='text' ng-model= 'selectedStock.weightage' ng-change = 'setWeightage(selectedStock.name , selectedStock.weightage)' ></td>
                               <td><a class="btn btn-danger" ng-click="deleteStock(selectedStock.name)">Delete</a></td> 
                             </tr>
                           </tbody>

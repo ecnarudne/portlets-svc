@@ -31,6 +31,18 @@ angular.module('PortletCtrl',['Api'])
 
             original = angular.copy($scope.portlet)
             # Used to set ot reset form field after submitting
+            $scope.calcWeightage = () ->
+                $scope.totalWeight = 0
+                $scope.selectedStocks.forEach (s) -> 
+                    console.log "in delete stock for each loop"
+                    weight = 0
+                    if s.weightage == undefined
+                        weight = 0
+                    else
+                        weight = parseInt(s.weightage)
+                        $scope.totalWeight = $scope.totalWeight + weight
+                    $scope.availableWeightage = 100 - $scope.totalWeight
+            
             portletApi.getSectors(
                 before: ->
                     $log.debug('Fetching sectors')
@@ -133,42 +145,24 @@ angular.module('PortletCtrl',['Api'])
                         ).length
              
             $scope.deleteStock = (stock)->
-                 $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
+                $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
                                                             x.name != stock
                                 )
-                 console.log "Json array is :" + JSON.stringify $scope.selectedStocks
-                 $scope.size = $scope.selectedStocks.filter((value) ->
-                        value.name != ''
-                        ).length
-                 console.log 'size after delete' + $scope.size
-                 if $scope.size == 0
+                console.log "Json array is :" + JSON.stringify $scope.selectedStocks
+                $scope.size = $scope.selectedStocks.filter((value) -> value.name != '').length
+                console.log 'size after delete' + $scope.size
+                if $scope.size == 0
                     $scope.isDisabled = false
+                    $scope.showSelected = false
                     $scope.availableWeightage = 100
-                 $scope.totalWeight = 0
-                 $scope.selectedStocks.forEach (s) -> 
-                    console.log "in delete stock for each loop"
-                    weight = 0
-                    if s.weightage == undefined
-                        weight = 0
-                    else
-                        weight = parseInt(s.weightage)
-                        $scope.totalWeight = $scope.totalWeight + weight
-                    $scope.availableWeightage = 100 - $scope.totalWeight
+                $scope.calcWeightage()
             
             $scope.setWeightage = (stock,percentage) ->
                 $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
                 console.log "JSon array with weight is :" + JSON.stringify $scope.selectedStocks
-                $scope.totalWeight = 0 
-                $scope.selectedStocks.forEach (s) -> 
-                    weight = 0
-                    if s.weightage == undefined
-                        weight = 0
-                    else
-                        weight = parseInt(s.weightage)
-                    $scope.totalWeight = $scope.totalWeight + weight
-                    $scope.availableWeightage = 100 - $scope.totalWeight
-                    if $scope.totalWeight > 100
-                        alert 'Total weightage must 100%'
+                $scope.calcWeightage()
+                if $scope.totalWeight > 100
+                    alert 'Total weightage must 100%'
 
                 console.log  'total weightage'+ $scope.totalWeight 
             

@@ -185,17 +185,17 @@ angular.module('CopyPortletCtrl',['Api'])
                         ).length
              
             $scope.deleteStock = (stock)->
-                 $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
+                $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
                                                             x.name != stock
                                 )
-                 console.log "Json array is :" + JSON.stringify $scope.selectedStocks
-                 $scope.size = $scope.selectedStocks.filter((value) -> value.name != '').length
-                 console.log 'size after delete' + $scope.size
-                 if $scope.size == 0
+                console.log "Json array is :" + JSON.stringify $scope.selectedStocks
+                $scope.size = $scope.selectedStocks.filter((value) -> value.name != '').length
+                console.log 'size after delete' + $scope.size
+                if $scope.size == 0
                     $scope.isDisabled = false
                     $scope.showSelected = false
                     $scope.availableWeightage = 100
-                 $scope.calcWeightage()
+                $scope.calcWeightage()
             
             $scope.setWeightage = (stock,percentage) ->
                 $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
