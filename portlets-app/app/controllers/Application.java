@@ -30,6 +30,7 @@ import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
 import play.mvc.Http.Session;
 import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
@@ -312,6 +313,7 @@ public class Application extends Controller {
         return ok(portfolio.render(getLocalUser(session())));
     }
 
+    @Authenticated(PortletsAuthenticator.class)
     public static Result listMyPortlets() {
     	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(session()));
     	Set<Portlet> portlets = new HashSet<Portlet>();

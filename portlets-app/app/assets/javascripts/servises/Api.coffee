@@ -12,7 +12,7 @@ angular.module('Api', ['ngCookies'])
       domain = 'http://portlets.nearbymap.com'
       
       # We need to set cookie after login. Hardcoaded cookie   
-      
+      console.log 'pay_session : ' + $cookies.PLAY_SESSION
       $cookies.cookieVal =  'Please set it after login'
       cookieVal = $cookies.cookieVal
 
@@ -25,9 +25,9 @@ angular.module('Api', ['ngCookies'])
           success: ->
           error: ->
           forbidden: (data, status, headers, config) ->
-            if(status==403)
+            if(status== 403 or status == 401)
               delete $cookies.cookieVal
-              $location.path("/pages-500")
+              $location.path("/sign-up")
             else
               options.error()
           complete: ->
