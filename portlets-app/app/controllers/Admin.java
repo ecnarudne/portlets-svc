@@ -80,12 +80,11 @@ public class Admin extends Controller {
     public static Result importMarketDataHistory() {
         DynamicForm requestData = Form.form().bindFromRequest();
         String dirpath = requestData.get("dirpath");
-        String exchange = requestData.get("exchange");
     	Logger.debug("dirpath: " + dirpath);
     	CsvMarketDataLoader loader = new CsvMarketDataLoader();
     	if(dirpath != null && dirpath.trim().isEmpty())
     		dirpath = CsvMarketDataLoader.MKT_DIR_PATH_DEFAULT;
-    	loader.loadMarketDataHistory(dirpath, exchange);
+    	loader.loadMarketDataHistory(dirpath);
     	return redirect(routes.Admin.mockSets());
     }
 

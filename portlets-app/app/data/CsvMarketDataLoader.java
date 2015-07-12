@@ -25,7 +25,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 	public static final String CSV_SPLIT_BY = ",";
 
 	// @Override
-	public boolean loadMarketDataHistory(String dirpath, String exchange) {
+	public boolean loadMarketDataHistory(String dirpath) {
 		File dir = new File(dirpath);
 		File[] files = dir.listFiles(new PatternFilenameFilter(".*_.*\\.csv"));
 		Logger.info(files.length + " market data files found.");
@@ -41,9 +41,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
             int indexOfDot = file.getName().indexOf('.');
             String dateString = file.getName().substring(indexOfDelimeter + 1, indexOfDot);
             LocalDate date = LocalDate.parse(dateString, DateTimeFormat.forPattern("yyyyMMdd"));
-			if(exchange == null || exchange.isEmpty()) {
-				exchange = file.getName().substring(0, indexOfDelimeter);
-			}
+			String exchange = file.getName().substring(0, indexOfDelimeter);
 			BufferedReader br = null;
 			try {
 				br = new BufferedReader(new FileReader(file));
