@@ -63,6 +63,23 @@ create table stock (
   constraint pk_stock primary key (id))
 ;
 
+create table stock_stats (
+  id                        bigint auto_increment not null,
+  exchange                  varchar(255),
+  stock_id                  bigint,
+  date                      varchar(255),
+  local_date                date,
+  open_price                varchar(255),
+  close_price               varchar(255),
+  high_price                varchar(255),
+  low_price                 varchar(255),
+  volume                    varchar(255),
+  avg_vol                   varchar(255),
+  mktcap                    varchar(255),
+  activity                  varchar(255),
+  constraint pk_stock_stats primary key (id))
+;
+
 create table user (
   id                        bigint auto_increment not null,
   full_name                 varchar(255),
@@ -110,10 +127,12 @@ alter table portlet add constraint fk_portlet_owner_1 foreign key (owner_id) ref
 create index ix_portlet_owner_1 on portlet (owner_id);
 alter table portlet_stock add constraint fk_portlet_stock_portlet_2 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
 create index ix_portlet_stock_portlet_2 on portlet_stock (portlet_id);
-alter table user_portlet_stock add constraint fk_user_portlet_stock_user_3 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_user_portlet_stock_user_3 on user_portlet_stock (user_id);
-alter table user_portlet_stock add constraint fk_user_portlet_stock_portlet_4 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
-create index ix_user_portlet_stock_portlet_4 on user_portlet_stock (portlet_id);
+alter table stock_stats add constraint fk_stock_stats_stock_3 foreign key (stock_id) references stock (id) on delete restrict on update restrict;
+create index ix_stock_stats_stock_3 on stock_stats (stock_id);
+alter table user_portlet_stock add constraint fk_user_portlet_stock_user_4 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_user_portlet_stock_user_4 on user_portlet_stock (user_id);
+alter table user_portlet_stock add constraint fk_user_portlet_stock_portlet_5 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
+create index ix_user_portlet_stock_portlet_5 on user_portlet_stock (portlet_id);
 
 
 
@@ -136,6 +155,8 @@ drop table portlet_stock;
 drop table sector;
 
 drop table stock;
+
+drop table stock_stats;
 
 drop table user;
 

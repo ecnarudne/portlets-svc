@@ -72,8 +72,20 @@ public class Admin extends Controller {
     	Logger.debug("filepath: " + filepath);
     	CsvMarketDataLoader loader = new CsvMarketDataLoader();
     	if(filepath != null && filepath.trim().isEmpty())
-    		filepath = CsvMarketDataLoader.FILE_PATH_DEFAULT;
-    	loader.loadToRedis(filepath, exchange, date);
+    		filepath = CsvMarketDataLoader.MKT_FILE_PATH_DEFAULT;
+    	loader.loadMarketDataFile(filepath, exchange, date);
+    	return redirect(routes.Admin.mockSets());
+    }
+    
+    public static Result importMarketDataHistory() {
+        DynamicForm requestData = Form.form().bindFromRequest();
+        String dirpath = requestData.get("dirpath");
+        String exchange = requestData.get("exchange");
+    	Logger.debug("dirpath: " + dirpath);
+    	CsvMarketDataLoader loader = new CsvMarketDataLoader();
+    	if(dirpath != null && dirpath.trim().isEmpty())
+    		dirpath = CsvMarketDataLoader.MKT_DIR_PATH_DEFAULT;
+    	loader.loadMarketDataHistory(dirpath, exchange);
     	return redirect(routes.Admin.mockSets());
     }
 

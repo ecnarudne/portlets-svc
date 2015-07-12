@@ -48,6 +48,7 @@ GET     /admin/mocks                controllers.Admin.mockSets()
 GET     /admin/listmocks            controllers.Admin.listMockSets()
 POST    /admin/addmock              controllers.Admin.addMockSet()
 POST    /admin/importmkt            controllers.Admin.importMarketDataFile()
+POST    /admin/importmkthistory     controllers.Admin.importMarketDataHistory()
 
 #Dummy url to get json data
 GET 	/page/portfolio/details			controllers.JsonHelper.getPortfoliodetail()

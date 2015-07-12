@@ -9,11 +9,17 @@
 	<select id="nick" name="nick"></select>
 	<input type="submit" value="Push" />
 </form><br/><br/>
-<h3>Import Market Data from CSV File on Server</h3>
+<h3>Import Market Data from single CSV File on Server</h3>
 <form action="@routes.Admin.importMarketDataFile()" method="post" >
-	<input type="text" id="filepath" name="filepath" value="/var/tmp/NASDAQ_20150517.txt" />
+	<input type="text" id="filepath" name="filepath" value="/var/tmp/data/NASDAQ_20150710.csv" />
 	<input type="text" id="exchange" name="exchange" value="NASDAQ" />
 	<input type="text" id="date" name="date" value="20150517" />
+	<input type="submit" value="Import" />
+</form>
+<h3>Import Market Data from all CSV Files on Server</h3>
+<form action="@routes.Admin.importMarketDataHistory()" method="post" >
+	<input type="text" id="filepath" name="dirpath" value="/var/tmp/data" />
+	<input type="text" id="exchange" name="exchange" value="NASDAQ" />
 	<input type="submit" value="Import" />
 </form>
 }
