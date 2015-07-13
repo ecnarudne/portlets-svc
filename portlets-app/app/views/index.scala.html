@@ -36,44 +36,71 @@
     <!-- DataTables CSS-->
     <title>MyPortlets</title>
   </head>
-  <body ng-controller="IndexCtrl">
-    <div id="wrapper">
-        <header role="banner" class="navbar-fixed-top navbar-inverse">
+  <body>
+    <div data-ng-controller="IndexCtrl">
+      <div data-ng-hide="isSpecificPage()" data-ng-cloak>
+        <div id="wrapper">
+          <header role="banner" class="navbar-fixed-top navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><i class="fa fa-cog"></i></button><a href="#/portfolio" class="navbar-brand page-scroll"><i class="mpt-myportlets"></i><span class="light">my</span>portlets</a>
+              </div>
+              <!-- /.navbar-header-->
+              <nav role="navigation" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-left">
+                  <li><a href="/#/page-explore">Discover</a></li>
+                  <li><a href="/#/portlet-create">Create</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown navbar-profile"><a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle"><img src="@routes.Assets.at("images/avatars/avatar-1-xs.jpg")" alt="" class="navbar-profile-avatar img-circle"><span class="navbar-profile-label">Ray Dalio</span><i class="fa fa-caret-down"></i></a>
+                    <ul role="menu" class="dropdown-menu">
+                      <li><a href="/#/portfolio">&nbsp;Portfolio</a></li>
+                      <li><a href="/#/page-settings">
+                          <!-- i.fa.fa-cogs-->&nbsp;Settings</a></li>
+                      <li class="divider"></li>
+                      <li><a href="/logout" ng-click = "logout()">
+                          <!-- i.fa.fa-sign-out-->&nbsp;Logout</a></li>
+                    </ul>
+                  </li>
+                </ul>
+                <form role="search" class="mainnav-form pull-left">
+                  <input type="text" placeholder="Search" class="form-control input-md mainnav-search-query">
+                  <button class="btn mainnav-form-btn"><i class="fa fa-search"></i></button>
+                </form>
+              </nav>
+            </div>
+            <!-- /.container-->
+          </header>
+        </div>
+      </div>
+      <div data-ng-show="isSpecificPage()" data-ng-cloak>
+        <div id="wrapper">
+          <header role="banner" class="navbar-fixed-top navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
-              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><i class="fa fa-cog"></i></button><a href="#/portfolio" class="navbar-brand page-scroll"><i class="mpt-myportlets"></i><span class="light">my</span>portlets</a>
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><i class="fa fa-cog"></i></button><a href="/#/portfolio" class="navbar-brand page-scroll" ng-click="changeHeader()"><i class="mpt-myportlets"></i><span class="light">my</span>portlets</a>
             </div>
             <!-- /.navbar-header-->
             <nav role="navigation" class="collapse navbar-collapse">
-              <ul class="nav navbar-nav navbar-left">
-                <li><a href="/#/page-explore">Discover</a></li>
-                <li><a href="/#/portlet-create">Create</a></li>
-              </ul>
               <ul class="nav navbar-nav navbar-right">
-                <li class="dropdown navbar-profile"><a data-toggle="dropdown" href="javascript:;" class="dropdown-toggle"><img src="@routes.Assets.at("images/avatars/avatar-1-xs.jpg")" alt="" class="navbar-profile-avatar img-circle"><span class="navbar-profile-label">Ray Dalio</span><i class="fa fa-caret-down"></i></a>
-                  <ul role="menu" class="dropdown-menu">
-                    <li><a href="/#/portfolio">&nbsp;Portfolio</a></li>
-                    <li><a href="/#/page-settings">
-                        <!-- i.fa.fa-cogs-->&nbsp;Settings</a></li>
-                    <li class="divider"></li>
-                    <li><a href="/logout">
-                        <!-- i.fa.fa-sign-out-->&nbsp;Logout</a></li>
-                  </ul>
-                </li>
+                <li><a href="/#sign-up">Sign up</a></li>
+                <li><a href="/#login">Log in</a></li>
               </ul>
-              <form role="search" class="mainnav-form pull-left">
-                <input type="text" placeholder="Search" class="form-control input-md mainnav-search-query">
-                <button class="btn mainnav-form-btn"><i class="fa fa-search"></i></button>
-              </form>
             </nav>
           </div>
           <!-- /.container-->
         </header>
-      <div class="content">
-          <div ng-view > </div>
-      </div>
-      <!-- .content-->
+      </div>  
     </div>
+
+            <div class="content">
+                <section data-ng-view id="content" class="animate-fade-up"></section>
+            </div>
+    
+
+
+
+  
     <footer class="footer">
       <div class="container">
         <div class="row">

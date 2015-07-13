@@ -24,7 +24,7 @@ angular.module('Api', ['ngCookies'])
           forbidden: (data, status, headers, config) ->
             if(status== 403 or status == 401)
               delete $cookies.cookieVal
-              $location.url("localhost:9000/login")
+              $location.url("/login")
             else
               options.error()
           complete: ->

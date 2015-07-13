@@ -5,17 +5,23 @@ do ->
     '$http'
     '$scope'
     '$cookies'
-    '$window'    
-    ($http, $scope, $cookies,$window ) ->
+    '$window'
+    '$location'   
+    ($http, $scope, $cookies,$window,$location ) ->
+      $scope.isSpecificPage = () ->
+        console.log "in isSpecificPage function" 
+        path = $location.path()
+        if path == '/login' or path == '/sign-up' 
+          return true
+        else 
+          return false
+
+      $scope.logout = () ->
+        $location.path ('/login')
+        $scope.isSpecificPage()
+      ###return _.contains( ['/404', '/pages/500', '/login', '/sign-up', '/pages/signin1', '/pages/signin2', '/pages/signup', '/pages/signup1', '/pages/signup2', '/pages/lock-screen'], path )###
       
-      #value is hardcoaded so dont consider cookie is in use      
-      $scope.user = false
-      if($cookies.cookieVal == undefined)
-        console.log "Hello cookie is undefined"
-        $scope.user = false
-      else
-        $scope.user = true
-      console.log 'hello u r in IndexCtrl' + $scope.user
+      console.log 'You are in Index Ctrl' 
       return
   ]
   
