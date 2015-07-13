@@ -13,16 +13,6 @@ angular.module('PortletCtrl',['Api'])
         "$window"
         ($scope,$log,$http,$cookies,portletApi,$location,$document,$window)->
             $log.debug('PortletCtrl controller called')
-            #retrive cookies
-            cookieVal = $cookies.cookieVal
-            $scope.errorMessage = false
-            if(cookieVal == undefined)
-                $log.debug('User is not logged-in redirecting to login.')
-                $location.path("/login")
-            else
-                #$log.debug('User is already authenticated')
-                #$location.path("/create")
-
             $scope.portlet = {}
             $scope.selectedStocks =  []
             $scope.availableWeightage = 100
@@ -52,11 +42,6 @@ angular.module('PortletCtrl',['Api'])
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
                     $location.path("/portlet-create")
-                    #$scope.errorMessage = true
-                forbidden: (data, status, headers, config) ->
-                    $log.error('Got error while Authentication Response: ' + data)
-                    $scope.errorMessage = true
-                    $location.path("/login")
                 
             )
             portletApi.getStockExchange(
@@ -67,8 +52,6 @@ angular.module('PortletCtrl',['Api'])
                     console.log "stock data fetched is : " + JSON.stringify(data)    
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
-                forbidden: (data, status, headers, config) ->
-                    $log.error('Got error while fetching')
             )
 
             $scope.revert = ->
@@ -101,11 +84,6 @@ angular.module('PortletCtrl',['Api'])
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
-                                #$scope.errorMessage = true
-                            forbidden: (data, status, headers, config) ->
-                                $log.error('Got error while Authentication Response: ' + data)
-                                $scope.errorMessage = true
-                                $location.path("/login")
                         )
 
             $scope.getStocks = () ->

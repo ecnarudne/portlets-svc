@@ -56,6 +56,9 @@ public class Application extends Controller {
         //return ok(index.render(getLocalUser(session())));
 		return ok(index.render());
     }
+    public static Result login() {
+        return ok(views.html.login.render());
+    }
 
     public static Result users() {
         return ok(users.render(getLocalUser(session())));
@@ -73,11 +76,12 @@ public class Application extends Controller {
     	List<User> list = User.find.all();
     	return ok(Json.toJson(list));
     }
-
+    @Authenticated(PortletsAuthenticator.class)
     public static Result sectors() {
         return ok(sectors.render(getLocalUser(session())));
     }
     
+    @Authenticated(PortletsAuthenticator.class)
     public static Result listSectors() {
     	List<Sector> list = Sector.find.all();
     	return ok(Json.toJson(list));
@@ -183,6 +187,7 @@ public class Application extends Controller {
     	return ok(Json.toJson(stats));
     }
     
+    @Authenticated(PortletsAuthenticator.class)
     public static Result listMyStockStatsByPortlet(Long portletId) {
     	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
     	Logger.debug("stocks.size(): " + stocks.size());

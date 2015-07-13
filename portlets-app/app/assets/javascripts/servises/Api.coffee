@@ -9,12 +9,9 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://portlets.nearbymap.com'
+      domain = 'http://localhost:9000'
       
       # We need to set cookie after login. Hardcoaded cookie   
-      console.log 'pay_session : ' + $cookies.PLAY_SESSION
-      $cookies.cookieVal =  'Please set it after login'
-      cookieVal = $cookies.cookieVal
 
       actionUrl = (path) ->
           domain + path
@@ -27,7 +24,7 @@ angular.module('Api', ['ngCookies'])
           forbidden: (data, status, headers, config) ->
             if(status== 403 or status == 401)
               delete $cookies.cookieVal
-              $location.path("/sign-up")
+              $location.url("localhost:9000/login")
             else
               options.error()
           complete: ->
@@ -120,11 +117,6 @@ angular.module('Api', ['ngCookies'])
         return
           
       isLogin = () ->
-        if($cookies.cookieVal == undefined)
-          $log.debug('User is not logedin redirecting to sign-up.')
-          $location.path("/sign-up")
-          return false
-        else
           return true
 
       new api()

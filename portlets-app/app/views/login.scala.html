@@ -1,0 +1,103 @@
+<!DOCTYPE html><!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->  <!--<![endif]-->
+<html ng-app="portlets">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport&quot; content=&quot;width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Google Font: Open Sans-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,700">
+    <link rel="stylesheet" href="@routes.Assets.at("bower_components/fontawesome/css/font-awesome.min.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("bower_components/bootstrap/dist/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-admin-myportlets.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/mvpready-flat.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/volatility.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/jquery.dataTables.css")">
+    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/custom.css")">
+    <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.ico")">
+    
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- DataTables CSS-->
+    <title>MyPortlets</title>
+  </head>    
+  <body>
+    <div id="wrapper">
+      <header role="banner" class="navbar-fixed-top navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle"><span class="sr-only">Toggle navigation</span><i class="fa fa-cog"></i></button><a href="#/" class="navbar-brand page-scroll"><i class="mpt-myportlets"></i><span class="light">my</span>portlets</a>
+          </div>
+          <!-- /.navbar-header-->
+          <nav role="navigation" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#">Sign up</a></li>
+              <li><a href="#">Log in</a></li>
+            </ul>
+          </nav>
+        </div>
+        <!-- /.container-->
+      </header>
+      <div id="main" class="account-wrapper top-60">
+    <div class="account-body">
+      <h3>Welcome back to MyPortlets.</h3>
+      <h5>Please sign in to get access.</h5><br>
+      <div class="row">
+        <div class="col-sm-12"><a href="/authenticate/google" class="btn btn-danger btn-block"><i class="fa fa-google"></i> Login with google</a></div>
+        
+      </div>
+      <!-- /.row--><span class="account-or-social text-muted">OR, SIGN IN BELOW</span>
+      <form method="POST" name="user_login" ng-submit="userLogin()" class="form account-form">
+        <div class="form-group">
+          <label for="username" class="placeholder-hidden">Username</label>
+          <input ng-model="user.name" id="username" type="text" placeholder="Username" tabindex="1" class="form-control">
+        </div>
+        <!-- /.form-group-->
+        <div class="form-group">
+          <label for="password" class="placeholder-hidden">Password</label>
+          <input id="password" ng-model="user.password" type="password" placeholder="Password" tabindex="2" class="form-control">
+        </div>
+        <!-- /.form-group-->
+        <div class="form-group clearfix">
+          <div class="pull-left">
+            <label class="checkbox-inline">
+              <input type="checkbox" value="" ng-model="user.rememberme" tabindex="3"><small>Remember me</small>
+            </label>
+          </div>
+          <div class="pull-right"><small><a href="/#/forgot-password">Forgot Password?</a></small></div>
+        </div>
+        <!-- /.form-group-->
+        <div class="form-group">
+          <button type="submit" tabindex="4" class="btn btn-primary btn-block btn-lg">Signin <i class="fa fa-play-circle"></i></button>
+        </div>
+        <!-- /.form-group-->
+      </form>
+    </div>
+    <!-- /.account-body-->
+    <div class="account-footer">
+      <p>Don"t have an account?<a href="/#/sign-up">Create an Account!</a></p>
+    </div>
+    <!-- /.account-footer-->
+  </div>
+      <!-- /.account-wrapper-->
+    
+    
+    <!--
+    Bootstrap core JavaScript
+    ================================================== 
+    -->
+    <!-- Core JS-->
+    <script src="@routes.Assets.at("javascripts/jquery-1.10.2.js")"></script>
+    <script src="@routes.Assets.at("bower_components/bootstrap/dist/js/bootstrap.min.js")"></script><!--[if lt IE 9]>
+    <script src="./js/libs/excanvas.compiled.js"></script>
+    <![endif]-->
+    <!-- App JS-->
+     <script src="@routes.Assets.at("javascripts/mvpready-core.js")"></script>
+    <script src="@routes.Assets.at("javascripts/mvpready-admin.js")"></script>
+  </body>
+</html>
