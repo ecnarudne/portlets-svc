@@ -1,11 +1,27 @@
 package models;
 
-import java.io.Serializable;
+import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-public class StockStats implements Serializable {
+import org.joda.time.LocalDate;
+
+import play.data.validation.Constraints.Required;
+import play.db.ebean.Model;
+
+@Entity
+public class StockStats extends Model {
 	private static final long serialVersionUID = 1L;
+	@Id
+	private Long id;
+	@Required
+	private String exchange;
+	@ManyToOne
 	private Stock stock;
+	private String date;
+	private LocalDate localDate;
 /*	private double openPrice;
 	private double closePrice;
 	private double highPrice;
@@ -21,8 +37,25 @@ public class StockStats implements Serializable {
 	private String volume;
 	private String avgVol;
 	private String mktcap;
-	private String date;
 	private String activity;
+
+	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
+
+	public static List<StockStats> findByStock(Stock stock) {
+		return StockStats.find.where().eq("stock_id", stock.getId()).findList();
+	}
+
+	public static StockStats findLatestByStock(Stock stock) {
+		return StockStats.find.where().eq("stock_id", stock.getId()).orderBy("local_date").setMaxRows(1).findUnique();
+	}
+
+	public static List<StockStats> findBySymbol(String symbol) {
+		return findByStock(Stock.findBySymbol(symbol));
+	}
+
+	public static StockStats findLatestBySymbol(String symbol) {
+		return findLatestByStock(Stock.findBySymbol(symbol));
+	}
 
 	public Stock getStock() {
 		return stock;
@@ -89,5 +122,23 @@ public class StockStats implements Serializable {
 	}
 	public void setActivity(String activity) {
 		this.activity = activity;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getExchange() {
+		return exchange;
+	}
+	public void setExchange(String exchange) {
+		this.exchange = exchange;
+	}
+	public LocalDate getLocalDate() {
+		return localDate;
+	}
+	public void setLocalDate(LocalDate localDate) {
+		this.localDate = localDate;
 	}
 }
