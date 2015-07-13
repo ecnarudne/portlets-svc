@@ -56,10 +56,6 @@ public class Application extends Controller {
         //return ok(index.render(getLocalUser(session())));
 		return ok(index.render());
     }
-    public static Result login() {
-        return ok(views.html.login.render());
-    }
-
     public static Result users() {
         return ok(users.render(getLocalUser(session())));
     }
