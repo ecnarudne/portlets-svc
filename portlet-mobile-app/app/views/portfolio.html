@@ -30,7 +30,7 @@
                 </thead>
                 <tbody style="color:white">
                   <tr ng-repeat= "portlet in portlets">
-                    <td><a style="color:#ffffff" href="#/app/portlet" ng-bind="portlet.name"></a></td>
+                    <td><a style="color:#ffffff" href="#/app/portlet/{{portlet.id}}" ng-bind="portlet.name"></a></td>
                     <td><span ng-bind="portlet.totalReturn"></span>%</td>
                     <td><span ng-bind="portlet.dailyReturn"></span>%</td>
                     <td><span ng-bind="portlet.annualReturn"></span>%</td>

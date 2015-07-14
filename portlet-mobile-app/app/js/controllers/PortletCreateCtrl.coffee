@@ -31,10 +31,10 @@ appController.controller(
                     console.debug 'categories fetched :' + JSON.stringify data
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
-                    $location.path("/portlet-create")
+                    
                 forbidden: (data, status, headers, config) ->
                     $log.error('Got error while Authentication Response: ' + data)
-                    $location.path("/login")
+                    
             )
             portletApi.getStockExchange(
                 before: ->
@@ -46,7 +46,6 @@ appController.controller(
                     $log.error('Something went wrong! ' + data)
                 forbidden: (data, status, headers, config) ->
                     $log.error('Got error while fetching')
-                    $location.path("/login")
             )
 
             $scope.getStocks = () ->
@@ -68,7 +67,6 @@ appController.controller(
                                 $log.error('Something went wrong! ' + data)
                             forbidden: (data, status, headers, config) ->
                                 $log.error('Got error while Authentication Response: ' + data)
-                                $location.path("/login")
                         }
             )
             console.log 'selected Stock are: ' + JSON.stringify $scope.selectedStocks
@@ -129,18 +127,13 @@ appController.controller(
                             before: ->
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $rootScope.portlet )
                             success: (data, status, headers, config) ->
-                                # Setting coockies
-                                console.log("Hi data submittes successfully")
-                                $cookies.cookieVal = data.value                        
-                                $location.path("/page-portlet")
+                                console.log("Data submittes successfully")
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
-                                $location.path("/portlet-create")
+                                
                             forbidden: (data, status, headers, config) ->
                                 $log.error('Got error while Authentication Response: ' + data)
                                 $scope.errorMessage = true
-                                $location.path("/login")
-                            
                         )
 
 ])

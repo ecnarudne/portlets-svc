@@ -9,13 +9,8 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://192.168.1.105:9000'
+      domain = 'http://portlets.nearbymap.com'
       
-      # We need to set cookie after login. Hardcoaded cookie   
-      
-      $cookies.cookieVal =  'Please set it after login'
-      cookieVal = $cookies.cookieVal
-
       actionUrl = (path) ->
           domain + path
 
@@ -26,7 +21,6 @@ angular.module('Api', ['ngCookies'])
           error: ->
           forbidden: (data, status, headers, config) ->
             if(status==403)
-              delete $cookies.cookieVal
               $location.path("/pages-500")
             else
               options.error()
@@ -66,6 +60,10 @@ angular.module('Api', ['ngCookies'])
       api.prototype.login = (request) ->
         get(actionUrl("/authenticate/google"),request)
         return     
+
+      api.prototype.authGoogle = (request) ->
+        get(actionUrl("/authenticate/google"),request)
+        return
         
       api.prototype.addPortlet = (request) ->
         post(actionUrl("/addPortlet"),request)
@@ -74,6 +72,10 @@ angular.module('Api', ['ngCookies'])
       api.prototype.getPortfolioDetails = (request) ->
         get(actionUrl("/myPortfolio"),request)
         return 
+
+      api.prototype.getPortfolioGraphData = (request) ->
+        get(actionUrl("/dailypricechartall"),request)
+        return
 
       api.prototype.getMyPortlets = (request) ->
         get(actionUrl("/listportlets"),request)
@@ -125,10 +127,10 @@ angular.module('Api', ['ngCookies'])
           
       isLogin = () ->
         if($cookies.cookieVal == undefined)
-          $log.debug('User is not logedin redirecting to sign-up.')
+          ###$log.debug('User is not logedin redirecting to sign-up.')
           $location.path("/sign-up")
           return false
-        else
+        else###
           return true
 
       new api()

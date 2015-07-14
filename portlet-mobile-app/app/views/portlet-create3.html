@@ -37,9 +37,9 @@
       
      
         <table class = "table">
-        <tr ng-repeat="selectedStock in portlet.selectedStocks"> 
+        <tr ng-repeat="selectedStock in portlet.selectedStocks track by $index"> 
           <td ng-bind="selectedStock.name"> </td> <td><input class="weightage" style="border-radius: 5px;
-     border-style: solid; background-color:transparent;" size='5' type="text" ng-model="percentage" ng-change="setWeightage(selectedStock.name , percentage)" > </td> <td> <button type="button" ng-click="deleteStock(selectedStock.name)" class="btn btn-sm btn-danger" >Delete</button> </td>   
+     border-style: solid; background-color:transparent;" size='5' type="text" ng-model="selectedStock.weightage" ng-change="setWeightage(selectedStock.name , selectedStock.weightage)" > </td> <td> <button type="button" ng-click="deleteStock(selectedStock.name)" class="btn btn-sm btn-danger" >Delete</button> </td>   
         </tr>
         </table>
         </ion-item>

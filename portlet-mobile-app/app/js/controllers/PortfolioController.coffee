@@ -24,7 +24,18 @@ angular.module('PortfolioCtrl',['ionic','Api'])
                     $log.debug('In complete of getPortfolioDetails')
                 }
             )
-            plotGraph()
+            portletApi.getPortfolioGraphData(
+                {
+                  before: ->
+                    $log.debug('Fetching graph data.')
+                  success: (data, status, headers, config) ->
+                    plotGraph(data)
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  graph data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
+            )
             portletApi.getMyPortlets(
                 {
                   before: ->
