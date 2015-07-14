@@ -74,12 +74,12 @@ public class Application extends Controller {
     	List<User> list = User.find.all();
     	return ok(Json.toJson(list));
     }
-    @Authenticated(PortletsAuthenticator.class)
+    
     public static Result sectors() {
         return ok(sectors.render(getLocalUser(session())));
     }
     
-    @Authenticated(PortletsAuthenticator.class)
+    
     public static Result listSectors() {
     	List<Sector> list = Sector.find.all();
     	return ok(Json.toJson(list));
@@ -185,7 +185,7 @@ public class Application extends Controller {
     	return ok(Json.toJson(stats));
     }
     
-    @Authenticated(PortletsAuthenticator.class)
+    
     public static Result listMyStockStatsByPortlet(Long portletId) {
     	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
     	Logger.debug("stocks.size(): " + stocks.size());
@@ -316,7 +316,7 @@ public class Application extends Controller {
         return ok(portfolio.render(getLocalUser(session())));
     }
 
-    @Authenticated(PortletsAuthenticator.class)
+    
     public static Result listMyPortlets() {
     	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(session()));
     	Set<Portlet> portlets = new HashSet<Portlet>();

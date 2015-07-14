@@ -12,8 +12,23 @@ angular.module('PortletCtrl',['ionic','Api'])
         "$routeParams"
         ($scope,$log,$http,$cookies,portletApi,$location,$routeParams)->
             $log.debug('PagePortletCtrl controller called')
-            plotPortletGraph()
-            console.log 'route parameters: ' + $routeParams.portletId
+            path = $location.path()
+            pathArray = path.split('/')
+            $scope.portletId = pathArray[pathArray.length-1]
+            
+            portletApi.getPortfolioGraphData(
+                {
+                  before: ->
+                    $log.debug('Fetching graph data.')
+                  success: (data, status, headers, config) ->
+                    plotPortletGraph(data)
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  graph data')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails()')
+                }
+            )
+            
             formatDate = (date) ->
                 d = new Date(date)
                 month = '' + d.getMonth() + 1
@@ -30,7 +45,7 @@ angular.module('PortletCtrl',['ionic','Api'])
                 ].join '/'
             console.log 'Route parameters: ' + $routeParams.portletId
             portletApi.getPortletDetails(
-                $routeParams.portletId = 5 
+                $scope.portletId 
                 {
                   before: ->
                     $log.debug('Fetching page portlet data.')
@@ -45,7 +60,7 @@ angular.module('PortletCtrl',['ionic','Api'])
                 }
             )
             portletApi.getPortletStatTable(
-                $routeParams.portletId = 1
+                $scope.portletId
                 {
                   before: ->
                     $log.debug('Fetching data for StatTable.')
