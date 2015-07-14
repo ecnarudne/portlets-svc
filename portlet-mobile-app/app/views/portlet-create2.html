@@ -1,45 +1,35 @@
-<ion-view view-title="Portlet-create" name="Portlet-create" ng-controller="PortletCreateCtrl">
-  <ion-content class="portfolio-bg">
-  	<div class="row">
-      <div align="center" class="col-90 toggle-bar">
-      <a id="add-portfolio"  href="#/app/portlet-create3" class="pull-left menu-btn-padd"><h4>Back</h4></a>
-      <a href="#" class="pull-right" ng-click="checkStocks() "><h4>Create</h4></a> 
-      <h4 align="center" class='page-text'>Create Portlet</h4>
+
+<ion-view view-title="Portlet-create" name="Portlet-create">
+  <ion-content class="portfolio-bg ">
+    <div ng-controller="PortletCreateCtrl">
+    	<div style="background: rgba(255,255,255,0.15);">
+        <div class="row">
+      		<div class="col-90 toggle-bar">
+          <a id="add-portfolio"  href="#/app/portlet-create" class="pull-left menu-btn-padd"><h4>Back</h4></a>
+      		<a href="#/app/portlet-create3" ng-click="setSelectedStocks()" class="pull-right"><h4> Done</h4></a>	
+      		<h4 align="center" class="page-text">Add Stocks</h4>
+      		</div>
+      	</div>
+        <div class="padding">
+            <select style="background-color:transparent;" id="stockExchange.name" ng-disabled="isDisabled" ng-change="getStocks()" ng-model="stockExchangeName" name="stockExchange" data-required="true" class="form-control parsley-validated">
+                  <option value="">Please Select</option>
+                      <option ng-repeat=" stockexchange in stockExchanges " value = "{{stockexchange.name}}" >{{stockexchange.name}}</option>
+              </select>
+        </div>
+        <div class="padding">
+        	<label class="item item-input search " >
+        		  <i class="icon ion-search placeholder-icon"></i>
+        		  <input style="color: grey;  padding-bottom: 2px; " ng-model="search" type="search" placeholder="Search">
+          </label>
+        </div>
+      </div>
+      <div class="table-striped">
+          <table class="table table-content" style="margin-top:20px">
+              <tr ng-repeat="stock in stocks  | filter : search ">
+                <td ng-bind="stock.name"></td>
+                <td ng-bind="stock.symbol"></td>
+                <td ><button ng-click="addStock(stock)" style="background: transparent; border: 1px solid #ffffff;border-radius: 5px;" type="button" class="ion-plus"></button></td>
+              </tr>
+          </table>
       </div>
     </div>
-    
-      <div class="row">
-        <div align="center" class="col-xs-12 col-md-12">
-  		      <a id="add-stock" href="#/app/portlet-create3" class="ion-ios-plus-outline button"></a>
-            <a id="add-stock" style="margin-left:-20px;font-size:16px;" href="#/app/portlet-create3" class="button">Add Stocks</a>
-        </div>
-      </div>
-  			
-      <div class="row" >
-        <h5 style="margin-left:4%;display:inline;">Stocks</h5>
-        <h5 style="margin-left:48%;diplay:inline">Weightage</h5>
-      </div>
-      <hr style="margin:0px;">    
-
-     <div>
-      
-     <ion-list  class="portfolio-bg white-color" ng-init="index=1;tockExchange.name=;x=stockExchange.name;">
-        <ion-item  ng-repeat="stockWeightage in stockWeightages "  style="border:1px;font-size:18px;"  class="portfolio-bg transparent list-padd" >
-        <div  class="row">
-            <div class="col-xs-8"><h2 style="font-size:20px;display:inline; " class="white-color" size='5'>{{stockWeightage.name}}</h2></div>
-            <div class="col-xs-4"><input  class="pull-right" style="display:inline;margin-right:45%;text-align:right ;border-radius: 5px; border-style: solid;border-color:white;background-color:transparent; " size='5' ng-model="stockWeightage.weightage" ng-change="getAvailable()" type="text"></div>
-            <div style="color:white;padding-top:10px;margin-left:-50px"><h2>%</h2></div>
-            <div class="col-xs-2"><a href="#" id="add-stock" class="ion-ios-minus-outline button"></a></div>
-        </div>
-        <ion-option-button  class="button-assertive button"ng-click="showDelete(stockWeightage)">Delete</ion-option-button>   
-        </ion-item>
-      </ion-list>
-      </div> 
-  </ion-content>
-  <ion-footer-bar style="background-repeat:repeat;background-size:100%;border-top:1px solid white;" class="portfolio-bg">
-    <div class="row">
-        <div class="col-xs-7 col-md-10" style="margin:0px;"><h4  style="margin:0px;">Available Weightage:</h4></div>
-        <div class="col-xs-5 col-md-5"><h4 style="margin:0px;">{{available}}%</h4></div>
-    </div>  
-  </ion-footer-bar>
-</ion-view>

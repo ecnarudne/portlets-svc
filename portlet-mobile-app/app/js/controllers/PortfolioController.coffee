@@ -1,47 +1,43 @@
 'use strict'
-angular.module('PortfolioCtrl',['ionic'])
+angular.module('PortfolioCtrl',['ionic','Api'])
 .controller(
     'PortfolioCtrl'
     [
         "$scope"
         "$log"
         "$http"
+        "$cookies"
+        "portletApi"
         "$location"
-        ($scope,$log,$http,$location)->
+        ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('PortfolioCtrl controller called')
-
-            $scope.portfolio = [ {
-								      'portlet':
-								        'dailyReturn': 0.56
-								        'yearlyReturn': 2.53
-								        'portfolioValue': 2.49
-								      
-								      'tableItems': [
-								        {
-								          'portletReturn': 0.5
-								          'totalReturn': -9.51
-								          'dailyReturn': -9.51
-								          'name': 'High-Yield Dividends'
-								          'oneYearReturn': 5.8
-								        }
-								        {
-								          'portletReturn': 0.5
-								          'totalReturn': -9.51
-								          'dailyReturn': -9.51
-								          'name': 'High-Yield Dividends'
-								          'oneYearReturn': 5.8
-								        }
-								        {
-								          'portletReturn': 0.5
-								          'totalReturn': -9.51
-								          'dailyReturn': -9.51
-								          'name': 'High-Yield Dividends'
-								          'oneYearReturn': 5.8
-								        }
-								      ]
-								    } ]
-
-
+            portletApi.getPortfolioDetails(
+                {
+                  before: ->
+                    $log.debug('Fetching Portfolio details.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'Portfolio Details: ' + JSON.stringify(data)
+                    $scope.portfolio = data
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting Portfolio details')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of getPortfolioDetails')
+                }
+            )
+            plotGraph()
+            portletApi.getMyPortlets(
+                {
+                  before: ->
+                    $log.debug('Fetching my portlets.')
+                  success: (data, status, headers, config) ->
+                    $log.debug 'MyPortlets: ' + JSON.stringify(data)
+                    $scope.portlets = data
+                  error: (data, status, headers, config, statusText) ->
+                    $log.error('Got error while getting  my portlets')                   
+                  complete: (data, status, headers, config) ->
+                    $log.debug('In complete of get My portlets.')
+                }
+            )
     ]
 
 )

@@ -4,6 +4,7 @@
 
 # Home page
 GET     /                           controllers.Application.index()
+
 GET     /listexchanges/             controllers.Application.listExchanges()
 
 GET     /listsectors                controllers.Application.listSectors()
@@ -56,3 +57,4 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /logout                     com.feth.play.module.pa.controllers.Authenticate.logout
 GET     /authenticate/:provider     com.feth.play.module.pa.controllers.Authenticate.authenticate(provider: String)
 GET     /authenticate/:provider/denied controllers.Application.oAuthDenied(provider: String)
+OPTIONS /*path                             controllers.Application.returnCorsOptions(path: String)

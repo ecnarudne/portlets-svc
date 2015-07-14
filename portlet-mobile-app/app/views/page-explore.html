@@ -32,17 +32,17 @@
             <table style="font-size:18px;" class="table white-color"   >
               <tr>
                 <td align="center"  >
-                  <a class="white-color" href="#">Show All <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" ng-click="getPortlets()">Show All <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
                 <td align="center">
-                  <a class="white-color" href="#">Top Performing <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" ng-click="getTopPortlets()">Top Performing <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
                 <td align="center">
-                  <a class="white-color" href="#">Newly Added <span class="pull-right icon-right ion-chevron-right"></span> </a>
+                  <a class="white-color" ng-click="getNewPortlets()">Newly Added <span class="pull-right icon-right ion-chevron-right"></span> </a>
                 </td>
               </tr>
               <tr>
@@ -60,13 +60,19 @@
         </div>
       </div>
       <div ng-repeat="portlet in portlets" class="col-md-3 col-sm-2">
-        <div class="panel panel-default mpt-portlet"><a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatility}}"><span style="text-transform: capitalize;">{{portlet.volatility}} Volatility</span><span class="mpt-returns" ng-bind="portlet.returns"></span><span><span ng-bind="portlet.followers" ></span> Followers</span></a>        
+        <div class="panel panel-default mpt-portlet">
+          <a ng-click = "viewMore(portlet.id)" class="text-center mpt-portlet-color {{portlet.volatilityClass}}">
+            <span class="text-capitalize " ng-bind="portlet.volatilityClass"></span>   Volatility
+        <span class="mpt-returns"> <span ng-bind="portlet.totalReturn"> </span>%</span>
+        <span><span ng-bind="portlet.followerCount" ></span> Followers</span></a>        
+          
           <div class="panel-body mpt-portlet-body">
-            <h5><a href="#" ng-bind="portlet.portletName" ></a></h5>
-            <h5 ng-bind="portlet.desc"></h5>  
+            <h5><a href="#" ng-bind="portlet.name" ></a></h5>
+            <h5 ng-bind="portlet.notes"></h5>  
           </div>
         </div>
       </div>
       </div>
   </ion-content>
 </ion-view>
+

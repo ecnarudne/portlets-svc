@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
+angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller', 'Api'])
 
 .controller(
   'InitController'
@@ -86,7 +86,7 @@ angular.module('finlytics', ['ngRoute', 'ionic', 'finlytics-controller'])
       reload: true
     )
     .state('app.portlet',
-      url: '/portlet'
+      url: '/portlet/:portletId'
       views: 'menuContent':
         templateUrl: 'views/portlet.html'
       cache: false

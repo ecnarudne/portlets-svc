@@ -8,11 +8,15 @@
       </div>
     </div>
         <div class="container page-text">
-          <h1 align="center">25.9%</h1>
-          <div ><center><h5 style="display:inline;padding-right:5px;font-family:sans-serif;">1D:0.56%</h5>
-          <h5 style="padding-left:5px;display:inline;font-family:sans-serif;">1Y:2.53%</h5></center></div>
-         </div> 
-        <div  style="margin-top:100px">
+          <h1 align="center"> <span ng-bind="portfolio.totalReturn"></span>%</h1>
+          <div ><center><h5 style="display:inline;padding-right:5px;font-family:sans-serif;">1D: <span ng-bind="portfolio.dailyReturn"></span>%</h5>
+          <h5 style="padding-left:5px;display:inline;font-family:sans-serif;">1Y: <span ng-bind="portfolio.annualReturn"></span>%</h5></center></div>
+        </div>
+         <h4 class="panel-heading page-text">Portfolio Perfomance (%)</h4>
+          <div class="panel-body">
+            <div id="profile-chart" class="chart-holder-300"></div>
+          </div> 
+          <div  style="margin-top:50x">
           <div>
             <div class="table-striped">
               <table class="table">
@@ -24,20 +28,12 @@
                     <th>1-Year</th>
                   </tr>
                 </thead>
-             <!--    <tfoot>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                </tfoot> -->
                 <tbody style="color:white">
-                  <tr ng-repeat= "tableItem in portfolio[0].tableItems">
-                    <td><a style="color:#ffffff" href="#/app/portlet" ng-bind="tableItem.name"></a></td>
-                    <td><span ng-bind="tableItem.totalReturn"></span>%</td>
-                    <td><span ng-bind="tableItem.dailyReturn"></span>%</td>
-                    <td><span ng-bind="tableItem.oneYearReturn"></span>%</td>
+                  <tr ng-repeat= "portlet in portlets">
+                    <td><a style="color:#ffffff" href="#/app/portlet" ng-bind="portlet.name"></a></td>
+                    <td><span ng-bind="portlet.totalReturn"></span>%</td>
+                    <td><span ng-bind="portlet.dailyReturn"></span>%</td>
+                    <td><span ng-bind="portlet.annualReturn"></span>%</td>
                   </tr>
                 </tbody>
               </table>
