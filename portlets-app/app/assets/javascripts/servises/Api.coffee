@@ -62,7 +62,15 @@ angular.module('Api', ['ngCookies'])
               
       api.prototype.login = (request) ->
         post(actionUrl("/user/login"),request)
-        return     
+        return    
+
+      api.prototype.logout = (request) ->
+        get(actionUrl("/logout"),request)
+        return 
+
+      api.prototype.authGoogle = (request) ->
+        get(actionUrl("/authenticate/google"),request)
+        return
         
       api.prototype.addPortlet = (request) ->
         post(actionUrl("/addPortlet"),request)
