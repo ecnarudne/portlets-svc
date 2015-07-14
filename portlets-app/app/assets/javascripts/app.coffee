@@ -11,6 +11,8 @@ do ->
     ($http, $scope, $cookies,$window,$location,portletApi ) ->
       $scope.isSpecificPage = () ->
         console.log "in isSpecificPage function" 
+        console.log "picURL: " + $cookies.pictureURL
+        $scope.picURL = $cookies.pictureURL
         path = $location.path()
         if path == '/login' or path == '/sign-up' or path == '/'
           return true
