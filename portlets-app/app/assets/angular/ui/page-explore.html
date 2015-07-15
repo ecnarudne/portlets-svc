@@ -8,41 +8,31 @@
     </div>
     <div class="row text-center">
       
-      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="category in categories">
+      <div class="category-container col-xs-6 col-sm-3 col-md-15" ng-repeat="sector in sectors">
         <div class="category-link"><a href="/discover/categories/Basic-Materials?ref=discover_index" class="category">
             <div class="category-name">
-              <div class="h4" ng-bind="category.name"></div>
+              <div class="h4" ng-bind="sector.name"></div>
             </div>
             <div class="category-project-count">
-              <div class="h4 bold" ><span ng-bind="category.total"></span> Portlets</div>
+              <div class="h4 bold" ><span ng-bind="sector.total"></span> Portlets</div>
             </div></a></div>
       </div>      
     </div>
   </div>
 </div>
-
-<div class="row mpt-vprimary">
+<button class='btn btn-primary' ng-click="loadNLForm()">load script</button>
+<div class="row mpt-vprimary" >
   <div class="container">
     <div class="col-xs-12">
       <div class="main clearfix">
-        <form id="nl-form" class="nl-form">
+        <form id="nl-form" class="nl-form"> 
           <select>
-            <option value="1" selected="">Everything</option>
-            <option value="2">Basic Material</option>
-            <option value="3">Energy</option>
-            <option value="4">Financial</option>
-            <option value="5">Healthcare</option>
-            <option value="6">Industrials</option>
-            <option value="7">Real Estate</option>
-            <option value="8">Technology</option>
-            <option value="9">Telecommunication</option>
-            <option value="10">Utilities</option>
-            <option value="11">Consumer         </option> 
-            <!-- <option ng-repeat=" sector in sectors " value = "{{}}" >{{sector.name}}</option> -->
+              <option value="">Please Select</option>
+              <option value = "{{sector.id}}" ng-repeat=" sector in sectors track by $index ">{{sector.name}}</option>
           </select> sorted by
-          <select>
-            <option value="1" selected="">popularity</option>
-            <option value="2">returns</option>
+          <select ng-model="sorter">
+            <option value="name" selected="">name</option>
+            <option value="notes">notes</option>
             <option value="3">ratings</option>
             <option value="4">creation date</option>
           </select>
@@ -57,7 +47,7 @@
 </div>
 <div id="main" class="container">
   <div class="row">
-    <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets">
+    <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets | orderBy : sorter">
       <div class="panel panel-default mpt-portlet">
         <a href="./page-portlet.html" class="text-center mpt-portlet-color {{portlet.volatilityClass}}">
           <span class="{{portlet.volatilityClass}}">
@@ -81,3 +71,4 @@
 </div>
 <!-- /main-->
 <div class="clearfix"></div>
+

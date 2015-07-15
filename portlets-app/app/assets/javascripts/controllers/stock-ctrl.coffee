@@ -9,7 +9,8 @@ angular.module('PageStockCtrl',['Api'])
         "$cookies"
         "portletApi"
         "$location"
-        ($scope,$log,$http,$cookies,portletApi,$location)->
+        "$routeParams"
+        ($scope,$log,$http,$cookies,portletApi,$location,$routeParams)->
             $log.debug('PageStockCtrl controller called')
             new (TradingView.MediumWidget)(
               'container_id': 'tv-medium-widget-fb788'
@@ -26,7 +27,7 @@ angular.module('PageStockCtrl',['Api'])
               'chartOnly': true)
             
             portletApi.getStockDetails(
-                stockId = 1
+                stockId = $routeParams.stockId
                 {
                   before: ->
                     $log.debug('Fetching table data.')

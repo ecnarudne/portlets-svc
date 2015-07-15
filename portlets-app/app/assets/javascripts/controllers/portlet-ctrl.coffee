@@ -64,8 +64,10 @@ angular.module('PagePortletCtrl',['Api'])
                   success: (data, status, headers, config) ->
                     stocks=[]
                     data.filter((stock)->
+                      stockURL = undefined
+                      stockURL = '/#/page-stock/' + stock.stats.stock.id
                       stockJson ={}
-                      stockJson.COMPANY = stock.stats.stock.name
+                      stockJson.COMPANY = "<a href= "  + stockURL + ">" + stock.stats.stock.name + "</a>"
                       stockJson.TICKER = stock.stats.stock.symbol
                       stockJson.ACTIVITY = stock.stats.activity
                       stockJson.WEIGHT = stock.buyWeight
