@@ -14,7 +14,7 @@
               <div class="h4" ng-bind="sector.name"></div>
             </div>
             <div class="category-project-count">
-              <div class="h4 bold" ><span ng-bind="sector.total"></span> Portlets</div>
+              <div class="h4 bold" ><span ng-bind="sector.portletCount"></span> Portlets</div>
             </div></a></div>
       </div>      
     </div>
@@ -30,11 +30,11 @@
               <option value="">Please Select</option>
               <option value = "{{sector.id}}" ng-repeat=" sector in sectors track by $index ">{{sector.name}}</option>
           </select> sorted by
-          <select ng-model="sorter">
+          <select>
             <option value="name" selected="">name</option>
             <option value="notes">notes</option>
-            <option value="3">ratings</option>
-            <option value="4">creation date</option>
+            <option value="rating">ratings</option>
+            <option value="dateOfCreation">creation date</option>
           </select>
           <div class="nl-submit-wrap">
             <button type="submit" class="nl-submit">Filter</button>
