@@ -19,12 +19,12 @@
                     <u>Edit Profile</u>
                   </h3>
                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p><br><br>
-                  <form action="./page-settings.html" class="form-horizontal">
+                  <form  class="form-horizontal">
                     <div class="form-group">
                       <label class="col-md-3">Avatar</label>
                       <div class="col-md-7">
                         <div data-provides="fileupload" class="fileupload fileupload-new">
-                          <div style="width: 180px; height: 180px;" class="fileupload-new thumbnail"><img src="assets/images/avatar-2-md.jpg" alt="Profile Avatar"></div>
+                          <div style="width: 180px; height: 180px;" class="fileupload-new thumbnail"><img src="{{portfolio.profilePicture}}" alt="Profile Avatar"></div>
                           <div style="max-width: 200px; max-height: 200px; line-height: 20px;" class="fileupload-preview fileupload-exists thumbnail"></div>
                           <div><span class="btn btn-default btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
                               <input type="file"></span><a href="#" data-dismiss="fileupload" class="btn btn-default fileupload-exists">Remove</a></div>
@@ -38,7 +38,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Username</label>
                       <div class="col-md-7">
-                        <input type="text" name="user-name" value="jumpstartui" disabled="" class="form-control">
+                        <input type="text" name="fullName" ng-model="portfolio.fullName" disabled="" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -46,7 +46,7 @@
                     <div class="form-group">
                       <label class="col-md-3">First Name</label>
                       <div class="col-md-7">
-                        <input type="text" name="first-name" value="Rod" class="form-control">
+                        <input type="text" name="preferredName" ng-model="portfolio.preferredName" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -54,7 +54,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Last Name</label>
                       <div class="col-md-7">
-                        <input type="text" name="last-name" value="Howard" class="form-control">
+                        <input type="text" name="last-name" ng-model="portfolio.nameTitle" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -62,7 +62,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Email Address</label>
                       <div class="col-md-7">
-                        <input type="text" name="email-address" value="rod@example.com" class="form-control">
+                        <input type="text" name="email" ng-model="portfolio.email" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -70,7 +70,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Website</label>
                       <div class="col-md-7">
-                        <input type="text" name="website" value="http://jumpstartthemes.com" class="form-control">
+                        <input type="text" name="website" value="www.techbulls.com" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -78,14 +78,14 @@
                     <div class="form-group">
                       <label class="col-md-3">About You</label>
                       <div class="col-md-7">
-                        <textarea id="about-textarea" name="about-you" rows="6" class="form-control">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</textarea>
+                        <textarea id="about-textarea" name="about-you" ng-model="portfolio.profileDescription" rows="6" class="form-control"></textarea>
                       </div>
                       <!-- /.col-->
                     </div>
                     <!-- /.form-group-->
                     <div class="form-group">
                       <div class="col-md-7 col-md-push-3">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary" ng-click="saveUserData()">Save Changes</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
                       </div>
                       <!-- /.col-->
@@ -127,7 +127,7 @@
                     <!-- /.form-group-->
                     <div class="form-group">
                       <div class="col-md-7 col-md-push-3">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary"  >Save Changes</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
                       </div>
                       <!-- /.col-->
