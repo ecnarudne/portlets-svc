@@ -125,7 +125,7 @@ angular.module('CopyPortletCtrl',['Api'])
                                 # Setting coockies
                                 console.log("Hi data submittes successfully")
                                 $cookies.cookieVal = data.value                        
-                                $location.path("/page-portlet")
+                                $location.path("/page-portlet/1")
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
