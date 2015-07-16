@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://portlets.nearbymap.com'
+      domain = 'http://localhost:9000'
       
       actionUrl = (path) ->
           domain + path

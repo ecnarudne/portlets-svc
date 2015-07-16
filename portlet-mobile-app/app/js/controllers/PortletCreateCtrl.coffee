@@ -14,6 +14,7 @@ appController.controller(
         "$document"
         "$rootScope"
         ($scope,$log,$http,$cookies,portletApi,$location,$document,$rootScope)->
+            $scope.spinner = false
             $scope.setPortletData = () ->
                 portlet = {}
                 portlet.name = $scope.name
@@ -58,6 +59,7 @@ appController.controller(
                         $scope.stockExchangeName
                         {
                             before: ->
+                                $scope.spinner = true
                                 $log.debug('submitting stock exchange data.')
                             success: (data, status, headers, config) ->
                                 console.log "stock fetched succesfully."
@@ -65,8 +67,9 @@ appController.controller(
                                 $log.debug('Stock fetched: ' + JSON.stringify data)
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
-                            forbidden: (data, status, headers, config) ->
+                            complete: (data, status, headers, config) ->
                                 $log.error('Got error while Authentication Response: ' + data)
+                                $scope.spinner = false
                         }
             )
             console.log 'selected Stock are: ' + JSON.stringify $scope.selectedStocks
