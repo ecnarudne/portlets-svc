@@ -34,6 +34,7 @@ GET     /listmystockstats/:portletId controllers.Application.listMyStockStatsByP
 GET     /listrecentportlets/:limit  controllers.Application.listRecentPortlets(limit: Int)
 GET     /listopportlets/:limit      controllers.Application.listTopPerformingPortlets(limit: Int)
 GET     /listportletstocks/:portletId controllers.Application.listPortletStocks(portletId: Long)
+GET     /listportletsbysector/:sectorId controllers.Application.listPortletsBySector(sectorId: Long)
 
 GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()

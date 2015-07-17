@@ -216,6 +216,13 @@ public class Application extends Controller {
     	return ok(Json.toJson(list));
     }
     
+    public static Result listPortletsBySector(Long sectorId) {
+    	List<Portlet> list = Portlet.findBySector(sectorId);
+    	return ok(Json.toJson(list));
+    }
+    
+    
+    
     public static Result listTopPerformingPortlets(Integer limit) {
     	//TODO track performance and return portlets by rating
     	if(limit == null || limit == 0)
