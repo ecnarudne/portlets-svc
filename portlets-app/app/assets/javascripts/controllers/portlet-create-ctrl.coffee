@@ -77,10 +77,8 @@ angular.module('PortletCtrl',['Api'])
                             before: ->
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $scope.portlet )
                             success: (data, status, headers, config) ->
-                                # Setting coockies
                                 console.log("Hi data submittes successfully")
-                                $cookies.cookieVal = data.value                        
-                                $location.path("/page-portlet")
+                                $location.path "/page-portlet/1"
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
