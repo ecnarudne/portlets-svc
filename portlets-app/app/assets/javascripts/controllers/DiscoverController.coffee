@@ -26,7 +26,7 @@ angular.module('DiscoverCtrl',['Api'])
                   year
                   month
                   day
-                ].join '/'
+                ].join '.'
             portletApi.getSectors(
                 {
                   before: ->

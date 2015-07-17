@@ -3185,6 +3185,11 @@ span.mpt-v5-text{ color: #6A2727;}
     margin: 0px;
     font-size: 18px;
   } 
+  .portlets-desc{
+    line-height:1.2em;
+    height:3.6em;
+    overflow:hidden;
+  }
 /* !Flot Chart Style */
 /* ----------------------------------------------- */
 .flot-tick-label{
