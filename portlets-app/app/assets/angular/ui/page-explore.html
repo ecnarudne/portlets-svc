@@ -20,21 +20,21 @@
     </div>
   </div>
 </div>
-<button class='btn btn-primary' ng-click="loadNLForm()">load script</button>
 <div class="row mpt-vprimary" >
   <div class="container">
     <div class="col-xs-12">
       <div class="main clearfix">
         <form id="nl-form" class="nl-form"> 
-          <select>
-              <option value="">Please Select</option>
+          <select ng-model="sector">
+              <option value="">Everything</option>
               <option value = "{{sector.id}}" ng-repeat=" sector in sectors track by $index ">{{sector.name}}</option>
           </select> sorted by
-          <select>
-            <option value="name" selected="">name</option>
-            <option value="notes">notes</option>
-            <option value="rating">ratings</option>
-            <option value="dateOfCreation">creation date</option>
+          <select ng-model="sorter">
+            <option value="">Random</option>
+            <option value="-followerCount" selected="">popularity</option>
+            <option value="-totalReturn">returns</option>
+            <option value="-followerCount">ratings</option>
+            <option value="createdOn">creation date</option>
           </select>
           <div class="nl-submit-wrap">
             <button type="submit" class="nl-submit">Filter</button>
