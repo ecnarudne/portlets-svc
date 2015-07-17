@@ -14,7 +14,9 @@ do ->
         
         templateUrl: '/assets/angular/ui/sign-up.html').when('/page-settings',
         
-		    templateUrl: '/assets/angular/ui/page-settings.html').when('/forgot-password',
+        templateUrl: '/assets/angular/ui/page-settings.html'
+
+        controller: 'SettingCtrl').when('/forgot-password',
 
         templateUrl: '/assets/angular/ui/forgot-password.html').when('/portlet-create',
         
