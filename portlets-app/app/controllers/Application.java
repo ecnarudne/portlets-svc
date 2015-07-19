@@ -245,6 +245,17 @@ public class Application extends Controller {
         }
     }
 
+	public static Result setMyProfileJson() {//TODO implement
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            return ok();
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+
     public static Result listExchanges() {
     	List<Exchange> list = new ArrayList<Exchange>(Arrays.asList(new Exchange(Exchange.NASDAQ)));
     	return ok(Json.toJson(list));

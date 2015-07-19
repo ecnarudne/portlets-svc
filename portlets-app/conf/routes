@@ -11,6 +11,7 @@ GET     /listsectors                controllers.Application.listSectors()
 GET     /sectors                    controllers.Application.sectors()
 POST    /addsector                  controllers.Application.addSector()
 POST    /addsectorjs                controllers.Application.addSectorJson()
+POST    /setprofilejs               controllers.Application.setMyProfileJson()
 
 GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystocks               controllers.Application.listMyStocks()
