@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import javax.persistence.Entity;
@@ -47,9 +47,9 @@ public class StockStats extends Model {
 
 	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
 
-	public static SortedMap<LocalDate, Map<Long, StockStats>> buildDateMapByStockIds(Collection<Long> stockIds) {
+	public static NavigableMap<LocalDate, Map<Long, StockStats>> buildDateMapByStockIds(Collection<Long> stockIds) {
 		//TODO must cache
-		SortedMap<LocalDate, Map<Long, StockStats>> dateMap = new TreeMap<LocalDate, Map<Long, StockStats>>();
+		TreeMap<LocalDate, Map<Long, StockStats>> dateMap = new TreeMap<LocalDate, Map<Long, StockStats>>();
 		List<StockStats> list = StockStats.find.where().in("stock_id", stockIds).findList();
 		for (StockStats s : list) {
 			if(dateMap.containsKey(s.getLocalDate())) {

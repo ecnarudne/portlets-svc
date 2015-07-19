@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.NavigableMap;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -70,18 +72,48 @@ public class Application extends Controller {
 		int i = 0;
 		for (LocalDate date : statsMap.keySet()) {
 			Map<Long, StockStats> stockMap = statsMap.get(date);
-			double portfolioValue = 0;
-			for (UserPortletStock u : ups) {
-				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO must cache
-				String closePrice = stockMap.get(id).getClosePrice();
-				portfolioValue += Double.parseDouble(closePrice);
-			}
+			double portfolioValue = calcPortfolioValue(ups, stockMap);
 			data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
 			data[i][1] = portfolioValue;
 			i++;
 		}
 		return ok(Json.toJson(data));
 	}
+
+	protected static double calcPortfolioValue(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
+		double portfolioValue = 0;
+		for (UserPortletStock u : ups) {
+			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO must cache
+			String closePrice = stockMap.get(id).getClosePrice();
+			portfolioValue += Double.parseDouble(closePrice);
+		}
+		return portfolioValue;
+	}
+
+    public static Result myPortfolio() {
+    	Portfolio portfolio = new Portfolio();
+    	User owner = getLocalUser(session());
+    	int portletCreatedCount = Portlet.findByOwner(owner).size();
+		owner.setPortletCreatedCount(portletCreatedCount);
+		portfolio.setOwner(owner);
+		//portfolio.setPortletCount(portletCreatedCount);//fetch subcribed portlet count
+		List<UserPortletStock> ups = UserPortletStock.findByUser(owner);
+		Set<Long> stockIdSet = new HashSet<Long>();
+		for (UserPortletStock u : ups) {
+			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+			stockIdSet.add(id);
+		}
+		NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+
+		double portfolioValueLast = calcPortfolioValue(ups, statsMap.lastEntry().getValue());
+		portfolio.setPortfolioValue(portfolioValueLast);
+		double portfolioValueDayBefore = calcPortfolioValue(ups, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+		portfolio.setDailyReturn(((portfolioValueLast - portfolioValueDayBefore)*100)/portfolioValueLast);
+		double portfolioValueYearBefore = calcPortfolioValue(ups, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+		portfolio.setAnnualReturn(((portfolioValueLast - portfolioValueYearBefore)*100)/portfolioValueLast);
+    	return ok(Json.toJson(portfolio));
+    }
+
 	public static Result stockPriceHistory(String symbol){
 		Stock stock = Stock.findBySymbol(symbol);
 		if(stock == null)
@@ -380,12 +412,6 @@ public class Application extends Controller {
     public static Result listMyPortletStocks() {
     	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
     	return ok(Json.toJson(list));
-    }
-
-    public static Result myPortfolio() {
-    	Portfolio portfolio = new Portfolio();
-    	portfolio.setOwner(getLocalUser(session()));
-    	return ok(Json.toJson(portfolio));
     }
 
     public static Result buyPortlet() {

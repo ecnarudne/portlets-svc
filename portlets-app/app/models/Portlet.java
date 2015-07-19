@@ -76,6 +76,13 @@ public class Portlet extends Model {
 		return null;
 	}
 
+	public static List<Portlet> findByOwner(User owner) {
+		//TODO must cache
+		if(owner == null)
+			return null;
+		return find.where().eq("owner", owner).findList();
+	}
+
 	public static List<Portlet> findBySector(Long sectorId) {
 		//TODO must cache
 		if(sectorId == null)
