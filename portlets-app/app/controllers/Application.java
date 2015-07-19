@@ -5,7 +5,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.SortedMap;
+
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 
 import models.Exchange;
 import models.Portfolio;
@@ -31,6 +36,7 @@ import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Security.Authenticated;
 import views.html.index;
 import views.html.mystocks;
@@ -52,6 +58,44 @@ public class Application extends Controller {
 	private static final int LIST_DEFAULT_LIMIT = 10;
 	private static final int LIST_MAX_LIMIT = 100;
 
+	public static Result portfolioPriceHistory(){
+		List<UserPortletStock> ups = UserPortletStock.findByUser(getLocalUser(session()));
+		Set<Long> stockIdSet = new HashSet<Long>();
+		for (UserPortletStock u : ups) {
+			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+			stockIdSet.add(id);
+		}
+		SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+		Number[][] data = new Number[statsMap.size()][2];
+		int i = 0;
+		for (LocalDate date : statsMap.keySet()) {
+			Map<Long, StockStats> stockMap = statsMap.get(date);
+			double portfolioValue = 0;
+			for (UserPortletStock u : ups) {
+				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO must cache
+				String closePrice = stockMap.get(id).getClosePrice();
+				portfolioValue += Double.parseDouble(closePrice);
+			}
+			data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+			data[i][1] = portfolioValue;
+			i++;
+		}
+		return ok(Json.toJson(data));
+	}
+	public static Result stockPriceHistory(String symbol){
+		Stock stock = Stock.findBySymbol(symbol);
+		if(stock == null)
+			return Results.notFound("Symbol not found");
+		List<StockStats> stats = StockStats.findByStock(stock);
+		Number[][] data = new Number[stats.size()][2];
+		int i = 0;
+		for (StockStats s : stats) {
+			data[i][0] = s.getLocalDate().toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+			data[i][1] = Double.parseDouble(s.getClosePrice());
+			i++;
+		}
+		return ok(Json.toJson(data));
+	}
 	public static Result index() {
 		printSession();
         //return ok(index.render(getLocalUser(session())));

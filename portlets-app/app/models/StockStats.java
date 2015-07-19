@@ -1,6 +1,12 @@
 package models;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -41,8 +47,36 @@ public class StockStats extends Model {
 
 	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
 
+	public static SortedMap<LocalDate, Map<Long, StockStats>> buildDateMapByStockIds(Collection<Long> stockIds) {
+		//TODO must cache
+		SortedMap<LocalDate, Map<Long, StockStats>> dateMap = new TreeMap<LocalDate, Map<Long, StockStats>>();
+		List<StockStats> list = StockStats.find.where().in("stock_id", stockIds).findList();
+		for (StockStats s : list) {
+			if(dateMap.containsKey(s.getLocalDate())) {
+				dateMap.get(s.getLocalDate()).put(s.getStock().getId(), s);
+			} else {
+				Map<Long, StockStats> statsMap = new HashMap<Long, StockStats>();
+				statsMap.put(s.getStock().getId(), s);
+				dateMap.put(s.getLocalDate(), statsMap);
+			}
+		}
+		return dateMap;
+	}
+
+	public static List<StockStats> findByStocks(List<Stock> stocks) {
+		List<Long> ids = new ArrayList<Long>();
+		for (Stock s : stocks) {
+			ids.add(s.getId());
+		}
+		return findByStockIds(ids);
+	}
+
+	public static List<StockStats> findByStockIds(List<Long> stockIds) {
+		return StockStats.find.where().in("stock_id", stockIds).orderBy("local_date").findList();
+	}
+
 	public static List<StockStats> findByStock(Stock stock) {
-		return StockStats.find.where().eq("stock_id", stock.getId()).findList();
+		return StockStats.find.where().eq("stock_id", stock.getId()).orderBy("local_date").findList();
 	}
 
 	public static StockStats findLatestByStock(Stock stock) {
