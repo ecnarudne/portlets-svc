@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
-
 import models.Exchange;
 import models.Portfolio;
 import models.Portlet;
@@ -24,7 +21,10 @@ import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
 import models.api.UserPortletStockAPI;
-import models.mock.MockSets;
+
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -407,10 +407,6 @@ public class Application extends Controller {
     	Logger.info("Saving: " + newUserPortletStock);
     	newUserPortletStock.save();
     	return redirect(routes.Application.portfolio());
-    }
-
-    public static Result dailyPriceChartDataAll() {
-    	return ok(Json.toJson(MockSets.mockGraphData()));
     }
 
     public static User getLocalUser(final Session session) {
