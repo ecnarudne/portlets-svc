@@ -5,7 +5,10 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.NavigableMap;
 import java.util.Set;
+import java.util.SortedMap;
 
 import models.Exchange;
 import models.Portfolio;
@@ -19,7 +22,10 @@ import models.User;
 import models.UserPortletStock;
 import models.UserValidityState;
 import models.api.UserPortletStockAPI;
-import models.mock.MockSets;
+
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
+
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -31,6 +37,7 @@ import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
+import play.mvc.Results;
 import play.mvc.Security.Authenticated;
 import views.html.index;
 import views.html.mystocks;
@@ -52,6 +59,74 @@ public class Application extends Controller {
 	private static final int LIST_DEFAULT_LIMIT = 10;
 	private static final int LIST_MAX_LIMIT = 100;
 
+	public static Result portfolioPriceHistory(){
+		List<UserPortletStock> ups = UserPortletStock.findByUser(getLocalUser(session()));
+		Set<Long> stockIdSet = new HashSet<Long>();
+		for (UserPortletStock u : ups) {
+			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+			stockIdSet.add(id);
+		}
+		SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+		Number[][] data = new Number[statsMap.size()][2];
+		int i = 0;
+		for (LocalDate date : statsMap.keySet()) {
+			Map<Long, StockStats> stockMap = statsMap.get(date);
+			double portfolioValue = calcPortfolioValue(ups, stockMap);
+			data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+			data[i][1] = portfolioValue;
+			i++;
+		}
+		return ok(Json.toJson(data));
+	}
+
+	protected static double calcPortfolioValue(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
+		double portfolioValue = 0;
+		for (UserPortletStock u : ups) {
+			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO must cache
+			String closePrice = stockMap.get(id).getClosePrice();
+			portfolioValue += Double.parseDouble(closePrice);
+		}
+		return portfolioValue;
+	}
+
+    public static Result myPortfolio() {
+    	Portfolio portfolio = new Portfolio();
+    	User owner = getLocalUser(session());
+    	int portletCreatedCount = Portlet.findByOwner(owner).size();
+		owner.setPortletCreatedCount(portletCreatedCount);
+		portfolio.setOwner(owner);
+		//portfolio.setPortletCount(portletCreatedCount);//fetch subcribed portlet count
+		List<UserPortletStock> ups = UserPortletStock.findByUser(owner);
+		Set<Long> stockIdSet = new HashSet<Long>();
+		for (UserPortletStock u : ups) {
+			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+			stockIdSet.add(id);
+		}
+		NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+
+		double portfolioValueLast = calcPortfolioValue(ups, statsMap.lastEntry().getValue());
+		portfolio.setPortfolioValue(portfolioValueLast);
+		double portfolioValueDayBefore = calcPortfolioValue(ups, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+		portfolio.setDailyReturn(((portfolioValueLast - portfolioValueDayBefore)*100)/portfolioValueLast);
+		double portfolioValueYearBefore = calcPortfolioValue(ups, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+		portfolio.setAnnualReturn(((portfolioValueLast - portfolioValueYearBefore)*100)/portfolioValueLast);
+    	return ok(Json.toJson(portfolio));
+    }
+
+	public static Result stockPriceHistory(String symbol){
+		Stock stock = Stock.findBySymbol(symbol);
+		if(stock == null)
+			return Results.notFound("Symbol not found");
+		List<StockStats> stats = StockStats.findByStock(stock);
+		Number[][] data = new Number[stats.size()][2];
+		int i = 0;
+		for (StockStats s : stats) {
+			data[i][0] = s.getLocalDate().toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+			data[i][1] = Double.parseDouble(s.getClosePrice());
+			i++;
+		}
+		return ok(Json.toJson(data));
+	}
 	public static Result index() {
 		printSession();
         //return ok(index.render(getLocalUser(session())));
@@ -170,6 +245,17 @@ public class Application extends Controller {
         }
     }
 
+	public static Result setMyProfileJson() {//TODO implement
+    	if(!isLoggedIn(session()))
+			return forbidden();
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            return ok();
+        } else {
+            return badRequest("Expecting Json data");
+        }
+    }
+
     public static Result listExchanges() {
     	List<Exchange> list = new ArrayList<Exchange>(Arrays.asList(new Exchange(Exchange.NASDAQ)));
     	return ok(Json.toJson(list));
@@ -215,6 +301,13 @@ public class Application extends Controller {
     	List<Portlet> list = Portlet.findRecent(limit);
     	return ok(Json.toJson(list));
     }
+    
+    public static Result listPortletsBySector(Long sectorId) {
+    	List<Portlet> list = Portlet.findBySector(sectorId);
+    	return ok(Json.toJson(list));
+    }
+    
+    
     
     public static Result listTopPerformingPortlets(Integer limit) {
     	//TODO track performance and return portlets by rating
@@ -331,12 +424,6 @@ public class Application extends Controller {
     	return ok(Json.toJson(list));
     }
 
-    public static Result myPortfolio() {
-    	Portfolio portfolio = new Portfolio();
-    	portfolio.setOwner(getLocalUser(session()));
-    	return ok(Json.toJson(portfolio));
-    }
-
     public static Result buyPortlet() {
         DynamicForm requestData = Form.form().bindFromRequest();
     	UserPortletStock newUserPortletStock = new UserPortletStock();
@@ -356,10 +443,6 @@ public class Application extends Controller {
     	Logger.info("Saving: " + newUserPortletStock);
     	newUserPortletStock.save();
     	return redirect(routes.Application.portfolio());
-    }
-
-    public static Result dailyPriceChartDataAll() {
-    	return ok(Json.toJson(MockSets.mockGraphData()));
     }
 
     public static User getLocalUser(final Session session) {

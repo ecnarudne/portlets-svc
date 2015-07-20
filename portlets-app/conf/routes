@@ -11,6 +11,7 @@ GET     /listsectors                controllers.Application.listSectors()
 GET     /sectors                    controllers.Application.sectors()
 POST    /addsector                  controllers.Application.addSector()
 POST    /addsectorjs                controllers.Application.addSectorJson()
+POST    /setprofilejs               controllers.Application.setMyProfileJson()
 
 GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystocks               controllers.Application.listMyStocks()
@@ -18,6 +19,7 @@ GET     /mystocks                   controllers.Application.myStocks()
 GET     /stocksinportlet/:portletId controllers.Application.stocksInPortlet(portletId: Long)
 GET     /liststocksbyexchange/:exchange controllers.Application.findByExchange(exchange: String)
 GET     /stockstats/:symbol         controllers.Application.stockStats(symbol: String)
+GET     /stockpricehistory/:symbol   controllers.Application.stockPriceHistory(symbol: String)
 
 POST    /defineportletjs            controllers.Application.definePortletJson()
 POST    /subscribeportletjs/:portletId controllers.Application.subscribeToPortletJson(portletId: Long)
@@ -34,15 +36,15 @@ GET     /listmystockstats/:portletId controllers.Application.listMyStockStatsByP
 GET     /listrecentportlets/:limit  controllers.Application.listRecentPortlets(limit: Int)
 GET     /listopportlets/:limit      controllers.Application.listTopPerformingPortlets(limit: Int)
 GET     /listportletstocks/:portletId controllers.Application.listPortletStocks(portletId: Long)
+GET     /listportletsbysector/:sectorId controllers.Application.listPortletsBySector(sectorId: Long)
 
 GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()
+GET     /myportfoliopxhist          controllers.Application.portfolioPriceHistory()
 
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()
 GET     /listusers                  controllers.Application.listUsers()
-
-GET     /dailypricechartall         controllers.Application.dailyPriceChartDataAll()
 
 GET     /admin/mocks                controllers.Admin.mockSets()
 GET     /admin/listmocks            controllers.Admin.listMockSets()

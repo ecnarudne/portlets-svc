@@ -76,14 +76,18 @@ public class Portlet extends Model {
 		return null;
 	}
 
-	public static List<Portlet> findBySector(Sector sector) {
+	public static List<Portlet> findByOwner(User owner) {
 		//TODO must cache
-		if(sector == null)
+		if(owner == null)
 			return null;
-		List<Portlet> list = find.where().eq("sector", sector).findList();
-		if(list != null && !list.isEmpty())
-			return list;
-		return null;
+		return find.where().eq("owner", owner).findList();
+	}
+
+	public static List<Portlet> findBySector(Long sectorId) {
+		//TODO must cache
+		if(sectorId == null)
+			return null;
+	    return find.fetch("sectors").where().eq("sectors.id", sectorId).findList();
 	}
 
 	public static List<Portlet> findRecent(int limit) {
