@@ -12,6 +12,10 @@
     "jquery-flot": "~0.8.0",
     "flot.tooltip": "~0.7.0",
     "angular-cookies": "~1.3.4",
-    "platform": "~1.3.0"
+    "platform": "~1.3.0",
+    "ngStorage": "0.3.0"
+  },
+  "dependencies": {
+    "ng-cordova-oauth": "~0.1.4"
   }
 }
