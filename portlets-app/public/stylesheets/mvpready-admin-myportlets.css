@@ -36,6 +36,9 @@ a:hover,a:focus,a:active{
 .top-20{
   padding-top: 20px;
 }
+.top-60{
+  padding-top: 60px;
+}
 .btm-20-60{
   padding-bottom: 20px
 }
@@ -2362,6 +2365,9 @@ table.table thead .sorting_desc_disabled,
   background: -ms-linear-gradient(left,  rgba(47,168,236,0.70) 0%,rgba(47,168,236,0.70) 20%,rgba(249,137,112,0.70) 80%,rgba(234,86,86,0.70) 100%), url(http://www.istartedsomething.com/bingimages/cache/WallStreetNY_EN-US9293687068_1366x768.jpg); /* IE10+ */
   background: linear-gradient(to right,  rgba(47,168,236,0.70) 0%,rgba(47,168,236,0.70) 20%,rgba(249,137,112,0.70) 80%,rgba(234,86,86,0.70) 100%), url(http://www.istartedsomething.com/bingimages/cache/WallStreetNY_EN-US9293687068_1366x768.jpg); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3d85c4', endColorstr='#ea5656',GradientType=1 ); /* IE6-9 */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center; 
 }
 .mpt-pt-head{
   color: #fff;
@@ -2413,11 +2419,14 @@ table.table thead .sorting_desc_disabled,
   font-size: 20px;
   padding: 6px;
   border: 1px solid #FFFFFF;
+  color: #ffffff;
+  background-color: rgba(255,255,255,0.15 );
 }
 .mpt-pt-head .mpt-cta .mpt-btn:hover{
   background-color: #ffffff;
   color: #e96d65;
 }
+.mpt-well
 
 @media (min-width: 992px) {
  .mpt-pt-head .mpt-lead {
@@ -3063,6 +3072,49 @@ span.mpt-v5-text{ color: #6A2727;}
 .mpt-explore-nav {
   margin-bottom: 20px;
 }
+ol.list-comments{
+  list-style: none;
+}
+ol.list-comments .comment-item .avatar img {
+  width: 30px;
+  height: 30px;
+}
+ol.list-comments .comment-main{
+  margin-left: 40px;
+}
+ol.list-comments h4{
+  font-size: 14px;
+  font-weight: bold;
+}
+ol.list-comments .comment-item{
+  margin-bottom: 20px;
+  padding: 20px 0;
+}
+  /*comments*/
+ .comment-box {
+  padding:15px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* !Stock Styles */
+/* ----------------------------------------------- */
+.mpt-stock-lead .list-group-item{
+  background-color: transparent;
+  border-left: 0px;
+  border-right: 0px;
+}
+
+.mpt-stock-lead .badge{
+  background-color: transparent;
+  color: #333333;
+  font-size: 14px;
+}
+.mpt-stock-chart {
+  min-height: 400px
+}
+
 /* !UserProfile Styles */
 /* ----------------------------------------------- */
 .userbox{

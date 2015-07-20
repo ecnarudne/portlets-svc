@@ -38,7 +38,7 @@ do ->
         
         templateUrl: '/assets/angular/ui/page-portlet.html'
 
-        controller: 'PagePortletCtrl').when('/page-stock',
+        controller: 'PagePortletCtrl').when('/page-stock/:stockId',
         
         templateUrl: '/assets/angular/ui/page-stock.html'
 
