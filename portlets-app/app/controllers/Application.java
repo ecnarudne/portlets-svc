@@ -60,23 +60,32 @@ public class Application extends Controller {
 	private static final int LIST_MAX_LIMIT = 100;
 
 	public static Result portfolioPriceHistory(){
-		List<UserPortletStock> ups = UserPortletStock.findByUser(getLocalUser(session()));
+    	User currentUser = getLocalUser(session());
+    	if(currentUser == null)
+    		forbidden("Login Required");
+		List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
 		Set<Long> stockIdSet = new HashSet<Long>();
 		for (UserPortletStock u : ups) {
 			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
 			stockIdSet.add(id);
 		}
-		SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
-		Number[][] data = new Number[statsMap.size()][2];
-		int i = 0;
-		for (LocalDate date : statsMap.keySet()) {
-			Map<Long, StockStats> stockMap = statsMap.get(date);
-			double portfolioValue = calcPortfolioValue(ups, stockMap);
-			data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
-			data[i][1] = portfolioValue;
-			i++;
+		try {
+			SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+			Number[][] data = new Number[statsMap.size()][2];
+			int i = 0;
+			for (LocalDate date : statsMap.keySet()) {
+				Map<Long, StockStats> stockMap = statsMap.get(date);
+				double portfolioValue = calcPortfolioValue(ups, stockMap);
+				data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+				data[i][1] = portfolioValue;
+				i++;
+			}
+			return ok(Json.toJson(data));
+		} catch (Exception e) {
+			String error = "Portfolio price information unavailable due to some issues. ";
+			Logger.error(error, e);
+			return Results.internalServerError(error);
 		}
-		return ok(Json.toJson(data));
 	}
 
 	protected static double calcPortfolioValue(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
@@ -90,26 +99,32 @@ public class Application extends Controller {
 	}
 
     public static Result myPortfolio() {
+    	User currentUser = getLocalUser(session());
+    	if(currentUser == null)
+    		Results.forbidden("Login Required");
     	Portfolio portfolio = new Portfolio();
-    	User owner = getLocalUser(session());
-    	int portletCreatedCount = Portlet.findByOwner(owner).size();
-		owner.setPortletCreatedCount(portletCreatedCount);
-		portfolio.setOwner(owner);
+    	int portletCreatedCount = Portlet.findByOwner(currentUser).size();
+		currentUser.setPortletCreatedCount(portletCreatedCount);
+		portfolio.setOwner(currentUser);
 		//portfolio.setPortletCount(portletCreatedCount);//fetch subcribed portlet count
-		List<UserPortletStock> ups = UserPortletStock.findByUser(owner);
-		Set<Long> stockIdSet = new HashSet<Long>();
-		for (UserPortletStock u : ups) {
-			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
-			stockIdSet.add(id);
-		}
-		NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+		try {
+			List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
+			Set<Long> stockIdSet = new HashSet<Long>();
+			for (UserPortletStock u : ups) {
+				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+				stockIdSet.add(id);
+			}
+			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
 
-		double portfolioValueLast = calcPortfolioValue(ups, statsMap.lastEntry().getValue());
-		portfolio.setPortfolioValue(portfolioValueLast);
-		double portfolioValueDayBefore = calcPortfolioValue(ups, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
-		portfolio.setDailyReturn(((portfolioValueLast - portfolioValueDayBefore)*100)/portfolioValueLast);
-		double portfolioValueYearBefore = calcPortfolioValue(ups, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
-		portfolio.setAnnualReturn(((portfolioValueLast - portfolioValueYearBefore)*100)/portfolioValueLast);
+			double portfolioValueLast = calcPortfolioValue(ups, statsMap.lastEntry().getValue());
+			portfolio.setPortfolioValue(portfolioValueLast);
+			double portfolioValueDayBefore = calcPortfolioValue(ups, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+			portfolio.setDailyReturn(((portfolioValueLast - portfolioValueDayBefore)*100)/portfolioValueLast);
+			double portfolioValueYearBefore = calcPortfolioValue(ups, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+			portfolio.setAnnualReturn(((portfolioValueLast - portfolioValueYearBefore)*100)/portfolioValueLast);
+		} catch (Exception e) {
+			Logger.error("Portfolio information unavailable due to some issues. ", e);
+		}
     	return ok(Json.toJson(portfolio));
     }
 
@@ -117,15 +132,21 @@ public class Application extends Controller {
 		Stock stock = Stock.findBySymbol(symbol);
 		if(stock == null)
 			return Results.notFound("Symbol not found");
-		List<StockStats> stats = StockStats.findByStock(stock);
-		Number[][] data = new Number[stats.size()][2];
-		int i = 0;
-		for (StockStats s : stats) {
-			data[i][0] = s.getLocalDate().toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
-			data[i][1] = Double.parseDouble(s.getClosePrice());
-			i++;
+		try {
+			List<StockStats> stats = StockStats.findByStock(stock);
+			Number[][] data = new Number[stats.size()][2];
+			int i = 0;
+			for (StockStats s : stats) {
+				data[i][0] = s.getLocalDate().toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+				data[i][1] = Double.parseDouble(s.getClosePrice());
+				i++;
+			}
+			return ok(Json.toJson(data));
+		} catch (Exception e) {
+			String error = "Stock Price information unavailable due to some issues. ";
+			Logger.error(error, e);
+			return Results.internalServerError(error);
 		}
-		return ok(Json.toJson(data));
 	}
 	public static Result index() {
 		printSession();
