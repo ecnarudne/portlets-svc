@@ -92,8 +92,12 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/listsectors"),request)
         return
 
-      api.prototype.getPortlets = (request) ->
+      api.prototype.getAllPortlets = (request) ->
         get(actionUrl("/listportlets"),request)
+        return
+
+      api.prototype.getPortlets = (sectorId,request) ->
+        get(actionUrl("/listportletsbysector/" + sectorId),request)
         return
       
       api.prototype.getDiscoverPageDetails = (request) ->
