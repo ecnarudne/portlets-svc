@@ -154,6 +154,8 @@ public class Application extends Controller {
         JsonNode json = request().body().asJson();
         if(json != null) {
         	String partName = json.findPath("partname").asText();
+        	if(partName == null)
+        		return Results.badRequest("Missing JSON field partname");
     		return searchSectors(partName);
         }
         return Results.badRequest("Bad JSON input");

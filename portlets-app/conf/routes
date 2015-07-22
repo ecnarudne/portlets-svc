@@ -13,6 +13,7 @@ POST    /addsector                  controllers.Application.addSector()
 POST    /addsectorjs                controllers.Application.addSectorJson()
 POST    /setprofilejs               controllers.Application.setMyProfileJson()
 GET     /searchsectors/:partname    controllers.Application.searchSectors(partname: String)
+POST     /searchsectors             controllers.Application.searchSectors()
 
 GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystocks               controllers.Application.listMyStocks()
