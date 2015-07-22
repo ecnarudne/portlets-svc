@@ -150,6 +150,15 @@ public class Application extends Controller {
 		}
 	}
 
+	public static Result searchSectors() {
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+        	String partName = json.findPath("partname").asText();
+    		return searchSectors(partName);
+        }
+        return Results.badRequest("Bad JSON input");
+	}
+
 	public static Result searchSectors(String partName) {
 		if(partName == null || partName.length() < 2)
 			return Results.notFound(partName);
