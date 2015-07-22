@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -128,7 +129,7 @@ public class Application extends Controller {
     	return ok(Json.toJson(portfolio));
     }
 
-	public static Result stockPriceHistory(String symbol){
+	public static Result stockPriceHistory(String symbol) {
 		Stock stock = Stock.findBySymbol(symbol);
 		if(stock == null)
 			return Results.notFound("Symbol not found");
@@ -148,6 +149,14 @@ public class Application extends Controller {
 			return Results.internalServerError(error);
 		}
 	}
+
+	public static Result searchSectors(String partName) {
+		if(partName == null || partName.length() < 2)
+			return Results.notFound(partName);
+		Collection<Sector> sectors = Portlet.findByPartName(partName);
+		return ok(Json.toJson(sectors));
+	}
+
 	public static Result index() {
 		printSession();
         //return ok(index.render(getLocalUser(session())));

@@ -1,7 +1,10 @@
 package models;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -96,6 +99,15 @@ public class Portlet extends Model {
 		if(list != null && !list.isEmpty())
 			return list;
 		return null;
+	}
+
+	public static Collection<Sector> findByPartName(String partName) {
+		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
+		Set<Sector> sectors = new HashSet<Sector>();
+		for (Portlet portlet : list) {
+			sectors.addAll(portlet.getSectors());
+		}
+		return sectors;
 	}
 
 	public String getVolatilityClass() {
