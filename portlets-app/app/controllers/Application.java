@@ -150,7 +150,7 @@ public class Application extends Controller {
 		}
 	}
 
-	public static Result searchSectors() {
+	public static Result searchSectorsJson() {
         JsonNode json = request().body().asJson();
         if(json != null) {
         	String partName = json.findPath("partname").asText();
