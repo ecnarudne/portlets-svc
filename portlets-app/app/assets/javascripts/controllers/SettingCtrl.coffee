@@ -10,7 +10,7 @@ angular.module('SettingCtrl',['Api'])
         "portletApi"
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
-            $log.debug('SettingCtrl controller called')
+            $log.debug('In SettingCtrl controller')
             portletApi.getPortfolioDetails(
                 {
                   before: ->
@@ -21,21 +21,21 @@ angular.module('SettingCtrl',['Api'])
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting Portfolio details')                   
                   complete: (data, status, headers, config) ->
-                    $log.debug('In complete of getPortfolioDetails()')
+                    $log.debug('In complete')
                 }
             )
-            $scope.saveUserData= () ->
+            $scope.saveProfile= () ->
                 console.log 'Data to submit' + JSON.stringify $scope.portfolio
-                ###portletApi.EditProfile(
+                portletApi.saveProfile(
                     data: $scope.portfolio
                     before: ->
                         $log.debug('Submiting Portfolio details.')
                     success: (data, status, headers, config) ->
                         $log.debug 'User data submited successfully.' + JSON.stringify(data)
+                        alert "Profile successfully saved."
                     error: (data, status, headers, config, statusText) ->
-                        $log.error('Got error while getting Portfolio details')                   
+                        $log.error('Got error while saving Portfolio details')                   
                     complete: (data, status, headers, config) ->
-                        $log.debug('In complete of getPortfolioDetails()')
-                    
-                )###
+                        $log.debug('In complete')
+                )
     ])

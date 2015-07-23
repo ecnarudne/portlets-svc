@@ -88,6 +88,10 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("/listmyportlets"),request)
         return
 
+      api.prototype.saveProfile = (request) ->
+        post(actionUrl("/setprofilejs"),request)
+        return
+
       api.prototype.getSectors = (request) ->
         get(actionUrl("/listsectors"),request)
         return

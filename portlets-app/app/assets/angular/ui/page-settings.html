@@ -18,7 +18,7 @@
                   <h3 class="content-title">
                     <u>Edit Profile</u>
                   </h3>
-                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p><br><br>
+                  <p ng-bind="portfolio.profileDescription"></p><br><br>
                   <form  class="form-horizontal">
                     <div class="form-group">
                       <label class="col-md-3">Avatar</label>
@@ -70,7 +70,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Website</label>
                       <div class="col-md-7">
-                        <input type="text" name="website" value="www.techbulls.com" class="form-control">
+                        <input type="text" ng-model="portfolio.website"  name="website" placeholder="www.example.com" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -85,7 +85,7 @@
                     <!-- /.form-group-->
                     <div class="form-group">
                       <div class="col-md-7 col-md-push-3">
-                        <button type="submit" class="btn btn-primary" ng-click="saveUserData()">Save Changes</button>
+                        <button type="submit" class="btn btn-primary" ng-click="saveProfile()">Save Changes</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
                       </div>
                       <!-- /.col-->
