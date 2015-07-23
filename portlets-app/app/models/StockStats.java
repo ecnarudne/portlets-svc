@@ -44,6 +44,7 @@ public class StockStats extends Model {
 	private String avgVol;
 	private String mktcap;
 	private String activity;
+	private double annualReturns;
 
 	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
 
@@ -174,5 +175,11 @@ public class StockStats extends Model {
 	}
 	public void setLocalDate(LocalDate localDate) {
 		this.localDate = localDate;
+	}
+	public double getAnnualReturns() {
+		return annualReturns;
+	}
+	public void setAnnualReturns(double annualReturns) {
+		this.annualReturns = annualReturns;
 	}
 }
