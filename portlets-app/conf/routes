@@ -14,6 +14,8 @@ POST    /addsectorjs                controllers.Application.addSectorJson()
 POST    /setprofilejs               controllers.Application.setMyProfileJson()
 GET     /searchsectors/:partname    controllers.Application.searchSectors(partname: String)
 POST    /searchsectorsjs            controllers.Application.searchSectorsJson()
+GET     /searchportlets/:partname   controllers.Application.searchPortlets(partname: String)
+POST    /searchportletsjs           controllers.Application.searchPortletsJson()
 
 GET     /stock/:stockId             controllers.Application.stock(stockId: Long)
 GET     /listmystocks               controllers.Application.listMyStocks()
