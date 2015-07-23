@@ -103,6 +103,11 @@ public class Portlet extends Model {
 
 	public static Collection<Sector> findByPartName(String partName) {
 		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
+		return list;
+	}
+
+	public static Collection<Sector> findSectorsByPartName(String partName) {
+		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
 		Set<Sector> sectors = new HashSet<Sector>();
 		for (Portlet portlet : list) {
 			sectors.addAll(portlet.getSectors());
