@@ -161,11 +161,29 @@ public class Application extends Controller {
         return Results.badRequest("Bad JSON input");
 	}
 
+	public static Result searchPortletsJson() {
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+        	String partName = json.findPath("partname").asText();
+        	if(partName == null)
+        		return Results.badRequest("Missing JSON field partname");
+    		return searchPortlets(partName);
+        }
+        return Results.badRequest("Bad JSON input");
+	}
+
 	public static Result searchSectors(String partName) {
 		if(partName == null || partName.length() < 2)
 			return Results.notFound(partName);
-		Collection<Sector> sectors = Portlet.findByPartName(partName);
+		Collection<Sector> sectors = Portlet.findSectorsByPartName(partName);
 		return ok(Json.toJson(sectors));
+	}
+
+	public static Result searchPortlets(String partName) {
+		if(partName == null || partName.length() < 2)
+			return Results.notFound(partName);
+		Collection<Portlet> portlets = Portlet.findByPartName(partName);
+		return ok(Json.toJson(portlets));
 	}
 
 	public static Result index() {
