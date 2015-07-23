@@ -1,0 +1,35 @@
+<div id="main" class="container">
+  <div class="row">
+  <div id="main" class="container" ng-show="show_message">
+    <div class="error-container top-60">
+      <div class="error-details">
+        <h1><span class="text-primary">Portlets not found.</span></h1>
+        <p>We can not find the Portlets you"re looking for.   Is there a typo in the portlet name?</p>
+      </div>
+    </div>
+    <div class="top-60"></div>
+    <div class="top-60"></div>
+    <div class="top-60"></div>
+  </div>
+    <div class="col-md-4 col-sm-6" ng-repeat="portlet in portlets | orderBy : sorter">
+      <div class="panel panel-default mpt-portlet">
+        <a ng-click="viewMore(portlet.id)"  class="text-center mpt-portlet-color {{portlet.volatilityClass}}">
+          <span class="{{portlet.volatilityClass}}">
+            <span class="text-capitalize " ng-bind="portlet.volatilityClass"></span>   Volatility 
+          </span> 
+          <span class="mpt-returns"><span ng-bind="portlet.totalReturn"></span>%</span>
+          <span class="label label-skeleton">Followers <span ng-bind="portlet.followerCount"></span> </span>
+        </a>
+        <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.owner.profilePicture}}" class="img-circle">
+        <strong ng-bind="portlet.owner.fullName"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastRebalancedOn"></span></div>
+        <div class="panel-body mpt-portlet-body">
+          <h3 style="white-space: nowrap; overflow:hidden "><a ng-bind="portlet.name"></a></h3> <p class="portlets-desc" ng-bind="portlet.notes"> </p>
+        </div>
+        <div class="mpt-portlet-body"><a role="button" ng-click="viewMore(portlet.id)" class="btn btn-link btn-block mpt-portlet-btn">VIEW MORE</a></div>
+      </div>
+    </div>
+    <!-- /.end col-->
+    
+  </div>
+  <!-- /.end row-->
+</div>

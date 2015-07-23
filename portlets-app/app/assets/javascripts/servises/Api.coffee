@@ -91,6 +91,9 @@ angular.module('Api', ['ngCookies'])
       api.prototype.saveProfile = (request) ->
         post(actionUrl("/setprofilejs"),request)
         return
+      api.prototype.searchPortlets = (search,request) ->
+        get(actionUrl("/searchportlets/" + search),request)
+        return
 
       api.prototype.getSectors = (request) ->
         get(actionUrl("/listsectors"),request)

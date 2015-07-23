@@ -65,7 +65,7 @@
                   </li>
                 </ul>
                 <form role="search" class="mainnav-form pull-left">
-                  <input type="text" placeholder="Search" class="form-control input-md mainnav-search-query">
+                  <input type="text" ng-model="search" ng-change = "searchPortlets(search)" placeholder="Search" class="form-control input-md mainnav-search-query">
                   <button class="btn mainnav-form-btn"><i class="fa fa-search"></i></button>
                 </form>
               </nav>

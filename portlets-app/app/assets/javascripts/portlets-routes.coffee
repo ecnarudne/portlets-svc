@@ -16,7 +16,11 @@ do ->
         
         templateUrl: '/assets/angular/ui/page-settings.html'
 
-        controller: 'SettingCtrl').when('/forgot-password',
+        controller: 'SettingCtrl').when('/search',
+        
+        templateUrl: '/assets/angular/ui/search.html'
+
+        controller: 'IndexCtrl').when('/forgot-password',
 
         templateUrl: '/assets/angular/ui/forgot-password.html').when('/portlet-create',
         
