@@ -101,7 +101,7 @@ public class Portlet extends Model {
 		return null;
 	}
 
-	public static Collection<Sector> findByPartName(String partName) {
+	public static Collection<Portlet> findByPartName(String partName) {
 		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
 		return list;
 	}
