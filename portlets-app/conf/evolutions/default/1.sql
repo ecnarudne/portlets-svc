@@ -77,6 +77,7 @@ create table stock_stats (
   avg_vol                   varchar(255),
   mktcap                    varchar(255),
   activity                  varchar(255),
+  annual_returns            double,
   constraint pk_stock_stats primary key (id))
 ;
 
