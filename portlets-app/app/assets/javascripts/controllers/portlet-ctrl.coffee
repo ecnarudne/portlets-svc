@@ -55,8 +55,8 @@ angular.module('PagePortletCtrl',['Api'])
                       stockJson.WEIGHT = stock.buyWeight
                       stockJson.AVG_COST = stock.buyPrice
                       stockJson.PRICE = stock.stats.closePrice
-                      stockJson.TOTAL_RETURN = stock.totalReturn
-                      stockJson.DAILY_RETURN = stock.dailyReturn
+                      stockJson.TOTAL_RETURN = stock.totalReturn.toFixed(2)
+                      stockJson.DAILY_RETURN = stock.dailyReturn.toFixed(2)
                       stocks.push stockJson
                       )
                     createTable(stocks)
