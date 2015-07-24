@@ -57,7 +57,7 @@
           <span class="label label-skeleton">Followers <span ng-bind="portlet.followerCount"></span> </span>
         </a>
         <div class="panel-heading mpt-portlet-heading clearfix"><img src="{{portlet.owner.profilePicture}}" class="img-circle">
-        <strong ng-bind="portlet.owner.fullName"></strong><span class="pull-right">Last update: <span class="pull-right" ng-bind="portlet.lastRebalancedOn"></span></div>
+        <strong ng-bind="portlet.owner.fullName"></strong><span class="pull-right">Last update: <span class="pull-right">{{portlet.createdOn | date:'yyyy.MM.dd'}}</span></div>
         <div class="panel-body mpt-portlet-body">
           <h3 style="white-space: nowrap; overflow:hidden "><a ng-bind="portlet.name"></a></h3> <p class="portlets-desc" ng-bind="portlet.notes"> </p>
         </div>

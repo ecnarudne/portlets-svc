@@ -5,12 +5,10 @@ angular.module('PageStockCtrl',['Api'])
     [
         "$scope"
         "$log"
-        "$http"
-        "$cookies"
         "portletApi"
         "$location"
         "$routeParams"
-        ($scope,$log,$http,$cookies,portletApi,$location,$routeParams)->
+        ($scope,$log,portletApi,$location,$routeParams)->
             $log.debug('PageStockCtrl controller called')
             new (TradingView.MediumWidget)(
               'container_id': 'tv-medium-widget-fb788'
@@ -38,20 +36,20 @@ angular.module('PageStockCtrl',['Api'])
                       symbol = $scope.stock.symbol
                       {
                         before: ->
-                          $log.debug('Fetching table data.')
+                          $log.debug('Fetching StockStat.')
                         success: (data, status, headers, config) ->
                           $log.debug 'Stock stat Data fetched successfully.' + JSON.stringify(data)
                           $scope.stockStat = data
                         error: (data, status, headers, config, statusText) ->
-                          $log.error('Got error while getting  table data')                   
+                          $log.error('Got error while getting  StockStat data')                   
                         complete: (data, status, headers, config) ->
-                          $log.debug('In complete of getPortfolioDetails()')
+                          $log.debug('In complete')
                       }
                     )
                   error: (data, status, headers, config, statusText) ->
-                    $log.error('Got error while getting  table data')                   
+                    $log.error('Got error while getting  stock data')                   
                   complete: (data, status, headers, config) ->
-                    $log.debug('In complete of getPortfolioDetails()')
+                    $log.debug('In complete')
                 }
             )
             
