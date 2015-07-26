@@ -66,11 +66,13 @@ public class Application extends Controller {
     		forbidden("Login Required");
 		List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
 		Set<Long> stockIdSet = new HashSet<Long>();
-		for (UserPortletStock u : ups) {
-			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
-			stockIdSet.add(id);
-		}
 		try {
+			if(ups != null) {
+				for (UserPortletStock u : ups) {
+					Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+					stockIdSet.add(id);
+				}
+			}
 			SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
 			Number[][] data = new Number[statsMap.size()][2];
 			int i = 0;
@@ -102,9 +104,12 @@ public class Application extends Controller {
     public static Result myPortfolio() {
     	User currentUser = getLocalUser(session());
     	if(currentUser == null)
-    		Results.forbidden("Login Required");
+    		return forbidden("Login Required");
     	Portfolio portfolio = new Portfolio();
-    	int portletCreatedCount = Portlet.findByOwner(currentUser).size();
+    	List<Portlet> created = Portlet.findByOwner(currentUser);
+    	int portletCreatedCount = 0;
+    	if(created != null)
+    		portletCreatedCount = created.size();
 		currentUser.setPortletCreatedCount(portletCreatedCount);
 		portfolio.setOwner(currentUser);
 		//portfolio.setPortletCount(portletCreatedCount);//fetch subcribed portlet count
@@ -472,9 +477,11 @@ public class Application extends Controller {
     public static Result listMyPortlets() {
     	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(session()));
     	Set<Portlet> portlets = new HashSet<Portlet>();
-    	for (UserPortletStock ups : portletStocks) {
-    		portlets.add(ups.getPortlet());
-		}
+	    if(portletStocks != null) {
+	    	for (UserPortletStock ups : portletStocks) {
+	    		portlets.add(ups.getPortlet());
+			}
+	    }
     	return ok(Json.toJson(portlets));
     }
 
