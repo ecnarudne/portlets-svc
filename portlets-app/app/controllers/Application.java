@@ -414,18 +414,27 @@ public class Application extends Controller {
 				}
 			}
 			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
-			for (Portlet portlet : list) {//TODO must cache
-				List<PortletStock> psl = PortletStock.findByPortlet(portlet);
-				double portletValueLast = calcPortletValue(psl, statsMap.lastEntry().getValue());
-				portlet.setLastValue(portletValueLast);
-				double portletValueDayBefore = calcPortletValue(psl, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
-				portlet.setDailyReturn(((portletValueLast - portletValueDayBefore)*100)/portletValueLast);
-				double portletValueYearBefore = calcPortletValue(psl, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
-				portlet.setAnnualReturn(((portletValueLast - portletValueYearBefore)*100)/portletValueLast);
+			for (Portlet portlet : list) {
+				addPortletStats(statsMap, portlet);
 			}
 		}
     	return ok(Json.toJson(list));
     }
+
+	protected static void addPortletStats(//TODO must cache
+			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap,
+			Portlet portlet) {
+		List<PortletStock> psl = PortletStock.findByPortlet(portlet);
+		LocalDate inceptionDate = new LocalDate(portlet.getCreatedOn());
+		double portletValueInception = calcPortletValue(psl, statsMap.lowerEntry(inceptionDate).getValue());
+		double portletValueLast = calcPortletValue(psl, statsMap.lastEntry().getValue());
+		portlet.setLastValue(portletValueLast);
+		portlet.setTotalReturn(((portletValueLast - portletValueInception)*100)/portletValueInception);
+		double portletValueDayBefore = calcPortletValue(psl, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+		portlet.setDailyReturn(((portletValueLast - portletValueDayBefore)*100)/portletValueDayBefore);
+		double portletValueYearBefore = calcPortletValue(psl, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+		portlet.setAnnualReturn(((portletValueLast - portletValueYearBefore)*100)/portletValueYearBefore);
+	}
     
     public static Result listRecentPortlets(Integer limit) {
     	if(limit == null || limit == 0)
@@ -467,6 +476,14 @@ public class Application extends Controller {
 
     public static Result portlet(Long portletId) {
     	Portlet portlet = Portlet.find.byId(portletId);
+    	Set<Long> stockIdSet = new HashSet<Long>();
+		List<PortletStock> psl = PortletStock.findByPortlet(portlet);
+		for (PortletStock ps : psl) {
+			Long id = Stock.findBySymbol(ps.getStock()).getId();
+			stockIdSet.add(id);
+		}
+		NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
+		addPortletStats(statsMap, portlet);
     	return ok(Json.toJson(portlet));
     }
 
