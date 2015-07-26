@@ -546,7 +546,6 @@ public class Application extends Controller {
 		        		PortletStock portletStock = new PortletStock();
 		        		portletStock.setStock(jsonNode.findPath("stock").asText());
 		        		portletStock.setWeightage(jsonNode.findPath("weightage").asDouble());
-						System.out.println(portletStock);
 						portletStock.setLastUpdatedOn(new Date());
 						portletStock.setPortlet(newPortlet);
 						portletStock.save();
@@ -561,7 +560,7 @@ public class Application extends Controller {
             flash(FLASH_ERROR_KEY, "Please login first");
     		Logger.error("Please login first");
     	}
-    	return redirect(routes.Application.portlets());
+    	return ok(Json.toJson(newPortlet));
     }
 
     public static Result portfolio() {
