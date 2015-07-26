@@ -30,6 +30,7 @@ create table portlet (
   total_return              double,
   daily_return              double,
   annual_return             double,
+  last_value                double,
   constraint ck_portlet_validity check (validity in (0,1,2,3)),
   constraint pk_portlet primary key (id))
 ;

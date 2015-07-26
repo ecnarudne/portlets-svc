@@ -45,6 +45,7 @@ public class Portlet extends Model {
 	private double totalReturn;
 	private double dailyReturn;
 	private double annualReturn;
+	private double lastValue;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
@@ -221,5 +222,11 @@ public class Portlet extends Model {
 	}
 	public void setPrimaryExchange(String primaryExchange) {
 		this.primaryExchange = primaryExchange;
+	}
+	public double getLastValue() {
+		return lastValue;
+	}
+	public void setLastValue(double lastValue) {
+		this.lastValue = lastValue;
 	}
 }

@@ -30,7 +30,11 @@ import org.joda.time.LocalDate;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
+import play.libs.F.Callback;
+import play.libs.F.Promise;
 import play.libs.Json;
+import play.libs.ws.WS;
+import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Http.Cookie;
 import play.mvc.Http.Cookies;
@@ -73,7 +77,7 @@ public class Application extends Controller {
 					stockIdSet.add(id);
 				}
 			}
-			SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+			SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
 			Number[][] data = new Number[statsMap.size()][2];
 			int i = 0;
 			for (LocalDate date : statsMap.keySet()) {
@@ -89,6 +93,16 @@ public class Application extends Controller {
 			Logger.error(error, e);
 			return Results.internalServerError(error);
 		}
+	}
+
+	protected static double calcPortletValue(List<PortletStock> psl, Map<Long, StockStats> stockMap) {
+		double portfolioValue = 0;
+		for (PortletStock ps : psl) {
+			Long id = Stock.findBySymbol(ps.getStock()).getId();//TODO must cache
+			String closePrice = stockMap.get(id).getClosePrice();
+			portfolioValue += Double.parseDouble(closePrice);
+		}
+		return portfolioValue;
 	}
 
 	protected static double calcPortfolioValue(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
@@ -120,7 +134,7 @@ public class Application extends Controller {
 				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
 				stockIdSet.add(id);
 			}
-			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);
+			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
 
 			double portfolioValueLast = calcPortfolioValue(ups, statsMap.lastEntry().getValue());
 			portfolio.setPortfolioValue(portfolioValueLast);
@@ -207,6 +221,42 @@ public class Application extends Controller {
     	newUser.setValidity(UserValidityState.PENDING);
     	newUser.save();
     	return redirect(routes.Application.users());
+    }
+
+    public static Result authByToken() {
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+        	try {
+				String token = json.findPath("token").asText(); 
+				//TODO use https://github.com/google/google-api-java-client
+				Promise<WSResponse> responsePromise = WS.url("https://www.googleapis.com/plus/v1/people/me").setHeader("Authorization: Bearer", token).get();
+				/* Promise<WSResponse> recoverPromise = responsePromise.recoverWith(new Function<Throwable, Promise<WSResponse>>() {
+				    @Override
+				    public Promise<WSResponse> apply(Throwable throwable) throws Throwable {
+				        return forbidden("Token not valid");
+				    }
+				});*/
+				responsePromise.onRedeem(new Callback<WSResponse>() {
+					@Override
+					public void invoke(WSResponse arg0) throws Throwable {
+						//TODO
+					}
+				});
+				responsePromise.onFailure(new Callback<Throwable>() {
+					@Override
+					public void invoke(Throwable arg0) throws Throwable {
+						// TODO
+						
+					}
+				});
+				return ok();
+			} catch (Exception e) {//TODO Narrow down
+				return forbidden("Token not valid");
+			}
+        	
+        } else {
+        	return forbidden("No JSON info");
+        }
     }
     
     public static Result listUsers() {
@@ -354,6 +404,26 @@ public class Application extends Controller {
     
     public static Result listPortlets() {
     	List<Portlet> list = Portlet.find.all();
+    	Set<Long> stockIdSet = new HashSet<Long>();
+		if(list != null) {
+			for (Portlet p : list) {
+				List<PortletStock> psl = PortletStock.findByPortlet(p);
+				for (PortletStock ps : psl) {
+					Long id = Stock.findBySymbol(ps.getStock()).getId();
+					stockIdSet.add(id);
+				}
+			}
+			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
+			for (Portlet portlet : list) {//TODO must cache
+				List<PortletStock> psl = PortletStock.findByPortlet(portlet);
+				double portletValueLast = calcPortletValue(psl, statsMap.lastEntry().getValue());
+				portlet.setLastValue(portletValueLast);
+				double portletValueDayBefore = calcPortletValue(psl, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+				portlet.setDailyReturn(((portletValueLast - portletValueDayBefore)*100)/portletValueLast);
+				double portletValueYearBefore = calcPortletValue(psl, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+				portlet.setAnnualReturn(((portletValueLast - portletValueYearBefore)*100)/portletValueLast);
+			}
+		}
     	return ok(Json.toJson(list));
     }
     
