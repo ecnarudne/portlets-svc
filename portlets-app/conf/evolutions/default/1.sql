@@ -38,7 +38,7 @@ create table portlet_stock (
   id                        bigint auto_increment not null,
   portlet_id                bigint,
   stock                     varchar(255),
-  percent                   double,
+  weightage                 double,
   last_updated_on           datetime,
   constraint pk_portlet_stock primary key (id))
 ;

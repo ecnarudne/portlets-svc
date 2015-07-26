@@ -259,8 +259,8 @@ public class Application extends Controller {
             	for (PortletStock ps : stocks) {
             		double currentPx = Stock.currentPrice(ps.getStock());
 
-            		//long shares = Math.round((amount * ps.getPercent())/(100 * currentPx));
-            		double shares = (amount * ps.getPercent())/(100 * currentPx);
+            		//long shares = Math.round((amount * ps.getWeightage())/(100 * currentPx));
+            		double shares = (amount * ps.getWeightage())/(100 * currentPx);
             		double spent = shares * currentPx;
 /*        			if(shares > 0 && remainingAmount < spent) {
         				shares -= 1;
@@ -272,7 +272,7 @@ public class Application extends Controller {
         	    		newUserPortletStock.setPortlet(portlet);
         		    	newUserPortletStock.setStock(ps.getStock());
         		    	newUserPortletStock.setBuyPrice(currentPx);
-        		    	newUserPortletStock.setBuyWeight(ps.getPercent());
+        		    	newUserPortletStock.setBuyWeight(ps.getWeightage());
         		    	newUserPortletStock.setQty(shares);
         		    	newUserPortletStock.setUser(getLocalUser(session()));
         		    	newUserPortletStock.save();
@@ -440,7 +440,7 @@ public class Application extends Controller {
 	    	newUserPortletStock.setStock(stock.getStock());
     		double buyPrice = Stock.currentPrice(stock.getStock());
     		newUserPortletStock.setBuyPrice(buyPrice);
-	    	newUserPortletStock.setQty(Math.round((amount*stock.getPercent())/buyPrice)/100);
+	    	newUserPortletStock.setQty(Math.round((amount*stock.getWeightage())/buyPrice)/100);
 	    	newUserPortletStock.setUser(getLocalUser(session()));
 	    	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
 	    	Logger.info("Saving: " + newUserPortletStock);
@@ -459,9 +459,34 @@ public class Application extends Controller {
     	
     	final User localUser = getLocalUser(session());
     	if(localUser != null) {
-			newPortlet.setOwner(localUser);
-			newPortlet.setValidity(PortletValidityState.PENDING);
-	    	newPortlet.save();
+        	try {
+        		//TODO start transaction
+				newPortlet.setOwner(localUser);
+				newPortlet.setValidity(PortletValidityState.PENDING);
+		    	newPortlet.save();
+		        final JsonNode json = request().body().asJson();
+		        if(json != null) {
+		        	JsonNode stockArray = json.findPath("stocks");
+		        	if(stockArray == null)
+		        		return Results.badRequest("Missing JSON field stocks");
+/*					ObjectMapper mapper = new ObjectMapper();
+					TypeReference<List<PortletStock>> typeRef = new TypeReference<List<PortletStock>>(){};
+					List<PortletStock> list = mapper.readValue(stockArray.traverse(), typeRef);*/
+		        	for (JsonNode jsonNode : stockArray) {
+		        		PortletStock portletStock = new PortletStock();
+		        		portletStock.setStock(jsonNode.findPath("stock").asText());
+		        		portletStock.setWeightage(jsonNode.findPath("weightage").asDouble());
+						System.out.println(portletStock);
+						portletStock.setLastUpdatedOn(new Date());
+						portletStock.setPortlet(newPortlet);
+						portletStock.save();
+					}
+		        }
+			} catch (Exception e) {
+				//TODO revert transaction
+				e.printStackTrace();
+			}
+		    	
     	} else {
             flash(FLASH_ERROR_KEY, "Please login first");
     		Logger.error("Please login first");
