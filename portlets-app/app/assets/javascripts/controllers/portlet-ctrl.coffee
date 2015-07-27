@@ -32,6 +32,9 @@ angular.module('PagePortletCtrl',['Api'])
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
                     $scope.portlet = data
+                    $scope.portlet.dailyReturn = $scope.portlet.dailyReturn.toFixed(2)
+                    $scope.portlet.annualReturn = $scope.portlet.annualReturn.toFixed(2)
+                    $scope.portlet.totalReturn = $scope.portlet.totalReturn.toFixed(2)
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  portlet Details.')                   
                   complete: (data, status, headers, config) ->
