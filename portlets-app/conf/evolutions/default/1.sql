@@ -30,6 +30,7 @@ create table portlet (
   total_return              double,
   daily_return              double,
   annual_return             double,
+  last_value                double,
   constraint ck_portlet_validity check (validity in (0,1,2,3)),
   constraint pk_portlet primary key (id))
 ;
@@ -38,7 +39,7 @@ create table portlet_stock (
   id                        bigint auto_increment not null,
   portlet_id                bigint,
   stock                     varchar(255),
-  percent                   double,
+  weightage                 double,
   last_updated_on           datetime,
   constraint pk_portlet_stock primary key (id))
 ;
@@ -77,6 +78,7 @@ create table stock_stats (
   avg_vol                   varchar(255),
   mktcap                    varchar(255),
   activity                  varchar(255),
+  annual_returns            double,
   constraint pk_stock_stats primary key (id))
 ;
 

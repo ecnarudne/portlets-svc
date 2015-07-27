@@ -30,7 +30,10 @@ angular.module('PortfolioCtrl',['Api'])
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
                     $scope.portfolio = data
+                    $scope.portfolio.dailyReturn = data.dailyReturn.toFixed(2)
+                    $scope.portfolio.annualReturn = data.annualReturn.toFixed(2)
                     $cookies.pictureURL = $scope.portfolio.owner.profilePicture
+                    
                     $scope.arrow = undefined
                     dailyReturn = parseFloat $scope.portfolio.dailyReturn
                     if dailyReturn < 0

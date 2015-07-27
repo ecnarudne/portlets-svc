@@ -19,13 +19,9 @@ angular.module('CopyPortletCtrl',['Api'])
             $scope.availableWeightage = 100
             $scope.size = 0
             $scope.isShown = false
-
-            original = angular.copy($scope.portlet)
-            # Used to set ot reset form field after submitting
             $scope.calcWeightage = () ->
                 $scope.totalWeight = 0
                 $scope.selectedStocks.forEach (s) -> 
-                    console.log "in delete stock for each loop"
                     weight = 0
                     if s.weightage == undefined
                         weight = 0
@@ -33,7 +29,6 @@ angular.module('CopyPortletCtrl',['Api'])
                         weight = parseInt(s.weightage)
                         $scope.totalWeight = $scope.totalWeight + weight
                     $scope.availableWeightage = 100 - $scope.totalWeight
-
             portletApi.getPortletDetails(
                 $routeParams.portletId  
                 {
@@ -84,9 +79,6 @@ angular.module('CopyPortletCtrl',['Api'])
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
                     $location.path("/portlet-create")
-                    #$scope.errorMessage = true
-                
-                
             )
             portletApi.getStockExchange(
                 before: ->
@@ -96,19 +88,7 @@ angular.module('CopyPortletCtrl',['Api'])
                     console.log "stock data fetched is : " + JSON.stringify(data)    
                 error: (data, status, headers, config) ->
                     $log.error('Something went wrong! ' + data)
-                
             )
-
-            $scope.revert = ->
-                $scope.portlet = angular.copy(original)
-                $scope.portlet_form.$setPristine()
-
-            $scope.canRevert = ->
-                return !angular.equals($scope.portlet, original) || !$scope.portlet_form.$pristine
-
-            $scope.canSubmit = ->
-                return $scope.portlet_form.$valid && !angular.equals($scope.portlet, original)
-
             $scope.addPortlet = () ->
                 $scope.portlet.stocks = $scope.selectedStocks
                 if $scope.size < 3 
@@ -122,15 +102,12 @@ angular.module('CopyPortletCtrl',['Api'])
                             before: ->
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $scope.portlet )
                             success: (data, status, headers, config) ->
-                                # Setting coockies
                                 console.log("Hi data submittes successfully")
-                                $cookies.cookieVal = data.value                        
-                                $location.path("/page-portlet")
+                                $location.path("/page-portlet/1")
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
                         )
-
             $scope.getStocks = () ->
                 portletApi.getStocks(
                     exchange = 'NASDAQ'
@@ -145,7 +122,6 @@ angular.module('CopyPortletCtrl',['Api'])
                             $log.error('Something went wrong! ' + data)
                     }
                 )
-            
             $scope.addStock = (stock)->
                 count =$scope.selectedStocks.filter((value) ->
                         value.name == stock
@@ -161,7 +137,6 @@ angular.module('CopyPortletCtrl',['Api'])
                 $scope.size = $scope.selectedStocks.filter((value) ->
                         value.name != ''
                         ).length
-             
             $scope.deleteStock = (stock)->
                 $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
                                                             x.name != stock
@@ -174,7 +149,6 @@ angular.module('CopyPortletCtrl',['Api'])
                     $scope.showSelected = false
                     $scope.availableWeightage = 100
                 $scope.calcWeightage()
-            
             $scope.setWeightage = (stock,percentage) ->
                 $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
                 console.log "JSon array with weight is :" + JSON.stringify $scope.selectedStocks
@@ -182,7 +156,6 @@ angular.module('CopyPortletCtrl',['Api'])
                 if $scope.totalWeight > 100
                     alert 'Total weightage must 100%'
                 console.log  'total weightage'+ $scope.totalWeight 
-            
             $scope.showTable = (searchVal)->
                 if searchVal.val == '' 
                     $scope.isShown = false

@@ -77,10 +77,8 @@ angular.module('PortletCtrl',['Api'])
                             before: ->
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $scope.portlet )
                             success: (data, status, headers, config) ->
-                                # Setting coockies
                                 console.log("Hi data submittes successfully")
-                                $cookies.cookieVal = data.value                        
-                                $location.path("/page-portlet")
+                                $location.path "/page-portlet/1"
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
@@ -108,26 +106,26 @@ angular.module('PortletCtrl',['Api'])
             
             $scope.addStock = (stock)->
                 count =$scope.selectedStocks.filter((value) ->
-                        value.name == stock
+                        value.stock == stock
                         ).length
                 if count == 0
                     $scope.stockWithWeight = {}
-                    $scope.stockWithWeight.name = stock
+                    $scope.stockWithWeight.stock = stock
                     $scope.selectedStocks.push $scope.stockWithWeight
                     $scope.isDisabled = true
                     $scope.showSelected = true
                 else
                     alert 'This Stock is already added'
                 $scope.size = $scope.selectedStocks.filter((value) ->
-                        value.name != ''
+                        value.stock != ''
                         ).length
              
             $scope.deleteStock = (stock)->
                 $scope.selectedStocks = $.grep($scope.selectedStocks, (x) ->
-                                                            x.name != stock
+                                                            x.stock != stock
                                 )
                 console.log "Json array is :" + JSON.stringify $scope.selectedStocks
-                $scope.size = $scope.selectedStocks.filter((value) -> value.name != '').length
+                $scope.size = $scope.selectedStocks.filter((value) -> value.stock != '').length
                 console.log 'size after delete' + $scope.size
                 if $scope.size == 0
                     $scope.isDisabled = false
@@ -136,7 +134,7 @@ angular.module('PortletCtrl',['Api'])
                 $scope.calcWeightage()
             
             $scope.setWeightage = (stock,percentage) ->
-                $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
+                $scope.selectedStocks.forEach (s) -> s.weightage = percentage if s.stock == stock
                 console.log "JSon array with weight is :" + JSON.stringify $scope.selectedStocks
                 $scope.calcWeightage()
                 if $scope.totalWeight > 100

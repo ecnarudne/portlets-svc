@@ -81,19 +81,30 @@ angular.module('Api', ['ngCookies'])
         return 
 
       api.prototype.getPortfolioGraphData = (request) ->
-        get(actionUrl("/dailypricechartall"),request)
+        get(actionUrl("/myportfoliopxhist"),request)
         return
 
       api.prototype.getMyPortlets = (request) ->
         get(actionUrl("/listmyportlets"),request)
         return
 
+      api.prototype.saveProfile = (request) ->
+        post(actionUrl("/setprofilejs"),request)
+        return
+      api.prototype.searchPortlets = (search,request) ->
+        get(actionUrl("/searchportlets/" + search),request)
+        return
+
       api.prototype.getSectors = (request) ->
         get(actionUrl("/listsectors"),request)
         return
 
-      api.prototype.getPortlets = (request) ->
+      api.prototype.getAllPortlets = (request) ->
         get(actionUrl("/listportlets"),request)
+        return
+
+      api.prototype.getPortlets = (sectorId,request) ->
+        get(actionUrl("/listportletsbysector/" + sectorId),request)
         return
       
       api.prototype.getDiscoverPageDetails = (request) ->

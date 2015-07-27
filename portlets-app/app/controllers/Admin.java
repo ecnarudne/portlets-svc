@@ -61,7 +61,7 @@ public class Admin extends Controller {
     
     public static Result listMockSets() {
     	//List<MockSet> list = new ArrayList<MockSet>((new MockSets()).map.keySet());
-    	return ok(Json.toJson((new MockSets()).map.keySet()));
+    	return ok(Json.toJson((new MockSets(getLocalUser(session()))).map.keySet()));
     }
 
     public static Result importMarketDataFile() {
@@ -92,7 +92,7 @@ public class Admin extends Controller {
         DynamicForm requestData = Form.form().bindFromRequest();
         String nick = requestData.get("nick");
     	Logger.debug("nick: " + nick);
-    	MockSet mockSet = new MockSets().persist(nick, getLocalUser(session()));
+    	MockSet mockSet = new MockSets(getLocalUser(session())).persist(nick, getLocalUser(session()));
     	Logger.debug("Persisted mockSet: " + mockSet);
     	return redirect(routes.Admin.mockSets());
     }

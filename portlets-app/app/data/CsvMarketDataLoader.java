@@ -120,14 +120,12 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 		String pxStatsKey = RedisKey.LAST_MARKET_PRICE_STATS
 				+ s.getStock().getSymbol();
 		Cache.set(pxStatsKey, s);
+		/* remove after tests
 		if (Logger.isDebugEnabled()) {
-			Logger.debug("Fetched Stats: "
-					+ ((StockStats) Cache.get(pxStatsKey)) + " for: "
-					+ s.getStock().getSymbol());
 			Logger.debug("Fetched Stock: "
 					+ ((StockStats) Cache.get(pxStatsKey)).getStock()
 					+ " for: " + s.getStock().getSymbol());
-		}
+		}*/
 	}
 
 	public static StockStats loadStockStatsBySymbol(String symbol) {

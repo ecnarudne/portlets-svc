@@ -21,17 +21,17 @@ public class PortletStock extends Model {
 	//@Required
 	private String stock;
 	//@Required
-	private double percent;
+	private double weightage;
 	private Date lastUpdatedOn;
 
 	public static Finder<Long, PortletStock> find = new Finder<Long, PortletStock>(Long.class, PortletStock.class);
 
 	public PortletStock(){}
-	public PortletStock(Portlet portlet, String stock, double percent) {
+	public PortletStock(Portlet portlet, String stock, double weightage) {
 		super();
 		this.portlet = portlet;
 		this.stock = stock;
-		this.percent = percent;
+		this.weightage = weightage;
 	}
 
 	public static List<PortletStock> findByPortlet(Portlet portlet) {
@@ -65,11 +65,11 @@ public class PortletStock extends Model {
 	public void setStock(String stock) {
 		this.stock = stock;
 	}
-	public double getPercent() {
-		return percent;
+	public double getWeightage() {
+		return weightage;
 	}
-	public void setPercent(double percent) {
-		this.percent = percent;
+	public void setWeightage(double weightage) {
+		this.weightage = weightage;
 	}
 	public Date getLastUpdatedOn() {
 		return lastUpdatedOn;

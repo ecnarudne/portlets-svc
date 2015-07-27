@@ -25,7 +25,7 @@
           <div class="row">
             <div class="col-xs-12">
               <h4>Created by : <span ng-bind="portlet.owner.fullName"></span></h4>
-              <h4>Created Since : <span ng-bind="createdOn"></span></h4>
+              <h4>Created Since : <span>{{portlet.createdOn | date:'yyyy.MM.dd'}}</span></h4>
               <h4>Followers : <span ng-bind="portlet.followerCount"></span></h4>
             </div>
           </div>

@@ -1,7 +1,10 @@
 package models;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -42,6 +45,7 @@ public class Portlet extends Model {
 	private double totalReturn;
 	private double dailyReturn;
 	private double annualReturn;
+	private double lastValue;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
@@ -76,14 +80,18 @@ public class Portlet extends Model {
 		return null;
 	}
 
-	public static List<Portlet> findBySector(Sector sector) {
+	public static List<Portlet> findByOwner(User owner) {
 		//TODO must cache
-		if(sector == null)
+		if(owner == null)
 			return null;
-		List<Portlet> list = find.where().eq("sector", sector).findList();
-		if(list != null && !list.isEmpty())
-			return list;
-		return null;
+		return find.where().eq("owner", owner).findList();
+	}
+
+	public static List<Portlet> findBySector(Long sectorId) {
+		//TODO must cache
+		if(sectorId == null)
+			return null;
+	    return find.fetch("sectors").where().eq("sectors.id", sectorId).findList();
 	}
 
 	public static List<Portlet> findRecent(int limit) {
@@ -92,6 +100,20 @@ public class Portlet extends Model {
 		if(list != null && !list.isEmpty())
 			return list;
 		return null;
+	}
+
+	public static Collection<Portlet> findByPartName(String partName) {
+		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
+		return list;
+	}
+
+	public static Collection<Sector> findSectorsByPartName(String partName) {
+		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
+		Set<Sector> sectors = new HashSet<Sector>();
+		for (Portlet portlet : list) {
+			sectors.addAll(portlet.getSectors());
+		}
+		return sectors;
 	}
 
 	public String getVolatilityClass() {
@@ -200,5 +222,11 @@ public class Portlet extends Model {
 	}
 	public void setPrimaryExchange(String primaryExchange) {
 		this.primaryExchange = primaryExchange;
+	}
+	public double getLastValue() {
+		return lastValue;
+	}
+	public void setLastValue(double lastValue) {
+		this.lastValue = lastValue;
 	}
 }

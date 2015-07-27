@@ -8,4 +8,5 @@ app = angular.module('portlets-controller', [
   'PagePortletCtrl'
   'PageStockCtrl'
   'CopyPortletCtrl'
+  'SettingCtrl'
   ])

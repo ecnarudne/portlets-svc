@@ -4,27 +4,27 @@
             <div class="col-md-3 col-sm-4 layout-sidebar">
               <div class="nav-layout-sidebar-skip"><strong>Tab Navigation</strong>/<a href="#settings-content">Skip to Content</a></div>
               <ul id="myTab" class="nav nav-layout-sidebar nav-stacked">
-                <li class="active"><a href="#profile-tab" data-toggle="tab"><i class="fa fa-user"></i>Profile Settings</a></li>
-                <li><a href="#password-tab" data-toggle="tab"><i class="fa fa-lock"></i>Change Password</a></li>
-                <li><a href="#messaging" data-toggle="tab"><i class="fa fa-bullhorn"></i>Notifications</a></li>
-                <li><a href="#payments" data-toggle="tab"><i class="fa fa-dollar"></i>Payment Settings</a></li>
-                <li><a href="#reports" data-toggle="tab"><i class="fa fa-signal"></i>Configure Reports</a></li>
+                <li class="active"><a href=".profile-tab" data-toggle="tab"><i class="fa fa-user"></i>Profile Settings</a></li>
+                <li><a href=".password-tab" data-toggle="tab"><i class="fa fa-lock"></i>Change Password</a></li>
+                <li><a href=".messaging" data-toggle="tab"><i class="fa fa-bullhorn"></i>Notifications</a></li>
+                <li><a href=".payments" data-toggle="tab"><i class="fa fa-dollar"></i>Payment Settings</a></li>
+                <li><a href=".reports" data-toggle="tab"><i class="fa fa-signal"></i>Configure Reports</a></li>
               </ul>
             </div>
             <!-- /.col-->
             <div class="col-md-9 col-sm-8 layout-main">
               <div id="settings-content" class="tab-content stacked-content">
-                <div id="profile-tab" class="tab-pane fade in active">
+                <div id="profile-tab" class="tab-pane fade in active profile-tab">
                   <h3 class="content-title">
                     <u>Edit Profile</u>
                   </h3>
-                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p><br><br>
-                  <form action="./page-settings.html" class="form-horizontal">
+                  <p ng-bind="portfolio.profileDescription"></p><br><br>
+                  <form  class="form-horizontal">
                     <div class="form-group">
                       <label class="col-md-3">Avatar</label>
                       <div class="col-md-7">
                         <div data-provides="fileupload" class="fileupload fileupload-new">
-                          <div style="width: 180px; height: 180px;" class="fileupload-new thumbnail"><img src="assets/images/avatar-2-md.jpg" alt="Profile Avatar"></div>
+                          <div style="width: 180px; height: 180px;" class="fileupload-new thumbnail"><img src="{{portfolio.profilePicture}}" alt="Profile Avatar"></div>
                           <div style="max-width: 200px; max-height: 200px; line-height: 20px;" class="fileupload-preview fileupload-exists thumbnail"></div>
                           <div><span class="btn btn-default btn-file"><span class="fileupload-new">Select image</span><span class="fileupload-exists">Change</span>
                               <input type="file"></span><a href="#" data-dismiss="fileupload" class="btn btn-default fileupload-exists">Remove</a></div>
@@ -38,7 +38,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Username</label>
                       <div class="col-md-7">
-                        <input type="text" name="user-name" value="jumpstartui" disabled="" class="form-control">
+                        <input type="text" name="fullName" ng-model="portfolio.fullName" disabled="" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -46,7 +46,7 @@
                     <div class="form-group">
                       <label class="col-md-3">First Name</label>
                       <div class="col-md-7">
-                        <input type="text" name="first-name" value="Rod" class="form-control">
+                        <input type="text" name="preferredName" ng-model="portfolio.preferredName" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -54,7 +54,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Last Name</label>
                       <div class="col-md-7">
-                        <input type="text" name="last-name" value="Howard" class="form-control">
+                        <input type="text" name="last-name" ng-model="portfolio.nameTitle" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -62,7 +62,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Email Address</label>
                       <div class="col-md-7">
-                        <input type="text" name="email-address" value="rod@example.com" class="form-control">
+                        <input type="text" name="email" ng-model="portfolio.email" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -70,7 +70,7 @@
                     <div class="form-group">
                       <label class="col-md-3">Website</label>
                       <div class="col-md-7">
-                        <input type="text" name="website" value="http://jumpstartthemes.com" class="form-control">
+                        <input type="text" ng-model="portfolio.website"  name="website" placeholder="www.example.com" class="form-control">
                       </div>
                       <!-- /.col-->
                     </div>
@@ -78,14 +78,14 @@
                     <div class="form-group">
                       <label class="col-md-3">About You</label>
                       <div class="col-md-7">
-                        <textarea id="about-textarea" name="about-you" rows="6" class="form-control">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</textarea>
+                        <textarea id="about-textarea" name="about-you" ng-model="portfolio.profileDescription" rows="6" class="form-control"></textarea>
                       </div>
                       <!-- /.col-->
                     </div>
                     <!-- /.form-group-->
                     <div class="form-group">
                       <div class="col-md-7 col-md-push-3">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary" ng-click="saveProfile()">Save Changes</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
                       </div>
                       <!-- /.col-->
@@ -94,7 +94,7 @@
                   </form>
                 </div>
                 <!-- /.tab-pane-->
-                <div id="password-tab" class="tab-pane fade">
+                <div id="password-tab" class="tab-pane fade password-tab">
                   <h3 class="content-title">
                     <u>Change Password</u>
                   </h3>
@@ -127,7 +127,7 @@
                     <!-- /.form-group-->
                     <div class="form-group">
                       <div class="col-md-7 col-md-push-3">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="submit" class="btn btn-primary"  >Save Changes</button>
                         <button type="reset" class="btn btn-default">Cancel</button>
                       </div>
                       <!-- /.col-->
@@ -136,7 +136,7 @@
                   </form>
                 </div>
                 <!-- /.tab-pane-->
-                <div id="messaging" class="tab-pane fade">
+                <div id="messaging" class="tab-pane fade messaging">
                   <h3 class="content-title">
                     <u>Notification Settings</u>
                   </h3>
@@ -196,7 +196,7 @@
                   </form>
                 </div>
                 <!-- /.tab-pane-->
-                <div id="payments" class="tab-pane fade">
+                <div id="payments" class="payments tab-pane fade">
                   <h3 class="content-title">
                     <u>Payments Settings</u>
                   </h3>
@@ -204,7 +204,7 @@
                   <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
                 </div>
                 <!-- /.tab-pane-->
-                <div id="reports" class="tab-pane fade">
+                <div id="reports" class="reports tab-pane fade">
                   <h3 class="content-title">
                     <u>Reports Settings</u>
                   </h3>
