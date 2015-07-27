@@ -39,6 +39,22 @@ angular.module('DiscoverCtrl',['Api'])
                       $log.debug('In complete of getPortlets')
                   }
               )
+            $scope.getSectorPortlets = (sectorId) ->
+              console.log "in get Sector wise portlet"
+              portletApi.getPortlets(
+                  sectorId
+                  {
+                    before: ->
+                      $log.debug('Fetching Portlet lists.')
+                    success: (data, status, headers, config) ->
+                      $log.debug 'Portlet list fetched successfully.' + JSON.stringify(data)
+                      $scope.portlets = data
+                    error: (data, status, headers, config, statusText) ->
+                      $log.error('Got error while fetcching portlet list')                   
+                    complete: (data, status, headers, config) ->
+                      $log.debug('In complete of getPortlets')
+                  }
+              )
             $scope.getAllPortlets()  
             $scope.getPortlets =() ->
               if $scope.sectorId == ""
