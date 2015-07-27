@@ -74,7 +74,7 @@ angular.module('Api', ['ngCookies'])
         return 
 
       api.prototype.getPortfolioGraphData = (request) ->
-        get(actionUrl("/dailypricechartall"),request)
+        get(actionUrl("/myportfoliopxhist"),request)
         return
 
       api.prototype.getMyPortlets = (request) ->

@@ -18,6 +18,8 @@ appController.controller(
           'https://www.googleapis.com/auth/userinfo.profile'
         ]).then ((result) ->
           $localStorage.accessToken = result.access_token
+          console.log "token From google server is : " + result.access_token
+          $state.go('/portfolio');
           $location.path '/portfolio'
           return
         ), (error) ->

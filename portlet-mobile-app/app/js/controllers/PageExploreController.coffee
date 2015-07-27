@@ -11,20 +11,6 @@ angular.module('PageExploreCtrl',['ionic','Api'])
         "$location"
         ($scope,$log,$http,$cookies,portletApi,$location)->
             $log.debug('DiscoverCtrl controller called')
-            formatDate = (date) ->
-                d = new Date(date)
-                month = '' + d.getMonth() + 1
-                day = '' + d.getDate()
-                year = d.getFullYear()
-                if month.length < 2
-                  month = '0' + month
-                if day.length < 2
-                  day = '0' + day
-                [
-                  year
-                  month
-                  day
-                ].join '/'
             portletApi.getCategories(
                 {
                   before: ->
@@ -38,9 +24,7 @@ angular.module('PageExploreCtrl',['ionic','Api'])
                     $log.debug('Categories fetched')
                 }
             )
-            
             $scope.getPortlets = () ->
-
                 portletApi.getPortlets(
                     {
                       before: ->
@@ -48,18 +32,12 @@ angular.module('PageExploreCtrl',['ionic','Api'])
                       success: (data, status, headers, config) ->
                         $log.debug 'Portlet list fetched successfully.' + JSON.stringify(data)
                         $scope.portlets = data
-
-                        $scope.portlets.filter((portlet) ->
-                                                  portlet.lastRebalancedOn = formatDate(portlet.lastRebalancedOn)
-                                )
-
                       error: (data, status, headers, config, statusText) ->
                         $log.error('Got error while fetcching portlet list')                   
                       complete: (data, status, headers, config) ->
                         $log.debug('In complete of getPortlets')
                     }
                 )
-
             $scope.getPortlets()
             $scope.getNewPortlets = () ->
               portletApi.getNewPortlets(
