@@ -225,6 +225,7 @@ public class Application extends Controller {
 
     public static Result authByToken() {
         JsonNode json = request().body().asJson();
+       System.out.println("Access token authentication: " + json.findPath("token").asText());
         if(json != null) {
         	try {
 				String token = json.findPath("token").asText(); 

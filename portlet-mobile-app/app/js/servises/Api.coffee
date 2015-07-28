@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://localhost:9000'
+      domain = 'http://192.168.1.107:9000'
       
       actionUrl = (path) ->
           domain + path
@@ -58,11 +58,11 @@ angular.module('Api', ['ngCookies'])
       api = () ->
               
       api.prototype.login = (request) ->
-        get(actionUrl("/authenticate/google"),request)
+        get(actionUrl("authenticate/google"),request)
         return     
 
       api.prototype.authGoogle = (request) ->
-        get(actionUrl("/authenticate/google"),request)
+        post(actionUrl("/authbytoken"),request)
         return
         
       api.prototype.addPortlet = (request) ->
