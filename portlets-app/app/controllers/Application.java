@@ -97,10 +97,16 @@ public class Application extends Controller {
 
 	protected static double calcPortletValue(List<PortletStock> psl, Map<Long, StockStats> stockMap) {
 		double portfolioValue = 0;
-		for (PortletStock ps : psl) {
-			Long id = Stock.findBySymbol(ps.getStock()).getId();//TODO must cache
-			String closePrice = stockMap.get(id).getClosePrice();
-			portfolioValue += Double.parseDouble(closePrice);
+		try {
+			for (PortletStock ps : psl) {
+				Long id = Stock.findBySymbol(ps.getStock()).getId();//TODO must cache
+				Logger.debug("calcPortletValue stock id: " + id);
+				String closePrice = stockMap.get(id).getClosePrice();
+				portfolioValue += Double.parseDouble(closePrice);
+			}
+		} catch (Exception e) {
+			Logger.error("Failed to calculate Portlet Value for stockMap: " + stockMap
+					+ " and PortletStocks: " + psl, e);
 		}
 		return portfolioValue;
 	}
