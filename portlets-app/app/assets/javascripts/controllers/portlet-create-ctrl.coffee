@@ -78,7 +78,7 @@ angular.module('PortletCtrl',['Api'])
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $scope.portlet )
                             success: (data, status, headers, config) ->
                                 console.log("Hi data submittes successfully")
-                                $location.path "/page-portlet/1"
+                                $location.path "/page-portlet/" + data.id
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")
