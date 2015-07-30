@@ -22,10 +22,11 @@ appController.controller(
           'https://www.googleapis.com/auth/userinfo.profile'
         ]).then ((result) ->
           $localStorage.accessToken = result.access_token
-          token = result.access_token
-          console.log "token From google server is : " + token
+          access_token = result.access_token
+          console.log "token From google server is : " + access_token
+
           portletApi.authGoogle(
-            data : { "token" : token }
+            access_token
             {
               before: ->
                 $log.debug('authentication.')

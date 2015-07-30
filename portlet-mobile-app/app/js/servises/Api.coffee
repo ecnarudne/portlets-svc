@@ -21,7 +21,7 @@ angular.module('Api', ['ngCookies'])
           error: ->
           forbidden: (data, status, headers, config) ->
             if(status==403)
-              $location.path("/pages-500")
+              #$location.path("/pages-500")
             else
               options.error()
           complete: ->
@@ -54,6 +54,18 @@ angular.module('Api', ['ngCookies'])
           )
           options
         )
+      postToken = (token,url, request) ->
+        options = withDefaults(request)
+        options.before()
+        dispatch(
+          $http.post(
+            url
+            JSON.stringify(options.data)
+            headers:
+              "token": token
+          )
+          options
+        )  
 
       api = () ->
               
@@ -61,8 +73,8 @@ angular.module('Api', ['ngCookies'])
         get(actionUrl("authenticate/google"),request)
         return     
 
-      api.prototype.authGoogle = (request) ->
-        post(actionUrl("/authbytoken"),request)
+      api.prototype.authGoogle = (token,request) ->
+        postToken(token,actionUrl("/authbytoken"),request)
         return
         
       api.prototype.addPortlet = (request) ->

@@ -36,6 +36,7 @@ import play.libs.Json;
 import play.libs.ws.WS;
 import play.libs.ws.WSResponse;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Http.Cookie;
 import play.mvc.Http.Cookies;
 import play.mvc.Http.Request;
@@ -43,7 +44,6 @@ import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.mvc.Security.Authenticated;
 import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
@@ -224,8 +224,11 @@ public class Application extends Controller {
     }
 
     public static Result authByToken() {
-        JsonNode json = request().body().asJson();
-       System.out.println("Access token authentication: " + json.findPath("token").asText());
+    	
+    	/*Http.Request req = Http.Context.current().request();
+    	Map<String, String[]> headerMap = req.headers();
+    	System.out.println("Access token authentication: " +headerMap.get("token")[0]);*/
+    	JsonNode json = request().body().asJson();
         if(json != null) {
         	try {
 				String token = json.findPath("token").asText(); 
