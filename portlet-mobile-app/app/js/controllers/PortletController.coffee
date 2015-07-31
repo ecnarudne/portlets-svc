@@ -28,21 +28,6 @@ angular.module('PortletCtrl',['ionic','Api'])
                     $log.debug('In complete of getPortfolioDetails()')
                 }
             )
-            
-            formatDate = (date) ->
-                d = new Date(date)
-                month = '' + d.getMonth() + 1
-                day = '' + d.getDate()
-                year = d.getFullYear()
-                if month.length < 2
-                  month = '0' + month
-                if day.length < 2
-                  day = '0' + day
-                [
-                  year
-                  month
-                  day
-                ].join '/'
             console.log 'Route parameters: ' + $routeParams.portletId
             portletApi.getPortletDetails(
                 $scope.portletId 
@@ -52,7 +37,8 @@ angular.module('PortletCtrl',['ionic','Api'])
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
                     $scope.portlet = data
-                    $scope.portlet.createdOn = formatDate(new Date(data.createdOn))
+                    $scope.portlet.dailyReturn = data.dailyReturn.toFixed(2)
+                    $scope.portlet.annualReturn = data.annualReturn.toFixed(2)
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  portlet data')                   
                   complete: (data, status, headers, config) ->

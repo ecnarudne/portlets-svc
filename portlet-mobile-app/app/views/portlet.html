@@ -79,7 +79,7 @@
                     </div><!-- /.row-->
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                        <h5  class="text-inline white-color">Created Since : <span ng-bind="portlet.createdOn"></span></h5>
+                        <h5  class="text-inline white-color">Created Since : <span>{{portlet.createdOn | date :"yyyy.MM.dd"}}</span></h5>
                         <h5  class="text-inline-padding white-color">Followers : <span ng-bind="portlet.followerCount"></span></h5>
                         </div>
                     </div>
