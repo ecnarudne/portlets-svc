@@ -50,9 +50,9 @@ public class Stock extends Model {
 	
 	public static double currentPrice(String symbol) {
 		String key = RedisKey.LAST_MARKET_PRICE_FLOAT + symbol;
-		String s = (String) play.cache.Cache.get(key);
-		if(Logger.isDebugEnabled()) Logger.debug("Got Price: " + s + " for symbol: " + symbol);
-		return Double.parseDouble(s);
+		double d = (double) play.cache.Cache.get(key);
+		if(Logger.isDebugEnabled()) Logger.debug("Got Price: " + d + " for symbol: " + symbol);
+		return d;
 	}
 
 	public Long getId() {

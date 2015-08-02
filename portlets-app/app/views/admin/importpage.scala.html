@@ -1,0 +1,18 @@
+@(user: models.User)
+
+@main(user) {
+<br/><br/>
+<h3>Import Market Data from all CSV Files on Server</h3>
+<form action="@routes.Admin.importMarketDataHistory()" method="post" >
+	<input type="text" id="filepath" name="dirpath" value="/var/tmp/data" />
+	<input type="submit" value="Import" />
+</form><br/><br/>
+
+<h5>--avoid mocks, create portlets using create page--</h5>
+<form action="@routes.Admin.addSectors()" method="post" >
+	<input type="submit" value="Push Sectors" />
+</form><br/>
+<form action="@routes.Admin.addMockSet()" method="post" >
+	<input type="submit" value="Push MockSet" />
+</form><br/>
+}

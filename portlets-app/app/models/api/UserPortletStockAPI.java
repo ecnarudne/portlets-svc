@@ -28,13 +28,13 @@ public class UserPortletStockAPI {
 		this.buyWeight = ups.getBuyWeight();
 		this.buyEpoch = ups.getBuyEpoch();
 		try {
-			this.totalReturn = ((100*(ups.getBuyPrice() - Double.parseDouble(stats.getClosePrice())))/ups.getBuyPrice());
+			this.totalReturn = ((100*(ups.getBuyPrice() - stats.getClosePrice()))/ups.getBuyPrice());
 		} catch (Exception e) {
 			Logger.error("Couldn't find totalReturn for ups Id: " + ups.getId(), e);
 		}
 		try {
 			//TODO calculate against previous day's price
-			this.dailyReturn = ((100*(ups.getBuyPrice() - Double.parseDouble(stats.getClosePrice())))/ups.getBuyPrice());
+			this.dailyReturn = ((100*(ups.getBuyPrice() - stats.getClosePrice()))/ups.getBuyPrice());
 		} catch (Exception e) {
 			Logger.error("Couldn't find totalReturn for ups Id: " + ups.getId(), e);
 		}

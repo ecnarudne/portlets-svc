@@ -58,6 +58,7 @@ public class Portlet extends Model {
 		this.sectors = sectors;
 		this.createdOn = new Date();
 	}
+
 	public static Portlet fromJson(JsonNode root) {
 		Portlet instance = Json.fromJson(root, Portlet.class);
 /* If Sectors do not get populated

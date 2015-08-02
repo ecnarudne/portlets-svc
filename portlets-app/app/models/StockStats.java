@@ -26,23 +26,16 @@ public class StockStats extends Model {
 	private String exchange;
 	@ManyToOne
 	private Stock stock;
-	private String date;
+	//private String date;
 	private LocalDate localDate;
-/*	private double openPrice;
+
+	private double openPrice;
 	private double closePrice;
 	private double highPrice;
 	private double lowPrice;
 	private double volume;
 	private double avgVol;
 	private double mktcap;
-*/
-	private String openPrice;
-	private String closePrice;
-	private String highPrice;
-	private String lowPrice;
-	private String volume;
-	private String avgVol;
-	private String mktcap;
 	private String activity;
 	private double annualReturns;
 
@@ -92,65 +85,15 @@ public class StockStats extends Model {
 		return findLatestByStock(Stock.findBySymbol(symbol));
 	}
 
+	public static StockStats findStockStatsOnDate(Stock stock, LocalDate onDate) {
+		return StockStats.find.where().eq("stock_id", stock.getId()).le("local_date", onDate).orderBy("local_date").setMaxRows(1).findUnique();
+	}
+
 	public Stock getStock() {
 		return stock;
 	}
 	public void setStock(Stock stock) {
 		this.stock = stock;
-	}
-	/**
-	 * Format: YYYYMMDD
-	 */
-	public String getDate() {
-		return date;
-	}
-	/**
-	 * Format: YYYYMMDD
-	 */
-	public void setDate(String date) {
-		this.date = date;
-	}
-	public String getOpenPrice() {
-		return openPrice;
-	}
-	public void setOpenPrice(String openPrice) {
-		this.openPrice = openPrice;
-	}
-	public String getClosePrice() {
-		return closePrice;
-	}
-	public void setClosePrice(String closePrice) {
-		this.closePrice = closePrice;
-	}
-	public String getHighPrice() {
-		return highPrice;
-	}
-	public void setHighPrice(String highPrice) {
-		this.highPrice = highPrice;
-	}
-	public String getLowPrice() {
-		return lowPrice;
-	}
-	public void setLowPrice(String lowPrice) {
-		this.lowPrice = lowPrice;
-	}
-	public String getVolume() {
-		return volume;
-	}
-	public void setVolume(String volume) {
-		this.volume = volume;
-	}
-	public String getAvgVol() {
-		return avgVol;
-	}
-	public void setAvgVol(String avgVol) {
-		this.avgVol = avgVol;
-	}
-	public String getMktcap() {
-		return mktcap;
-	}
-	public void setMktcap(String mktcap) {
-		this.mktcap = mktcap;
 	}
 	public String getActivity() {
 		return activity;
@@ -181,5 +124,47 @@ public class StockStats extends Model {
 	}
 	public void setAnnualReturns(double annualReturns) {
 		this.annualReturns = annualReturns;
+	}
+	public double getOpenPrice() {
+		return openPrice;
+	}
+	public void setOpenPrice(double openPrice) {
+		this.openPrice = openPrice;
+	}
+	public double getClosePrice() {
+		return closePrice;
+	}
+	public void setClosePrice(double closePrice) {
+		this.closePrice = closePrice;
+	}
+	public double getHighPrice() {
+		return highPrice;
+	}
+	public void setHighPrice(double highPrice) {
+		this.highPrice = highPrice;
+	}
+	public double getLowPrice() {
+		return lowPrice;
+	}
+	public void setLowPrice(double lowPrice) {
+		this.lowPrice = lowPrice;
+	}
+	public double getVolume() {
+		return volume;
+	}
+	public void setVolume(double volume) {
+		this.volume = volume;
+	}
+	public double getAvgVol() {
+		return avgVol;
+	}
+	public void setAvgVol(double avgVol) {
+		this.avgVol = avgVol;
+	}
+	public double getMktcap() {
+		return mktcap;
+	}
+	public void setMktcap(double mktcap) {
+		this.mktcap = mktcap;
 	}
 }

@@ -34,6 +34,13 @@ public class PortletStock extends Model {
 		this.weightage = weightage;
 	}
 
+	@Override
+	public void save() {
+		super.save();
+		PortletDefinitionAudit audit = new PortletDefinitionAudit(this, System.currentTimeMillis());//TODO get single epoch for all audits for same changefor 
+		audit.save();
+	}
+	
 	public static List<PortletStock> findByPortlet(Portlet portlet) {
 		if(portlet == null)
 			return null;

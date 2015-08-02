@@ -22,7 +22,7 @@ import play.mvc.Http.Session;
 import play.mvc.Result;
 import views.html.index;
 import views.html.users;
-import views.html.admin.mocks;
+import views.html.admin.importpage;
 
 import com.feth.play.module.pa.PlayAuthenticate;
 
@@ -55,13 +55,8 @@ public class Admin extends Controller {
     	return ok(Json.toJson(list));
     }
 
-    public static Result mockSets() {
-        return ok(mocks.render(getLocalUser(session())));
-    }
-    
-    public static Result listMockSets() {
-    	//List<MockSet> list = new ArrayList<MockSet>((new MockSets()).map.keySet());
-    	return ok(Json.toJson((new MockSets(getLocalUser(session()))).map.keySet()));
+    public static Result importDataPage() {
+        return ok(importpage.render(getLocalUser(session())));
     }
 
     public static Result importMarketDataFile() {
@@ -74,7 +69,7 @@ public class Admin extends Controller {
     	if(filepath != null && filepath.trim().isEmpty())
     		filepath = CsvMarketDataLoader.MKT_FILE_PATH_DEFAULT;
     	loader.loadMarketDataFile(filepath, exchange, date);
-    	return redirect(routes.Admin.mockSets());
+    	return redirect(routes.Admin.importDataPage());
     }
     
     public static Result importMarketDataHistory() {
@@ -85,16 +80,22 @@ public class Admin extends Controller {
     	if(dirpath != null && dirpath.trim().isEmpty())
     		dirpath = CsvMarketDataLoader.MKT_DIR_PATH_DEFAULT;
     	loader.loadMarketDataHistory(dirpath);
-    	return redirect(routes.Admin.mockSets());
+    	return redirect(routes.Admin.importDataPage());
+    }
+
+    public static Result addSectors() {
+    	(new MockSets()).persistSectors();
+    	Logger.debug("Persisted sectors");
+    	return redirect(routes.Admin.importDataPage());
     }
 
     public static Result addMockSet() {
         DynamicForm requestData = Form.form().bindFromRequest();
         String nick = requestData.get("nick");
     	Logger.debug("nick: " + nick);
-    	MockSet mockSet = new MockSets(getLocalUser(session())).persist(nick, getLocalUser(session()));
+    	MockSet mockSet = new MockSets().persist(nick, getLocalUser(session()));
     	Logger.debug("Persisted mockSet: " + mockSet);
-    	return redirect(routes.Admin.mockSets());
+    	return redirect(routes.Admin.importDataPage());
     }
 
     public static Result listPortletStocks() {

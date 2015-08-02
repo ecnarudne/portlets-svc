@@ -15,7 +15,7 @@ import play.db.ebean.Model;
 
 public class MockSets {
 	public static final String SECTOR_MOCK_TECH = "Technology";
-	public static final String SECTOR_MOCK_INT = "Internet";
+	public static final String SECTOR_MOCK_FIN = "Financial";
 	public Map<String, MockSet> map;
 	Sector cat;
 	Sector cat2;
@@ -24,16 +24,13 @@ public class MockSets {
 	Portlet portletMock3;
 	Portlet portletMock4;
 
-	public MockSets(User user) {
+	public void persistSectors() {
+		this.cat = ensureSectorExists(new Sector(SECTOR_MOCK_TECH));
+		this.cat2 = ensureSectorExists(new Sector(SECTOR_MOCK_FIN));
+	}
+	public MockSet persist(String nick, User user) {
 		persistMockPortlets(user);
 		map = new HashMap<String, MockSet>();
-/*		map.put("Dummy2s",
-				new MockSet(new ArrayList<Model>(Arrays.asList(
-						new PortletStock(portletMock1, "MSFT", 50), 
-						new PortletStock(portletMock1, "GOOG", 50), 
-						new PortletStock(portletMock2, "AMZN", 50), 
-						new PortletStock(portletMock2, "YHOO", 50)
-		))));*/
 		map.put("Dummy4s",
 				new MockSet(new ArrayList<Model>(Arrays.asList(
 						new PortletStock(portletMock1, "MSFT", 25), 
@@ -53,8 +50,6 @@ public class MockSets {
 						new PortletStock(portletMock4, "AMZN", 25), 
 						new PortletStock(portletMock4, "YHOO", 25)
 		))));
-	}
-	public MockSet persist(String nick, User user) {
 		MockSet toPersist = map.get(nick);
 		if(toPersist != null) {
 			for (Model model : toPersist.models) {
@@ -70,7 +65,7 @@ public class MockSets {
 	}
 	private void persistMockPortlets(User user) {
 		this.cat = ensureSectorExists(new Sector(SECTOR_MOCK_TECH));
-		this.cat2 = ensureSectorExists(new Sector(SECTOR_MOCK_INT));
+		this.cat2 = ensureSectorExists(new Sector(SECTOR_MOCK_FIN));
 		if(user == null)
 			user = getAdminUser();
 		this.portletMock1 = ensurePortletExists(new Portlet("Software Giants" + " - " + user.getFullName(), user, "https://www.google.com.sg/images/srpr/logo11w.png", Arrays.asList(cat, cat2)));

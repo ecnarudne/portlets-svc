@@ -35,6 +35,28 @@ create table portlet (
   constraint pk_portlet primary key (id))
 ;
 
+create table portlet_definition_audit (
+  id                        bigint auto_increment not null,
+  portlet_id                bigint,
+  stock                     varchar(255),
+  epoch                     bigint,
+  weightage                 double,
+  last_updated_on           datetime,
+  constraint pk_portlet_definition_audit primary key (id))
+;
+
+create table portlet_investment_audit (
+  id                        bigint auto_increment not null,
+  portlet_id                bigint,
+  user_id                   bigint,
+  stock                     varchar(255),
+  epoch                     bigint,
+  qty                       double,
+  price                     double,
+  weight                    double,
+  constraint pk_portlet_investment_audit primary key (id))
+;
+
 create table portlet_stock (
   id                        bigint auto_increment not null,
   portlet_id                bigint,
@@ -42,6 +64,15 @@ create table portlet_stock (
   weightage                 double,
   last_updated_on           datetime,
   constraint pk_portlet_stock primary key (id))
+;
+
+create table price_import_history (
+  id                        bigint auto_increment not null,
+  exchange                  varchar(255),
+  local_date                date,
+  import_date               datetime,
+  filepath                  varchar(255),
+  constraint pk_price_import_history primary key (id))
 ;
 
 create table sector (
@@ -68,15 +99,14 @@ create table stock_stats (
   id                        bigint auto_increment not null,
   exchange                  varchar(255),
   stock_id                  bigint,
-  date                      varchar(255),
   local_date                date,
-  open_price                varchar(255),
-  close_price               varchar(255),
-  high_price                varchar(255),
-  low_price                 varchar(255),
-  volume                    varchar(255),
-  avg_vol                   varchar(255),
-  mktcap                    varchar(255),
+  open_price                double,
+  close_price               double,
+  high_price                double,
+  low_price                 double,
+  volume                    double,
+  avg_vol                   double,
+  mktcap                    double,
   activity                  varchar(255),
   annual_returns            double,
   constraint pk_stock_stats primary key (id))
@@ -152,7 +182,13 @@ drop table portlet;
 
 drop table portlet_sector;
 
+drop table portlet_definition_audit;
+
+drop table portlet_investment_audit;
+
 drop table portlet_stock;
+
+drop table price_import_history;
 
 drop table sector;
 

@@ -16,6 +16,7 @@ import models.Portfolio;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
+import models.PriceImportHistory;
 import models.Sector;
 import models.Stock;
 import models.StockStats;
@@ -43,7 +44,6 @@ import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import play.mvc.Results;
-import play.mvc.Security.Authenticated;
 import views.html.index;
 import views.html.mystocks;
 import views.html.portfolio;
@@ -69,24 +69,9 @@ public class Application extends Controller {
     	if(currentUser == null)
     		forbidden("Login Required");
 		List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
-		Set<Long> stockIdSet = new HashSet<Long>();
 		try {
-			if(ups != null) {
-				for (UserPortletStock u : ups) {
-					Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
-					stockIdSet.add(id);
-				}
-			}
-			SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
-			Number[][] data = new Number[statsMap.size()][2];
-			int i = 0;
-			for (LocalDate date : statsMap.keySet()) {
-				Map<Long, StockStats> stockMap = statsMap.get(date);
-				double portfolioValue = calcPortfolioValue(ups, stockMap);
-				data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
-				data[i][1] = portfolioValue;
-				i++;
-			}
+			//Number[][] data = getPriceHstoryAsChartArray_byPriceMap(ups);
+			Number[][] data = getPriceHistoryAsChartArray(ups, LocalDate.now().minusYears(1));//TODO get time as param
 			return ok(Json.toJson(data));
 		} catch (Exception e) {
 			String error = "Portfolio price information unavailable due to some issues. ";
@@ -95,14 +80,67 @@ public class Application extends Controller {
 		}
 	}
 
-	protected static double calcPortletValue(List<PortletStock> psl, Map<Long, StockStats> stockMap) {
+	private static Number[][] getPriceHistoryAsChartArray(List<UserPortletStock> ups, LocalDate afterDate) {
+		//LocalDate afterDate = LocalDate.now().withFieldAdded(DurationFieldType.days(), days*-1);
+		List<PriceImportHistory> dates = PriceImportHistory.findDatesAfter(Exchange.NASDAQ, afterDate);//TODO remove exchange hardcode
+		Number[][] data = new Number[dates.size()][2];
+		int i = 0;
+		for (PriceImportHistory date : dates) {
+			double portfolioValue = calcPortfolioValue(ups, date.getLocalDate());
+			data[i][0] = date.getLocalDate().toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+			data[i][1] = portfolioValue;
+			i++;
+		}
+		return data;
+	}
+
+	protected static Number[][] getPriceHstoryAsChartArray_byPriceMap(List<UserPortletStock> ups) {
+		Set<Long> stockIdSet = new HashSet<Long>();
+		if(ups != null) {
+			for (UserPortletStock u : ups) {
+				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
+				stockIdSet.add(id);
+			}
+		}
+		SortedMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
+		Number[][] data = new Number[statsMap.size()][2];
+		int i = 0;
+		for (LocalDate date : statsMap.keySet()) {
+			Map<Long, StockStats> stockMap = statsMap.get(date);
+			double portfolioValue = calcPortfolioValue_byPriceMap(ups, stockMap);
+			data[i][0] = date.toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
+			data[i][1] = portfolioValue;
+			i++;
+		}
+		return data;
+	}
+
+	protected static double calcPortletValue(List<PortletStock> psl, LocalDate onDate) {
+		double portfolioValue = 0;
+		try {
+			for (PortletStock ps : psl) {
+				Stock stock = Stock.findBySymbol(ps.getStock());//TODO must cache
+				StockStats stats = StockStats.findStockStatsOnDate(stock, onDate);
+				if(stats != null) {
+					portfolioValue += stats.getClosePrice();
+				} else {
+					Logger.error("No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
+				}
+			}
+		} catch (Exception e) {
+			Logger.error("Failed to calculate Portlet Value for PortletStocks: " + psl, e);
+		}
+		return portfolioValue;
+	}
+
+	protected static double calcPortletValue_byMap(List<PortletStock> psl, Map<Long, StockStats> stockMap) {
 		double portfolioValue = 0;
 		try {
 			for (PortletStock ps : psl) {
 				Long id = Stock.findBySymbol(ps.getStock()).getId();//TODO must cache
 				Logger.debug("calcPortletValue stock id: " + id);
-				String closePrice = stockMap.get(id).getClosePrice();
-				portfolioValue += Double.parseDouble(closePrice);
+				double closePrice = stockMap.get(id).getClosePrice();
+				portfolioValue += closePrice;
 			}
 		} catch (Exception e) {
 			Logger.error("Failed to calculate Portlet Value for stockMap: " + stockMap
@@ -111,12 +149,28 @@ public class Application extends Controller {
 		return portfolioValue;
 	}
 
-	protected static double calcPortfolioValue(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
+	protected static double calcPortfolioValue(List<UserPortletStock> ups, LocalDate onDate) {
+		double portfolioValue = 0;
+		for (UserPortletStock u : ups) {
+			Stock stock = Stock.findBySymbol(u.getStock());
+			StockStats stats = StockStats.findStockStatsOnDate(stock, onDate);
+			if(stats != null) {
+				portfolioValue += stats.getClosePrice();
+			} else {
+				Logger.error("No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
+			}
+		}
+		return portfolioValue;
+	}
+
+	protected static double calcPortfolioValue_byPriceMap(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
 		double portfolioValue = 0;
 		for (UserPortletStock u : ups) {
 			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO must cache
-			String closePrice = stockMap.get(id).getClosePrice();
-			portfolioValue += Double.parseDouble(closePrice);
+			StockStats stock = stockMap.get(id);
+			if(stock != null) {
+				portfolioValue += stock.getClosePrice();
+			}
 		}
 		return portfolioValue;
 	}
@@ -140,13 +194,11 @@ public class Application extends Controller {
 				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
 				stockIdSet.add(id);
 			}
-			NavigableMap<LocalDate, Map<Long, StockStats>> statsMap = StockStats.buildDateMapByStockIds(stockIdSet);//TODO keep in redis
-
-			double portfolioValueLast = calcPortfolioValue(ups, statsMap.lastEntry().getValue());
+			double portfolioValueLast = calcPortfolioValue(ups, LocalDate.now());
 			portfolio.setPortfolioValue(portfolioValueLast);
-			double portfolioValueDayBefore = calcPortfolioValue(ups, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+			double portfolioValueDayBefore = calcPortfolioValue(ups, LocalDate.now().minusDays(1));
 			portfolio.setDailyReturn(((portfolioValueLast - portfolioValueDayBefore)*100)/portfolioValueLast);
-			double portfolioValueYearBefore = calcPortfolioValue(ups, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+			double portfolioValueYearBefore = calcPortfolioValue(ups, LocalDate.now().minusYears(1));
 			portfolio.setAnnualReturn(((portfolioValueLast - portfolioValueYearBefore)*100)/portfolioValueLast);
 		} catch (Exception e) {
 			Logger.error("Portfolio information unavailable due to some issues. ", e);
@@ -164,7 +216,7 @@ public class Application extends Controller {
 			int i = 0;
 			for (StockStats s : stats) {
 				data[i][0] = s.getLocalDate().toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis();
-				data[i][1] = Double.parseDouble(s.getClosePrice());
+				data[i][1] = s.getClosePrice();
 				i++;
 			}
 			return ok(Json.toJson(data));
@@ -432,13 +484,13 @@ public class Application extends Controller {
 			Portlet portlet) {
 		List<PortletStock> psl = PortletStock.findByPortlet(portlet);
 		LocalDate inceptionDate = new LocalDate(portlet.getCreatedOn());
-		double portletValueInception = calcPortletValue(psl, statsMap.lowerEntry(inceptionDate).getValue());
-		double portletValueLast = calcPortletValue(psl, statsMap.lastEntry().getValue());
+		double portletValueInception = calcPortletValue(psl, inceptionDate);
+		double portletValueLast = calcPortletValue(psl, LocalDate.now());
 		portlet.setLastValue(portletValueLast);
 		portlet.setTotalReturn(((portletValueLast - portletValueInception)*100)/portletValueInception);
-		double portletValueDayBefore = calcPortletValue(psl, statsMap.lowerEntry(statsMap.lastEntry().getKey()).getValue());
+		double portletValueDayBefore = calcPortletValue(psl, LocalDate.now().minusDays(1));
 		portlet.setDailyReturn(((portletValueLast - portletValueDayBefore)*100)/portletValueDayBefore);
-		double portletValueYearBefore = calcPortletValue(psl, statsMap.ceilingEntry(LocalDate.now().minusYears(1)).getValue());
+		double portletValueYearBefore = calcPortletValue(psl, LocalDate.now().minusYears(1));
 		portlet.setAnnualReturn(((portletValueLast - portletValueYearBefore)*100)/portletValueYearBefore);
 	}
     
@@ -496,6 +548,16 @@ public class Application extends Controller {
     public static Result listPortletStocks(Long portletId) {
     	List<PortletStock> list = PortletStock.find.where().eq("portlet_id", portletId).findList();
     	return ok(Json.toJson(list));
+    }
+
+    public static Result listPortletStockStats(Long portletId) {
+    	List<PortletStock> stocks = PortletStock.find.where().eq("portlet_id", portletId).findList();
+    	List<StockStats> statsList = new ArrayList<StockStats>();
+    	for (PortletStock portletStock : stocks) {
+    		Stock stock = Stock.findBySymbol(portletStock.getStock());
+    		statsList.add(StockStats.findLatestByStock(stock));
+		}
+    	return ok(Json.toJson(statsList));
     }
 
     public static Result listMyStocks() {
