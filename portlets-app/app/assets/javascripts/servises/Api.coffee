@@ -116,7 +116,7 @@ angular.module('Api', ['ngCookies'])
         return
 
       api.prototype.getPortletStatTable = (portletId,request) ->
-        get(actionUrl("/listmystockstats/" + portletId),request)
+        get(actionUrl("/listportletstats/" + portletId),request)
         return
 
       api.prototype.getStocks = (exchange,request) ->
