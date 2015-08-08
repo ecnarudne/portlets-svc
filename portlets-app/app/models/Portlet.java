@@ -40,11 +40,17 @@ public class Portlet extends Model {
 	private Date createdOn;
 
 	/* Calculated attributes */
+	@Deprecated
 	private long followerCount;
+	@Deprecated
 	private double volatility;
+	@Deprecated
 	private double totalReturn;
+	@Deprecated
 	private double dailyReturn;
+	@Deprecated
 	private double annualReturn;
+	@Deprecated
 	private double lastValue;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
@@ -188,45 +194,56 @@ public class Portlet extends Model {
 	public void setLastRebalancedOn(Date lastRebalancedOn) {
 		this.lastRebalancedOn = lastRebalancedOn;
 	}
-	public long getFollowerCount() {
-		return followerCount;
-	}
-	public void setFollowerCount(long followerCount) {
-		this.followerCount = followerCount;
-	}
-	public double getVolatility() {
-		return volatility;
-	}
-	public void setVolatility(double volatility) {
-		this.volatility = volatility;
-	}
-	public double getTotalReturn() {
-		return totalReturn;
-	}
-	public void setTotalReturn(double totalReturn) {
-		this.totalReturn = totalReturn;
-	}
-	public double getDailyReturn() {
-		return dailyReturn;
-	}
-	public void setDailyReturn(double dailyReturn) {
-		this.dailyReturn = dailyReturn;
-	}
-	public double getAnnualReturn() {
-		return annualReturn;
-	}
-	public void setAnnualReturn(double annualReturn) {
-		this.annualReturn = annualReturn;
-	}
 	public String getPrimaryExchange() {
 		return primaryExchange;
 	}
 	public void setPrimaryExchange(String primaryExchange) {
 		this.primaryExchange = primaryExchange;
 	}
+	@Deprecated
+	public long getFollowerCount() {
+		return followerCount;
+	}
+	@Deprecated
+	public void setFollowerCount(long followerCount) {
+		this.followerCount = followerCount;
+	}
+	@Deprecated
+	public double getVolatility() {
+		return volatility;
+	}
+	@Deprecated
+	public void setVolatility(double volatility) {
+		this.volatility = volatility;
+	}
+	@Deprecated
+	public double getTotalReturn() {
+		return totalReturn;
+	}
+	@Deprecated
+	public void setTotalReturn(double totalReturn) {
+		this.totalReturn = totalReturn;
+	}
+	public double getDailyReturn() {
+		return dailyReturn;
+	}
+	@Deprecated
+	public void setDailyReturn(double dailyReturn) {
+		this.dailyReturn = dailyReturn;
+	}
+	@Deprecated
+	public double getAnnualReturn() {
+		return annualReturn;
+	}
+	@Deprecated
+	public void setAnnualReturn(double annualReturn) {
+		this.annualReturn = annualReturn;
+	}
+	@Deprecated
 	public double getLastValue() {
 		return lastValue;
 	}
+	@Deprecated
 	public void setLastValue(double lastValue) {
 		this.lastValue = lastValue;
 	}
