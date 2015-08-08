@@ -3,15 +3,15 @@ package stats;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import java.util.Map;
 
-import org.joda.time.LocalDate;
-
-import play.Logger;
 import models.PortletStock;
 import models.Stock;
 import models.StockStats;
 import models.UserPortletStock;
+
+import org.joda.time.LocalDate;
+
+import play.Logger;
 
 public class Calculations {
 
@@ -51,19 +51,6 @@ public class Calculations {
 				portfolioValue += stats.getClosePrice();
 			} else {
 				Logger.error("No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
-			}
-		}
-		return portfolioValue;
-	}
-	
-	@Deprecated
-	public static double calcPortfolioValue_byPriceMap(List<UserPortletStock> ups, Map<Long, StockStats> stockMap) {
-		double portfolioValue = 0;
-		for (UserPortletStock u : ups) {
-			Long id = Stock.findBySymbol(u.getStock()).getId();//TODO must cache
-			StockStats stock = stockMap.get(id);
-			if(stock != null) {
-				portfolioValue += stock.getClosePrice();
 			}
 		}
 		return portfolioValue;

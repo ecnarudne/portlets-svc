@@ -1,15 +1,13 @@
 package models.api;
 
-import java.util.Date;
+import models.PortletStock;
+import models.Stock;
+import models.StockStats;
 
 import org.joda.time.LocalDate;
 
 import play.Logger;
 import stats.Calculations;
-import models.Portlet;
-import models.PortletStock;
-import models.Stock;
-import models.StockStats;
 
 public class PortletStockAPI {
 	private PortletStock portletStock;
@@ -38,20 +36,21 @@ public class PortletStockAPI {
 			return null;
 		return new PortletAPI(portletStock.getPortlet());
 	}
-	public String getStock() {
-		return portletStock.getStock();
-	}
 	public double getWeightage() {
 		return portletStock.getWeightage();
 	}
-	public Date getLastUpdatedOn() {
-		return portletStock.getLastUpdatedOn();
+	public String getLastUpdatedOn() {
+		if(portletStock.getLastUpdatedOn() == null)
+			return null;
+		return portletStock.getLastUpdatedOn().toString();
 	}
 	public void setPortletStock(PortletStock portletStock) {
 		this.portletStock = portletStock;
 	}
-	public StockStats getStockStats() {
-		return stockStats;
+	public StockStatsAPI getStockStats() {
+		if(stockStats == null)
+			return null;
+		return new StockStatsAPI(stockStats);
 	}
 	public void setStockStats(StockStats stockStats) {
 		this.stockStats = stockStats;

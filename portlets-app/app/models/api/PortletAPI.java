@@ -1,6 +1,5 @@
 package models.api;
 
-import java.util.Date;
 import java.util.List;
 
 import models.Portlet;
@@ -39,7 +38,7 @@ public class PortletAPI {
 			Logger.error("Couldn't find stats and returns for Portlet Id: " + p.getId(), e);
 		}
 	}
-	public String getVolatilityClass() {
+	public VolatilityClass getVolatilityClass() {
 		return portlet.getVolatilityClass();
 	}
 	public Long getId() {
@@ -70,14 +69,18 @@ public class PortletAPI {
 	public boolean isVisibleToAll() {
 		return portlet.isVisibleToAll();
 	}
-	public Date getCreatedOn() {
-		return portlet.getCreatedOn();
+	public String getCreatedOn() {
+		if(portlet.getCreatedOn() == null)
+			return null;
+		return portlet.getCreatedOn().toString();
 	}
 	public PortletValidityState getValidity() {
 		return portlet.getValidity();
 	}
-	public Date getLastRebalancedOn() {
-		return portlet.getLastRebalancedOn();
+	public String getLastRebalancedOn() {
+		if(portlet.getLastRebalancedOn() == null)
+			return null;
+		return portlet.getLastRebalancedOn().toString();
 	}
 	public String getPrimaryExchange() {
 		return portlet.getPrimaryExchange();

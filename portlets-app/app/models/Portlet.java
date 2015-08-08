@@ -35,23 +35,10 @@ public class Portlet extends Model {
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private VolatilityClass volatilityClass;
 	private String primaryExchange = Exchange.NASDAQ;
 	private Date lastRebalancedOn;
 	private Date createdOn;
-
-	/* Calculated attributes */
-	@Deprecated
-	private long followerCount;
-	@Deprecated
-	private double volatility;
-	@Deprecated
-	private double totalReturn;
-	@Deprecated
-	private double dailyReturn;
-	@Deprecated
-	private double annualReturn;
-	@Deprecated
-	private double lastValue;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
@@ -123,16 +110,6 @@ public class Portlet extends Model {
 		return sectors;
 	}
 
-	public String getVolatilityClass() {
-		if(volatility < 2) {//Daily
-			return VolatilityClass.LOW.getDisplayName();
-		} else if(volatility < 4) {
-			return VolatilityClass.MEDIUM.getDisplayName();
-		} else {
-			return VolatilityClass.HIGH.getDisplayName();
-		}
-	}
-
 	/* Boiler-plates */
 	public Long getId() {
 		return id;
@@ -200,51 +177,10 @@ public class Portlet extends Model {
 	public void setPrimaryExchange(String primaryExchange) {
 		this.primaryExchange = primaryExchange;
 	}
-	@Deprecated
-	public long getFollowerCount() {
-		return followerCount;
+	public VolatilityClass getVolatilityClass() {
+		return volatilityClass;
 	}
-	@Deprecated
-	public void setFollowerCount(long followerCount) {
-		this.followerCount = followerCount;
-	}
-	@Deprecated
-	public double getVolatility() {
-		return volatility;
-	}
-	@Deprecated
-	public void setVolatility(double volatility) {
-		this.volatility = volatility;
-	}
-	@Deprecated
-	public double getTotalReturn() {
-		return totalReturn;
-	}
-	@Deprecated
-	public void setTotalReturn(double totalReturn) {
-		this.totalReturn = totalReturn;
-	}
-	public double getDailyReturn() {
-		return dailyReturn;
-	}
-	@Deprecated
-	public void setDailyReturn(double dailyReturn) {
-		this.dailyReturn = dailyReturn;
-	}
-	@Deprecated
-	public double getAnnualReturn() {
-		return annualReturn;
-	}
-	@Deprecated
-	public void setAnnualReturn(double annualReturn) {
-		this.annualReturn = annualReturn;
-	}
-	@Deprecated
-	public double getLastValue() {
-		return lastValue;
-	}
-	@Deprecated
-	public void setLastValue(double lastValue) {
-		this.lastValue = lastValue;
+	public void setVolatilityClass(VolatilityClass volatilityClass) {
+		this.volatilityClass = volatilityClass;
 	}
 }

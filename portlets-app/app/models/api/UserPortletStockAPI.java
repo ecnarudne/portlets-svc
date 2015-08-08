@@ -50,14 +50,10 @@ public class UserPortletStockAPI {
 	public void setDailyReturn(double dailyReturn) {
 		this.dailyReturn = dailyReturn;
 	}
-	public UserPortletStock getUserPortletStock() {
-		return userPortletStock;
-	}
-	public void setUserPortletStock(UserPortletStock userPortletStock) {
-		this.userPortletStock = userPortletStock;
-	}
-	public StockStats getStockStats() {
-		return stockStats;
+	public StockStatsAPI getStockStats() {
+		if(stockStats == null)
+			return null;
+		return new StockStatsAPI(stockStats);
 	}
 	public void setStockStats(StockStats stockStats) {
 		this.stockStats = stockStats;
