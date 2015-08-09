@@ -35,17 +35,10 @@ public class Portlet extends Model {
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private VolatilityClass volatilityClass;
 	private String primaryExchange = Exchange.NASDAQ;
 	private Date lastRebalancedOn;
 	private Date createdOn;
-
-	/* Calculated attributes */
-	private long followerCount;
-	private double volatility;
-	private double totalReturn;
-	private double dailyReturn;
-	private double annualReturn;
-	private double lastValue;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
@@ -117,16 +110,6 @@ public class Portlet extends Model {
 		return sectors;
 	}
 
-	public String getVolatilityClass() {
-		if(volatility < 2) {//Daily
-			return VolatilityClass.LOW.getDisplayName();
-		} else if(volatility < 4) {
-			return VolatilityClass.MEDIUM.getDisplayName();
-		} else {
-			return VolatilityClass.HIGH.getDisplayName();
-		}
-	}
-
 	/* Boiler-plates */
 	public Long getId() {
 		return id;
@@ -188,46 +171,16 @@ public class Portlet extends Model {
 	public void setLastRebalancedOn(Date lastRebalancedOn) {
 		this.lastRebalancedOn = lastRebalancedOn;
 	}
-	public long getFollowerCount() {
-		return followerCount;
-	}
-	public void setFollowerCount(long followerCount) {
-		this.followerCount = followerCount;
-	}
-	public double getVolatility() {
-		return volatility;
-	}
-	public void setVolatility(double volatility) {
-		this.volatility = volatility;
-	}
-	public double getTotalReturn() {
-		return totalReturn;
-	}
-	public void setTotalReturn(double totalReturn) {
-		this.totalReturn = totalReturn;
-	}
-	public double getDailyReturn() {
-		return dailyReturn;
-	}
-	public void setDailyReturn(double dailyReturn) {
-		this.dailyReturn = dailyReturn;
-	}
-	public double getAnnualReturn() {
-		return annualReturn;
-	}
-	public void setAnnualReturn(double annualReturn) {
-		this.annualReturn = annualReturn;
-	}
 	public String getPrimaryExchange() {
 		return primaryExchange;
 	}
 	public void setPrimaryExchange(String primaryExchange) {
 		this.primaryExchange = primaryExchange;
 	}
-	public double getLastValue() {
-		return lastValue;
+	public VolatilityClass getVolatilityClass() {
+		return volatilityClass;
 	}
-	public void setLastValue(double lastValue) {
-		this.lastValue = lastValue;
+	public void setVolatilityClass(VolatilityClass volatilityClass) {
+		this.volatilityClass = volatilityClass;
 	}
 }

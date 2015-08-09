@@ -1,85 +1,42 @@
 package models.api;
 
+import org.joda.time.LocalDate;
+
 import play.Logger;
+import models.Stock;
 import models.StockStats;
 import models.UserPortletStock;
 
 public class UserPortletStockAPI {
-	private Long id;
-	private Long userId;
-	private Long portletid;
-	private StockStats stats;
-	private double qty;
-	private double buyPrice;
-	private double buyWeight;
-	private long buyEpoch;
+	private UserPortletStock userPortletStock;
+	private StockStats stockStats;
 	private double totalReturn;
 	private double dailyReturn;
+	private double annualReturn;
 
 	public UserPortletStockAPI(){}
 	public UserPortletStockAPI(UserPortletStock ups, StockStats stats) {
 		super();
-		this.id = ups.getId();
-		this.userId = ups.getUser().getId();
-		this.portletid = ups.getPortlet().getId();
-		this.stats = stats;
-		this.qty = ups.getQty();
-		this.buyPrice = ups.getBuyPrice();
-		this.buyWeight = ups.getBuyWeight();
-		this.buyEpoch = ups.getBuyEpoch();
+		this.userPortletStock = ups;
+		this.stockStats = stats;
+		Stock stock = Stock.findBySymbol(ups.getStock());
 		try {
 			this.totalReturn = ((100*(ups.getBuyPrice() - stats.getClosePrice()))/ups.getBuyPrice());
 		} catch (Exception e) {
 			Logger.error("Couldn't find totalReturn for ups Id: " + ups.getId(), e);
 		}
 		try {
-			//TODO calculate against previous day's price
-			this.dailyReturn = ((100*(ups.getBuyPrice() - stats.getClosePrice()))/ups.getBuyPrice());
+			StockStats statsDayBefore = StockStats.findStockStatsOnDate(stock, LocalDate.now().minusDays(1));
+			this.dailyReturn = ((100*(stats.getClosePrice() - statsDayBefore.getClosePrice()))/statsDayBefore.getClosePrice());
 		} catch (Exception e) {
-			Logger.error("Couldn't find totalReturn for ups Id: " + ups.getId(), e);
+			Logger.error("Couldn't find dailyReturn for ups Id: " + ups.getId(), e);
 		}
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	public Long getPortletid() {
-		return portletid;
-	}
-	public void setPortletid(Long portletid) {
-		this.portletid = portletid;
-	}
-	public StockStats getStats() {
-		return stats;
-	}
-	public void setStats(StockStats stats) {
-		this.stats = stats;
-	}
-	public double getQty() {
-		return qty;
-	}
-	public void setQty(double qty) {
-		this.qty = qty;
-	}
-	public double getBuyPrice() {
-		return buyPrice;
-	}
-	public void setBuyPrice(double buyPrice) {
-		this.buyPrice = buyPrice;
-	}
-	public long getBuyEpoch() {
-		return buyEpoch;
-	}
-	public void setBuyEpoch(long buyEpoch) {
-		this.buyEpoch = buyEpoch;
+		try {
+			StockStats statsYearBefore = StockStats.findStockStatsOnDate(stock, LocalDate.now().minusYears(1));
+			this.annualReturn = ((100*(stats.getClosePrice() - statsYearBefore.getClosePrice()))/statsYearBefore.getClosePrice());
+		} catch (Exception e) {
+			Logger.error("Couldn't find annualReturn for ups Id: " + ups.getId(), e);
+		}
 	}
 	public double getTotalReturn() {
 		return totalReturn;
@@ -93,10 +50,39 @@ public class UserPortletStockAPI {
 	public void setDailyReturn(double dailyReturn) {
 		this.dailyReturn = dailyReturn;
 	}
-	public double getBuyWeight() {
-		return buyWeight;
+	public StockStatsAPI getStockStats() {
+		if(stockStats == null)
+			return null;
+		return new StockStatsAPI(stockStats);
 	}
-	public void setBuyWeight(double buyWeight) {
-		this.buyWeight = buyWeight;
+	public void setStockStats(StockStats stockStats) {
+		this.stockStats = stockStats;
+	}
+	public Long getId() {
+		return userPortletStock.getId();
+	}
+	public Long getUserId() {
+		return userPortletStock.getUser().getId();
+	}
+	public Long getPortletid() {
+		return userPortletStock.getPortlet().getId();
+	}
+	public double getQty() {
+		return userPortletStock.getQty();
+	}
+	public double getBuyPrice() {
+		return userPortletStock.getBuyPrice();
+	}
+	public long getBuyEpoch() {
+		return userPortletStock.getBuyEpoch();
+	}
+	public double getBuyWeight() {
+		return userPortletStock.getBuyWeight();
+	}
+	public double getAnnualReturn() {
+		return annualReturn;
+	}
+	public void setAnnualReturn(double annualReturn) {
+		this.annualReturn = annualReturn;
 	}
 }

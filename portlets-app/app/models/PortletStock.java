@@ -84,4 +84,7 @@ public class PortletStock extends Model {
 	public void setLastUpdatedOn(Date lastUpdatedOn) {
 		this.lastUpdatedOn = lastUpdatedOn;
 	}
+	public static List<PortletStock> findByPortletId(Long portletId) {
+		return find.where().eq("portlet_id", portletId).findList();
+	}
 }

@@ -33,11 +33,9 @@ public class StockStats extends Model {
 	private double closePrice;
 	private double highPrice;
 	private double lowPrice;
-	private double volume;
 	private double avgVol;
 	private double mktcap;
 	private String activity;
-	private double annualReturns;
 
 	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
 
@@ -119,12 +117,6 @@ public class StockStats extends Model {
 	public void setLocalDate(LocalDate localDate) {
 		this.localDate = localDate;
 	}
-	public double getAnnualReturns() {
-		return annualReturns;
-	}
-	public void setAnnualReturns(double annualReturns) {
-		this.annualReturns = annualReturns;
-	}
 	public double getOpenPrice() {
 		return openPrice;
 	}
@@ -148,12 +140,6 @@ public class StockStats extends Model {
 	}
 	public void setLowPrice(double lowPrice) {
 		this.lowPrice = lowPrice;
-	}
-	public double getVolume() {
-		return volume;
-	}
-	public void setVolume(double volume) {
-		this.volume = volume;
 	}
 	public double getAvgVol() {
 		return avgVol;
