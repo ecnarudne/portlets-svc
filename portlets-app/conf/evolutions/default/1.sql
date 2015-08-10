@@ -22,16 +22,12 @@ create table portlet (
   notes                     varchar(255),
   validity                  integer,
   visible_to_all            tinyint(1) default 0,
+  volatility_class          integer,
   primary_exchange          varchar(255),
   last_rebalanced_on        datetime,
   created_on                datetime,
-  follower_count            bigint,
-  volatility                double,
-  total_return              double,
-  daily_return              double,
-  annual_return             double,
-  last_value                double,
   constraint ck_portlet_validity check (validity in (0,1,2,3)),
+  constraint ck_portlet_volatility_class check (volatility_class in (0,1,2)),
   constraint pk_portlet primary key (id))
 ;
 
@@ -104,11 +100,9 @@ create table stock_stats (
   close_price               double,
   high_price                double,
   low_price                 double,
-  volume                    double,
   avg_vol                   double,
   mktcap                    double,
   activity                  varchar(255),
-  annual_returns            double,
   constraint pk_stock_stats primary key (id))
 ;
 

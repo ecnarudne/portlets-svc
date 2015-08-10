@@ -24,7 +24,7 @@ angular.module('PagePortletCtrl',['Api'])
                 }
             )
             console.log 'Route parameters: ' + $routeParams.portletId
-            portletApi.getPortletDetails(
+            ###portletApi.getPortletDetails(
                 $routeParams.portletId  
                 {
                   before: ->
@@ -40,9 +40,9 @@ angular.module('PagePortletCtrl',['Api'])
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete function')
                 }
-            )
+            )###
             portletApi.getPortletStatTable(
-                $routeParams.portletId
+                5
                 {
                   before: ->
                     $log.debug('Fetching data for StatTable.')
