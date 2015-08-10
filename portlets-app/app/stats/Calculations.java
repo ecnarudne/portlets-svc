@@ -16,6 +16,10 @@ import play.Logger;
 public class Calculations {
 
 	public static double calcReturnFromStats(StockStats currentStockStats, StockStats previousStockStats) {
+		if(previousStockStats == null) {
+			Logger.warn("Missing previous stats to calculate returns");
+			return 0;
+		}
 		return calcReturnFromPrice(currentStockStats.getClosePrice(), previousStockStats.getClosePrice());
 	}
 
