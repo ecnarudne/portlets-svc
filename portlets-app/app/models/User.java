@@ -13,6 +13,7 @@ import com.feth.play.module.pa.user.AuthUserIdentity;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 import play.Logger;
+import secure.Authentication;
 
 
 @Entity
@@ -50,9 +51,9 @@ public class User extends Model {
 	public User() {}
 	public User(String provider, String providerId) {
 		super();
-		if(isAuthGoogle(provider)) {
+		if(Authentication.isAuthGoogle(provider)) {
 			this.googleId = providerId;
-		} else if(isAuthFacebook(provider)) {
+		} else if(Authentication.isAuthFacebook(provider)) {
 			this.facebookId = providerId;
 		} else {
 			Logger.error("Unknown Auth Provider: " + provider);
@@ -64,11 +65,11 @@ public class User extends Model {
 		//TODO must cache
 		if(provider == null || providerId == null)
 			return null;
-		if(isAuthGoogle(provider)) {
+		if(Authentication.isAuthGoogle(provider)) {
 	    	List<User> users = find.where().eq("googleId", providerId).findList();
 			if(users != null && !users.isEmpty())
 				return users.get(0);
-		} else if(isAuthFacebook(provider)) {
+		} else if(Authentication.isAuthFacebook(provider)) {
 	    	List<User> users = find.where().eq("facebookId", providerId).findList();
 			if(users != null && !users.isEmpty())
 				return users.get(0);
@@ -80,7 +81,7 @@ public class User extends Model {
 	public static User create(AuthUser authUser) {
 		String provider = authUser.getProvider();
 		User newUser = new User();
-		if(isAuthGoogle(provider)) {
+		if(Authentication.isAuthGoogle(provider)) {
 			newUser.googleId = authUser.getId();
 			GoogleAuthUser googleAuthUser = (GoogleAuthUser) authUser;
 			newUser.fullName = googleAuthUser.getName();
@@ -91,7 +92,7 @@ public class User extends Model {
 			newUser.profileLink = googleAuthUser.getProfileLink();
 			if(googleAuthUser.getLocale() != null)
 				newUser.locale = googleAuthUser.getLocale().toString();
-		} else if(isAuthFacebook(provider)) {
+		} else if(Authentication.isAuthFacebook(provider)) {
 			newUser.facebookId = authUser.getId();
 			FacebookAuthUser facebookAuthUser = (FacebookAuthUser) authUser;
 			newUser.fullName = facebookAuthUser.getName();
@@ -145,13 +146,6 @@ public class User extends Model {
 	}
 	public static Finder<Long, User> find = new Finder<Long, User>(Long.class, User.class);
 
-	/* Helpers */
-	public static boolean isAuthFacebook(String provider) {
-		return provider.equals("facebook");
-	}
-	public static boolean isAuthGoogle(String provider) {
-		return provider.equals("google");
-	}
 	public void setMale(String gender) {
 		if(gender != null) {
 			if(gender.equalsIgnoreCase("male") || gender.startsWith("M")) {
