@@ -19,6 +19,7 @@ import models.Stock;
 import models.StockStats;
 import models.User;
 import models.UserPortletStock;
+import models.UserToken;
 import models.UserValidityState;
 import models.api.PortletAPI;
 import models.api.PortletStockAPI;
@@ -30,11 +31,7 @@ import org.joda.time.LocalDate;
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
-import play.libs.F.Callback;
-import play.libs.F.Promise;
 import play.libs.Json;
-import play.libs.ws.WS;
-import play.libs.ws.WSResponse;
 import play.mvc.Controller;
 import play.mvc.Http.Cookie;
 import play.mvc.Http.Cookies;
@@ -43,6 +40,7 @@ import play.mvc.Http.Response;
 import play.mvc.Http.Session;
 import play.mvc.Result;
 import play.mvc.Results;
+import secure.Authentication;
 import stats.Calculations;
 import views.html.index;
 import views.html.mystocks;
@@ -199,40 +197,49 @@ public class Application extends Controller {
     	return redirect(routes.Application.users());
     }
 
-    public static Result authByToken() {
-        JsonNode json = request().body().asJson();
-        if(json != null) {
+	public static Result authByToken() {
+        String[] headers = request().headers().get("token");
+        if(headers != null && headers.length > 0) {
         	try {
-				String token = json.findPath("token").asText(); 
-				//TODO use https://github.com/google/google-api-java-client
-				Promise<WSResponse> responsePromise = WS.url("https://www.googleapis.com/plus/v1/people/me").setHeader("Authorization: Bearer", token).get();
-				/* Promise<WSResponse> recoverPromise = responsePromise.recoverWith(new Function<Throwable, Promise<WSResponse>>() {
-				    @Override
-				    public Promise<WSResponse> apply(Throwable throwable) throws Throwable {
-				        return forbidden("Token not valid");
-				    }
-				});*/
-				responsePromise.onRedeem(new Callback<WSResponse>() {
-					@Override
-					public void invoke(WSResponse arg0) throws Throwable {
-						//TODO
-					}
-				});
-				responsePromise.onFailure(new Callback<Throwable>() {
-					@Override
-					public void invoke(Throwable arg0) throws Throwable {
-						// TODO
-						
-					}
-				});
+				String token = headers[0];
+				Authentication.registerAuthToken(token);
 				return ok();
 			} catch (Exception e) {//TODO Narrow down
 				return forbidden("Token not valid");
 			}
-        	
         } else {
-        	return forbidden("No JSON info");
+        	return forbidden("No Token in Header");
         }
+    }
+
+	public static Result validateToken() {
+        String[] headers = request().headers().get("token");
+        if(headers != null && headers.length > 0) {
+        	try {
+				String token = headers[0];
+				UserToken userToken = UserToken.findByToken(token);
+				if(userToken != null) {
+					return ok("Valid token found");
+				} else {
+					return forbidden("Token not found");
+				}
+			} catch (Exception e) {
+				return forbidden("Token not valid");
+			}
+        } else {
+        	return forbidden("No Token in Header");
+        }
+    }
+
+    public static Result registerAuthToken(String token) {
+    	if(Logger.isDebugEnabled()) Logger.debug("token: " + token);
+    	try {
+			Authentication.registerAuthToken(token);
+			return ok();
+		} catch (Exception e) {
+			Logger.error("Error in validating token", e);
+			return forbidden("Token not valid");
+		}
     }
     
     public static Result listUsers() {

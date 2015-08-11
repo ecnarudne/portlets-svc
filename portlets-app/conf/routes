@@ -47,6 +47,8 @@ GET     /myPortfolio                controllers.Application.myPortfolio()
 GET     /portfolio                  controllers.Application.portfolio()
 GET     /myportfoliopxhist          controllers.Application.portfolioPriceHistory()
 
+GET     /testtoken/:token           controllers.Application.registerAuthToken(token: String)
+GET     /validatetoken              controllers.Application.validateToken()
 POST    /authbytoken                controllers.Application.authByToken()
 POST    /newuser                    controllers.Application.addUser()
 GET     /users                      controllers.Application.users()

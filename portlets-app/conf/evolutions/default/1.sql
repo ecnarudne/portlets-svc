@@ -143,6 +143,19 @@ create table user_portlet_stock (
   constraint pk_user_portlet_stock primary key (id))
 ;
 
+create table user_token (
+  id                        bigint auto_increment not null,
+  user_id                   bigint,
+  token                     varchar(255),
+  first_signin_time         datetime,
+  provider                  varchar(255),
+  federated_user_id         varchar(255),
+  federatedcreation_time    datetime,
+  application_expiry_time   datetime,
+  federated_expiry_seconds  integer,
+  constraint pk_user_token primary key (id))
+;
+
 
 create table portlet_sector (
   portlet_id                     bigint not null,
@@ -159,6 +172,8 @@ alter table user_portlet_stock add constraint fk_user_portlet_stock_user_4 forei
 create index ix_user_portlet_stock_user_4 on user_portlet_stock (user_id);
 alter table user_portlet_stock add constraint fk_user_portlet_stock_portlet_5 foreign key (portlet_id) references portlet (id) on delete restrict on update restrict;
 create index ix_user_portlet_stock_portlet_5 on user_portlet_stock (portlet_id);
+alter table user_token add constraint fk_user_token_user_6 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_user_token_user_6 on user_token (user_id);
 
 
 
@@ -193,6 +208,8 @@ drop table stock_stats;
 drop table user;
 
 drop table user_portlet_stock;
+
+drop table user_token;
 
 SET FOREIGN_KEY_CHECKS=1;
 
