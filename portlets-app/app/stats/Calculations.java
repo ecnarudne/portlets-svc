@@ -35,9 +35,10 @@ public class Calculations {
 				Stock stock = Stock.findBySymbol(ps.getStock());//TODO must cache
 				StockStats stats = StockStats.findStockStatsOnDate(stock, onDate);
 				if(stats != null) {
-					portfolioValue += stats.getClosePrice();
+					//if(Logger.isDebugEnabled()) Logger.debug(" ClosePrice: " + stats.getClosePrice() + " Stock: " + ps.getStock() + " onDate: " + onDate);
+					portfolioValue += (stats.getClosePrice() * ps.getWeightage())/100;
 				} else {
-					Logger.error("No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
+					Logger.error("For calc Portlet Value, No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
 				}
 			}
 		} catch (Exception e) {
@@ -52,11 +53,13 @@ public class Calculations {
 			Stock stock = Stock.findBySymbol(u.getStock());
 			StockStats stats = StockStats.findStockStatsOnDate(stock, onDate);
 			if(stats != null) {
-				portfolioValue += stats.getClosePrice();
+				portfolioValue += stats.getClosePrice() * u.getQty();
+				//if(Logger.isDebugEnabled()) Logger.debug("Stock: " + u.getStock() + " ClosePrice: " + stats.getClosePrice() + " Qty: " + u.getQty() + " Item Value: " + (stats.getClosePrice() * u.getQty()));
 			} else {
-				Logger.error("No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
+				Logger.error("For calc Portfolio Value, No price history found for stock: " + stock.getName() + " on date: " + onDate.toString());
 			}
 		}
+		//if(Logger.isDebugEnabled()) Logger.debug("portfolioValue: " + portfolioValue + " onDate: " + onDate);
 		return portfolioValue;
 	}
 

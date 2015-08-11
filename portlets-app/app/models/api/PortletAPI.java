@@ -27,13 +27,22 @@ public class PortletAPI {
 			List<PortletStock> psl = PortletStock.findByPortlet(portlet);
 			LocalDate inceptionDate = new LocalDate(portlet.getCreatedOn());
 			double portletValueInception = Calculations.calcPortletValue(psl, inceptionDate);
+			//if(Logger.isDebugEnabled()) Logger.debug("portletValueInception: " + portletValueInception);
 			double portletValue = Calculations.calcPortletValue(psl, LocalDate.now());
+			if(Logger.isDebugEnabled()) Logger.debug("portletValue: " + portletValue);
 			this.setLastValue(portletValue);
 			this.setTotalReturn(Calculations.calcReturnFromPrice(portletValue, portletValueInception));
+			//if(Logger.isDebugEnabled()) Logger.debug("TotalReturn: " + this.getTotalReturn());
 			double portletValueDayBefore = Calculations.calcPortletValue(psl, LocalDate.now().minusDays(1));
+			//if(Logger.isDebugEnabled()) Logger.debug("portletValueDayBefore: " + portletValueDayBefore);
 			this.setDailyReturn(Calculations.calcReturnFromPrice(portletValue, portletValueDayBefore));
+			//if(Logger.isDebugEnabled()) Logger.debug("DailyReturn: " + this.getDailyReturn());
 			double portletValueYearBefore = Calculations.calcPortletValue(psl, LocalDate.now().minusYears(1));
+			//if(Logger.isDebugEnabled()) Logger.debug("portletValueYearBefore: " + portletValueYearBefore);
 			this.setAnnualReturn(Calculations.calcReturnFromPrice(portletValue, portletValueYearBefore));
+			//if(Logger.isDebugEnabled()) Logger.debug("AnnualReturn: " + this.getAnnualReturn());
+
+			//this.setVolatility();
 		} catch (Exception e) {
 			Logger.error("Couldn't find stats and returns for Portlet Id: " + p.getId(), e);
 		}

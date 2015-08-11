@@ -80,6 +80,7 @@ public class Application extends Controller {
 	private static Number[][] getPriceHistoryAsChartArray(List<UserPortletStock> ups, LocalDate afterDate) {
 		//LocalDate afterDate = LocalDate.now().withFieldAdded(DurationFieldType.days(), days*-1);
 		List<PriceImportHistory> dates = PriceImportHistory.findDatesAfter(Exchange.NASDAQ, afterDate);//TODO remove exchange hardcode
+		if(Logger.isDebugEnabled()) Logger.debug("Price History dates size: " + dates.size());
 		Number[][] data = new Number[dates.size()][2];
 		int i = 0;
 		for (PriceImportHistory date : dates) {
@@ -290,7 +291,7 @@ public class Application extends Controller {
             	List<PortletStock> stocks = PortletStock.findByPortlet(portlet);
             	double remainingAmount = amount;
             	for (PortletStock ps : stocks) {
-            		double currentPx = Stock.currentPrice(ps.getStock());
+            		double currentPx = StockStats.findLatestBySymbol(ps.getStock()).getClosePrice();
 
             		//long shares = Math.round((amount * ps.getWeightage())/(100 * currentPx));
             		double shares = (amount * ps.getWeightage())/(100 * currentPx);
@@ -364,7 +365,9 @@ public class Application extends Controller {
     }
     
     public static Result stockStats(String symbol) {
-    	StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
+		//StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
+    	Stock stock = Stock.findBySymbol(symbol);
+    	StockStats stats = StockStats.findLatestByStock(stock);
     	return ok(Json.toJson(stats));
     }
     
@@ -483,13 +486,16 @@ public class Application extends Controller {
 			Logger.error("No Stocks found for Portlet: " + portletId);
 	    	return redirect(routes.Application.myStocks());
     	}
-    	for (PortletStock stock : stocks) {
+		if(Logger.isDebugEnabled()) Logger.debug("Subscribing for amount: " + amount + " on portletId: " + portletId);
+
+    	for (PortletStock ps : stocks) {
         	UserPortletStock newUserPortletStock = new UserPortletStock();
     		newUserPortletStock.setPortlet(portlet);
-	    	newUserPortletStock.setStock(stock.getStock());
-    		double buyPrice = Stock.currentPrice(stock.getStock());
+	    	newUserPortletStock.setStock(ps.getStock());
+    		double buyPrice = StockStats.findLatestBySymbol(ps.getStock()).getClosePrice();
     		newUserPortletStock.setBuyPrice(buyPrice);
-	    	newUserPortletStock.setQty(Math.round((amount*stock.getWeightage())/buyPrice)/100);
+	    	newUserPortletStock.setQty((amount*ps.getWeightage())/(buyPrice*100));
+	    	newUserPortletStock.setBuyWeight(ps.getWeightage());
 	    	newUserPortletStock.setUser(getLocalUser(session()));
 	    	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
 	    	Logger.info("Saving: " + newUserPortletStock);

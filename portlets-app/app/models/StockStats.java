@@ -28,7 +28,6 @@ public class StockStats extends Model {
 	private Stock stock;
 	//private String date;
 	private LocalDate localDate;
-
 	private double openPrice;
 	private double closePrice;
 	private double highPrice;
@@ -84,7 +83,7 @@ public class StockStats extends Model {
 	}
 
 	public static StockStats findStockStatsOnDate(Stock stock, LocalDate onDate) {
-		return StockStats.find.where().eq("stock_id", stock.getId()).le("local_date", onDate).orderBy("local_date").setMaxRows(1).findUnique();
+		return StockStats.find.where().le("localDate", onDate).eq("stock_id", stock.getId()).orderBy("local_date desc").setMaxRows(1).findUnique();
 	}
 
 	public Stock getStock() {
