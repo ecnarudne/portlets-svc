@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import models.Exchange;
+import models.Follows;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
@@ -254,9 +255,56 @@ public class Application extends Controller {
 	    	newPortlet.save();
 	    	return ok();
         } else {
-            return badRequest("Expecting Json data");
+            return badRequest("No JSON Data found");
         }
     }
+
+    public static Result followPortlet(Long portletId) {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+    	User user = getLocalUser(session());
+    	Portlet portlet = Portlet.find.byId(portletId);
+        if(portlet != null) {
+        	Follows existing = Follows.findByUserAndPortlet(user, portlet);
+        	if(existing == null) {
+	        	Follows follows = new Follows(user, portlet);
+	        	follows.save();
+        	}
+        	return ok();
+        } else {
+            return badRequest("Portlet not found by ID: " + portletId);
+        }
+    }
+
+    public static Result unfollowPortlet(Long portletId) {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+    	User user = getLocalUser(session());
+    	Portlet portlet = Portlet.find.byId(portletId);
+        if(portlet != null) {
+        	Follows existing = Follows.findByUserAndPortlet(user, portlet);
+        	existing.delete();
+        	return ok();
+        } else {
+            return badRequest("Portlet not found by ID: " + portletId);
+        }
+    }
+
+    public static Result updateProfileText() {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+    	User user = getLocalUser(session());
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            user.setNameTitle(json.findPath("nametitle").asText());
+            user.setProfileTitle(json.findPath("profiletitle").asText());
+            user.setProfileDescription(json.findPath("profiledescription").asText());
+            return ok();
+        } else {
+        	return badRequest("No JSON Data found");
+        }
+    }
+
     public static Result subscribeToPortletJson(Long portletId) {
     	if(!isLoggedIn(session()))
 			return forbidden();

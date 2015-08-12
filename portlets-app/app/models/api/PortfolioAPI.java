@@ -2,6 +2,7 @@ package models.api;
 
 import java.util.List;
 
+import models.Follows;
 import models.Portlet;
 import models.User;
 import models.UserPortletStock;
@@ -37,6 +38,7 @@ public class PortfolioAPI {
 				this.annualReturn = Calculations.calcReturnFromPrice(portfolioValue, portfolioValueYearBefore);
 				double volatility = Calculations.calcPortfolioVolatility(ups);
 				this.volatility = volatility;
+				this.followedPortletCount = Follows.countByUser(owner.getId());
 			} else {
 				Logger.info("No portlet subscriptions found to calculate Portfolio value");
 			}

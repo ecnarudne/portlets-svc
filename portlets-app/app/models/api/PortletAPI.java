@@ -2,6 +2,7 @@ package models.api;
 
 import java.util.List;
 
+import models.Follows;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
@@ -43,6 +44,7 @@ public class PortletAPI {
 			//if(Logger.isDebugEnabled()) Logger.debug("AnnualReturn: " + this.getAnnualReturn());
 			this.setVolatility(Calculations.calcPortletVolatility(portlet.getId()));
 			if(Logger.isDebugEnabled()) Logger.debug("Volatility: " + this.getVolatility());
+			this.followerCount = Follows.countByPortlet(portlet.getId());
 		} catch (Exception e) {
 			Logger.error("Couldn't find stats and returns for Portlet Id: " + p.getId(), e);
 		}
