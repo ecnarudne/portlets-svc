@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Set;
 
 import models.Exchange;
-import models.Portfolio;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
@@ -21,6 +20,7 @@ import models.User;
 import models.UserPortletStock;
 import models.UserToken;
 import models.UserValidityState;
+import models.api.PortfolioAPI;
 import models.api.PortletAPI;
 import models.api.PortletStockAPI;
 import models.api.UserPortletStockAPI;
@@ -96,30 +96,7 @@ public class Application extends Controller {
     	User currentUser = getLocalUser(session());
     	if(currentUser == null)
     		return forbidden("Login Required");
-    	Portfolio portfolio = new Portfolio();
-    	List<Portlet> created = Portlet.findByOwner(currentUser);
-    	int portletCreatedCount = 0;
-    	if(created != null)
-    		portletCreatedCount = created.size();
-		currentUser.setPortletCreatedCount(portletCreatedCount);
-		portfolio.setOwner(currentUser);
-		//portfolio.setPortletCount(portletCreatedCount);//fetch subcribed portlet count
-		try {
-			List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
-			Set<Long> stockIdSet = new HashSet<Long>();
-			for (UserPortletStock u : ups) {
-				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
-				stockIdSet.add(id);
-			}
-			double portfolioValueLast = Calculations.calcPortfolioValue(ups, LocalDate.now());
-			portfolio.setPortfolioValue(portfolioValueLast);
-			double portfolioValueDayBefore = Calculations.calcPortfolioValue(ups, LocalDate.now().minusDays(1));
-			portfolio.setDailyReturn(Calculations.calcReturnFromPrice(portfolioValueLast, portfolioValueDayBefore));
-			double portfolioValueYearBefore = Calculations.calcPortfolioValue(ups, LocalDate.now().minusYears(1));
-			portfolio.setAnnualReturn(Calculations.calcReturnFromPrice(portfolioValueLast, portfolioValueYearBefore));
-		} catch (Exception e) {
-			Logger.error("Portfolio information unavailable due to some issues. ", e);
-		}
+    	PortfolioAPI portfolio = new PortfolioAPI(currentUser);
     	return ok(Json.toJson(portfolio));
     }
 
@@ -181,7 +158,7 @@ public class Application extends Controller {
 	}
 
 	public static Result index() {
-		printSession();
+		//printSession();
         //return ok(index.render(getLocalUser(session())));
 		return ok(index.render());
     }
@@ -610,7 +587,7 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
-	private static void printSession() {
+	protected static void printSession() {
 		Session s = session();
 		Request r = request();
 		Cookies c = request().cookies();
@@ -619,9 +596,6 @@ public class Application extends Controller {
     	Logger.debug("deb Cookies: " + c);
     	for (Cookie cookie : c) {
     		Logger.debug("cookie Name: " + cookie.name() + " -cookie Value: " + cookie.value());
-		}
-    	for (String k : s.keySet()) {
-    		Logger.debug("session key: " + k + " -session Value: " + s.get(k));
 		}
     	Logger.debug("deb session: " + s.keySet());
 	}

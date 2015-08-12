@@ -96,7 +96,15 @@ public class Portlet extends Model {
 		return null;
 	}
 
-	public static Collection<Portlet> findByPartName(String partName) {
+	public static List<Portlet> findCreatedBefore(String exchange, Date maxCreateDate) {
+		return find.where().eq("primaryExchange", exchange).le("createdOn", maxCreateDate).orderBy("createdOn").findList();
+	}
+
+	public static List<Portlet> findCreatedAfter(String exchange, Date startDate) {
+		return find.where().eq("primaryExchange", exchange).ge("createdOn", startDate).orderBy("createdOn").findList();
+	}
+
+	public static List<Portlet> findByPartName(String partName) {
 		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
 		return list;
 	}

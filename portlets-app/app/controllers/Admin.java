@@ -4,12 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 import models.Portlet;
+import models.PortletStats;
 import models.PortletStock;
 import models.PortletValidityState;
 import models.User;
 import models.UserValidityState;
 import models.mock.MockSet;
 import models.mock.MockSets;
+
+import org.joda.time.LocalDate;
+
 import play.Logger;
 import play.data.DynamicForm;
 import play.data.Form;
@@ -34,7 +38,7 @@ public class Admin extends Controller {
     public static final String FLASH_SUCCESS_KEY = "ADMIN_SUCCESS";
 
 	public static Result index() {
-		printSession();
+		//printSession();
         return ok(index.render());
     }
 
@@ -88,6 +92,21 @@ public class Admin extends Controller {
     	Logger.debug("Persisted sectors");
     	return redirect(routes.Admin.importDataPage());
     }
+    
+    public static Result overwritePortletStats() {
+        try {
+			DynamicForm requestData = Form.form().bindFromRequest();
+			Long portletId = Long.parseLong(requestData.get("portletid"));
+			Portlet portlet = Portlet.find.byId(portletId);
+			LocalDate startDate = new LocalDate(requestData.get("start"));//yyyy-MM-dd
+			LocalDate endDate = new LocalDate(requestData.get("end"));//yyyy-MM-dd
+			PortletStats.overwriteDuring(portlet , startDate, endDate);
+			return ok();
+		} catch (Exception e) {
+			Logger.error("Failed to overwrite PortletStats", e);
+			return badRequest("Failed to overwrite PortletStats. " + e.getMessage());
+		}
+    }
 
     public static Result addMockSet() {
         DynamicForm requestData = Form.form().bindFromRequest();
@@ -129,7 +148,7 @@ public class Admin extends Controller {
         return redirect(routes.Application.index());
     }
 
-	private static void printSession() {
+	protected static void printSession() {
 		Session s = session();
 		Request r = request();
 		Cookies c = request().cookies();

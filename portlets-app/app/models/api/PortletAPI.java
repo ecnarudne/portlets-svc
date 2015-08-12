@@ -41,8 +41,8 @@ public class PortletAPI {
 			//if(Logger.isDebugEnabled()) Logger.debug("portletValueYearBefore: " + portletValueYearBefore);
 			this.setAnnualReturn(Calculations.calcReturnFromPrice(portletValue, portletValueYearBefore));
 			//if(Logger.isDebugEnabled()) Logger.debug("AnnualReturn: " + this.getAnnualReturn());
-
-			//this.setVolatility();
+			this.setVolatility(Calculations.calcPortletVolatility(portlet.getId()));
+			if(Logger.isDebugEnabled()) Logger.debug("Volatility: " + this.getVolatility());
 		} catch (Exception e) {
 			Logger.error("Couldn't find stats and returns for Portlet Id: " + p.getId(), e);
 		}
