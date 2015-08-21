@@ -52,7 +52,7 @@ public class UserToken extends Model {
 		//TODO cache
 		if(userId == null)
 			return null;
-		return find.where().eq("user_id", userId).orderBy("first_signin_time desc").findUnique();
+		return find.where().eq("user_id", userId).orderBy("first_signin_time desc").setMaxRows(1).findUnique();
 	}
 
 	public static UserToken findByToken(String token) {

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import models.Exchange;
-import models.Portfolio;
+import models.Follows;
 import models.Portlet;
 import models.PortletStock;
 import models.PortletValidityState;
@@ -21,6 +21,7 @@ import models.User;
 import models.UserPortletStock;
 import models.UserToken;
 import models.UserValidityState;
+import models.api.PortfolioAPI;
 import models.api.PortletAPI;
 import models.api.PortletStockAPI;
 import models.api.UserPortletStockAPI;
@@ -80,6 +81,7 @@ public class Application extends Controller {
 	private static Number[][] getPriceHistoryAsChartArray(List<UserPortletStock> ups, LocalDate afterDate) {
 		//LocalDate afterDate = LocalDate.now().withFieldAdded(DurationFieldType.days(), days*-1);
 		List<PriceImportHistory> dates = PriceImportHistory.findDatesAfter(Exchange.NASDAQ, afterDate);//TODO remove exchange hardcode
+		if(Logger.isDebugEnabled()) Logger.debug("Price History dates size: " + dates.size());
 		Number[][] data = new Number[dates.size()][2];
 		int i = 0;
 		for (PriceImportHistory date : dates) {
@@ -95,30 +97,7 @@ public class Application extends Controller {
     	User currentUser = getLocalUser(session());
     	if(currentUser == null)
     		return forbidden("Login Required");
-    	Portfolio portfolio = new Portfolio();
-    	List<Portlet> created = Portlet.findByOwner(currentUser);
-    	int portletCreatedCount = 0;
-    	if(created != null)
-    		portletCreatedCount = created.size();
-		currentUser.setPortletCreatedCount(portletCreatedCount);
-		portfolio.setOwner(currentUser);
-		//portfolio.setPortletCount(portletCreatedCount);//fetch subcribed portlet count
-		try {
-			List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
-			Set<Long> stockIdSet = new HashSet<Long>();
-			for (UserPortletStock u : ups) {
-				Long id = Stock.findBySymbol(u.getStock()).getId();//TODO store Stock object in UserPortletStock
-				stockIdSet.add(id);
-			}
-			double portfolioValueLast = Calculations.calcPortfolioValue(ups, LocalDate.now());
-			portfolio.setPortfolioValue(portfolioValueLast);
-			double portfolioValueDayBefore = Calculations.calcPortfolioValue(ups, LocalDate.now().minusDays(1));
-			portfolio.setDailyReturn(Calculations.calcReturnFromPrice(portfolioValueLast, portfolioValueDayBefore));
-			double portfolioValueYearBefore = Calculations.calcPortfolioValue(ups, LocalDate.now().minusYears(1));
-			portfolio.setAnnualReturn(Calculations.calcReturnFromPrice(portfolioValueLast, portfolioValueYearBefore));
-		} catch (Exception e) {
-			Logger.error("Portfolio information unavailable due to some issues. ", e);
-		}
+    	PortfolioAPI portfolio = new PortfolioAPI(currentUser);
     	return ok(Json.toJson(portfolio));
     }
 
@@ -180,7 +159,7 @@ public class Application extends Controller {
 	}
 
 	public static Result index() {
-		printSession();
+		//printSession();
         //return ok(index.render(getLocalUser(session())));
 		return ok(index.render());
     }
@@ -276,9 +255,56 @@ public class Application extends Controller {
 	    	newPortlet.save();
 	    	return ok();
         } else {
-            return badRequest("Expecting Json data");
+            return badRequest("No JSON Data found");
         }
     }
+
+    public static Result followPortlet(Long portletId) {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+    	User user = getLocalUser(session());
+    	Portlet portlet = Portlet.find.byId(portletId);
+        if(portlet != null) {
+        	Follows existing = Follows.findByUserAndPortlet(user, portlet);
+        	if(existing == null) {
+	        	Follows follows = new Follows(user, portlet);
+	        	follows.save();
+        	}
+        	return ok();
+        } else {
+            return badRequest("Portlet not found by ID: " + portletId);
+        }
+    }
+
+    public static Result unfollowPortlet(Long portletId) {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+    	User user = getLocalUser(session());
+    	Portlet portlet = Portlet.find.byId(portletId);
+        if(portlet != null) {
+        	Follows existing = Follows.findByUserAndPortlet(user, portlet);
+        	existing.delete();
+        	return ok();
+        } else {
+            return badRequest("Portlet not found by ID: " + portletId);
+        }
+    }
+
+    public static Result updateProfileText() {
+    	if(!isLoggedIn(session()))
+			return forbidden();
+    	User user = getLocalUser(session());
+        JsonNode json = request().body().asJson();
+        if(json != null) {
+            user.setNameTitle(json.findPath("nametitle").asText());
+            user.setProfileTitle(json.findPath("profiletitle").asText());
+            user.setProfileDescription(json.findPath("profiledescription").asText());
+            return ok();
+        } else {
+        	return badRequest("No JSON Data found");
+        }
+    }
+
     public static Result subscribeToPortletJson(Long portletId) {
     	if(!isLoggedIn(session()))
 			return forbidden();
@@ -290,7 +316,7 @@ public class Application extends Controller {
             	List<PortletStock> stocks = PortletStock.findByPortlet(portlet);
             	double remainingAmount = amount;
             	for (PortletStock ps : stocks) {
-            		double currentPx = Stock.currentPrice(ps.getStock());
+            		double currentPx = StockStats.findLatestBySymbol(ps.getStock()).getClosePrice();
 
             		//long shares = Math.round((amount * ps.getWeightage())/(100 * currentPx));
             		double shares = (amount * ps.getWeightage())/(100 * currentPx);
@@ -364,7 +390,9 @@ public class Application extends Controller {
     }
     
     public static Result stockStats(String symbol) {
-    	StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
+		//StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(symbol);
+    	Stock stock = Stock.findBySymbol(symbol);
+    	StockStats stats = StockStats.findLatestByStock(stock);
     	return ok(Json.toJson(stats));
     }
     
@@ -483,13 +511,16 @@ public class Application extends Controller {
 			Logger.error("No Stocks found for Portlet: " + portletId);
 	    	return redirect(routes.Application.myStocks());
     	}
-    	for (PortletStock stock : stocks) {
+		if(Logger.isDebugEnabled()) Logger.debug("Subscribing for amount: " + amount + " on portletId: " + portletId);
+
+    	for (PortletStock ps : stocks) {
         	UserPortletStock newUserPortletStock = new UserPortletStock();
     		newUserPortletStock.setPortlet(portlet);
-	    	newUserPortletStock.setStock(stock.getStock());
-    		double buyPrice = Stock.currentPrice(stock.getStock());
+	    	newUserPortletStock.setStock(ps.getStock());
+    		double buyPrice = StockStats.findLatestBySymbol(ps.getStock()).getClosePrice();
     		newUserPortletStock.setBuyPrice(buyPrice);
-	    	newUserPortletStock.setQty(Math.round((amount*stock.getWeightage())/buyPrice)/100);
+	    	newUserPortletStock.setQty((amount*ps.getWeightage())/(buyPrice*100));
+	    	newUserPortletStock.setBuyWeight(ps.getWeightage());
 	    	newUserPortletStock.setUser(getLocalUser(session()));
 	    	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
 	    	Logger.info("Saving: " + newUserPortletStock);
@@ -604,7 +635,7 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
-	private static void printSession() {
+	protected static void printSession() {
 		Session s = session();
 		Request r = request();
 		Cookies c = request().cookies();
@@ -613,9 +644,6 @@ public class Application extends Controller {
     	Logger.debug("deb Cookies: " + c);
     	for (Cookie cookie : c) {
     		Logger.debug("cookie Name: " + cookie.name() + " -cookie Value: " + cookie.value());
-		}
-    	for (String k : s.keySet()) {
-    		Logger.debug("session key: " + k + " -session Value: " + s.get(k));
 		}
     	Logger.debug("deb session: " + s.keySet());
 	}

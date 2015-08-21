@@ -17,6 +17,10 @@ import org.joda.time.LocalDate;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
+
 @Entity
 public class StockStats extends Model {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +32,6 @@ public class StockStats extends Model {
 	private Stock stock;
 	//private String date;
 	private LocalDate localDate;
-
 	private double openPrice;
 	private double closePrice;
 	private double highPrice;
@@ -36,8 +39,26 @@ public class StockStats extends Model {
 	private double avgVol;
 	private double mktcap;
 	private String activity;
+	private double dailyReturn;
+	private double annualReturn;
 
 	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
+
+	public static Double calcDailyVolatility(Long stockId, LocalDate startDate, LocalDate endDate) {
+		StringBuilder sql = new StringBuilder("SELECT STD(daily_return) as sd FROM stock_stats WHERE stock_id=:stockId");
+		if(startDate != null)
+			sql.append(" AND local_date > :startDate");
+		if(endDate != null)
+			sql.append(" AND local_date < :endDate");
+		SqlQuery query = Ebean.createSqlQuery(sql.toString());
+		query.setParameter("stockId", stockId);
+		if(startDate != null)
+			query.setParameter("startDate", startDate);
+		if(endDate != null)
+			query.setParameter("endDate", endDate);
+		SqlRow row = query.findUnique();
+		return row.getDouble("sd");
+	}
 
 	public static NavigableMap<LocalDate, Map<Long, StockStats>> buildDateMapByStockIds(Collection<Long> stockIds) {
 		//TODO must cache
@@ -72,7 +93,7 @@ public class StockStats extends Model {
 	}
 
 	public static StockStats findLatestByStock(Stock stock) {
-		return StockStats.find.where().eq("stock_id", stock.getId()).orderBy("local_date").setMaxRows(1).findUnique();
+		return StockStats.find.where().eq("stock_id", stock.getId()).orderBy("local_date desc").setMaxRows(1).findUnique();
 	}
 
 	public static List<StockStats> findBySymbol(String symbol) {
@@ -84,7 +105,8 @@ public class StockStats extends Model {
 	}
 
 	public static StockStats findStockStatsOnDate(Stock stock, LocalDate onDate) {
-		return StockStats.find.where().eq("stock_id", stock.getId()).le("local_date", onDate).orderBy("local_date").setMaxRows(1).findUnique();
+		//if(Logger.isDebugEnabled()) Logger.debug("findStockStatsOnDate for Stock ID: " + stock.getId() + " onDate: " + onDate);
+		return find.where().le("localDate", onDate).eq("stock_id", stock.getId()).orderBy("local_date desc").setMaxRows(1).findUnique();
 	}
 
 	public Stock getStock() {
@@ -152,5 +174,17 @@ public class StockStats extends Model {
 	}
 	public void setMktcap(double mktcap) {
 		this.mktcap = mktcap;
+	}
+	public double getDailyReturn() {
+		return dailyReturn;
+	}
+	public void setDailyReturn(double dailyReturn) {
+		this.dailyReturn = dailyReturn;
+	}
+	public double getAnnualReturn() {
+		return annualReturn;
+	}
+	public void setAnnualReturn(double annualReturn) {
+		this.annualReturn = annualReturn;
 	}
 }

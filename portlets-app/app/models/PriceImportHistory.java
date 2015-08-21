@@ -33,6 +33,19 @@ public class PriceImportHistory extends Model{
 
 	public static Finder<Long, PriceImportHistory> find = new Finder<Long, PriceImportHistory>(Long.class, PriceImportHistory.class);
 
+	public static boolean existsOnDate(String exchange, LocalDate onDate) {
+		return PriceImportHistory.find.where()
+				.ieq("exchange", exchange)
+				.eq("local_date", onDate)
+				.findRowCount() > 0;
+	}
+	public static List<PriceImportHistory> findDatesDuring(String exchange, LocalDate startDate, LocalDate endDate) {
+		return PriceImportHistory.find.where()
+				.ieq("exchange", exchange)
+				.ge("local_date", startDate)
+				.le("local_date", endDate)
+				.orderBy("local_date").findList();
+	}
 	public static List<PriceImportHistory> findDatesAfter(String exchange, LocalDate afterDate) {
 		return PriceImportHistory.find.where()
 				.ieq("exchange", exchange)

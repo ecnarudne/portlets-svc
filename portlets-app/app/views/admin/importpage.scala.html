@@ -4,15 +4,22 @@
 <br/><br/>
 <h3>Import Market Data from all CSV Files on Server</h3>
 <form action="@routes.Admin.importMarketDataHistory()" method="post" >
-	<input type="text" id="filepath" name="dirpath" value="/var/tmp/data" />
+	<input type="text" name="dirpath" value="/var/tmp/data" />
 	<input type="submit" value="Import" />
 </form><br/><br/>
-
-<h5>--avoid mocks, create portlets using create page--</h5>
+<h4>Create 2 Sectors</h4>
 <form action="@routes.Admin.addSectors()" method="post" >
 	<input type="submit" value="Push Sectors" />
 </form><br/>
+<h5>--avoid mocks, create portlets using create page--</h5>
 <form action="@routes.Admin.addMockSet()" method="post" >
 	<input type="submit" value="Push MockSet" />
+</form><br/>
+<h5>--hack to generate portlet stats without import--</h5>
+<form action="@routes.Admin.overwritePortletStats()" method="post" >
+	Portlet ID:<input type="text" name="portletid" />
+	Start:<input type="text" name="start" value="2015-01-01" />
+	End:<input type="text" name="end" value="2015-12-31" />
+	<input type="submit" value="Generate Portlet Stats" />
 </form><br/>
 }

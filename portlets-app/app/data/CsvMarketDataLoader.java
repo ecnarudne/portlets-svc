@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import models.PortletStats;
 import models.PriceImportHistory;
 import models.Stock;
 import models.StockStats;
@@ -17,6 +18,7 @@ import org.joda.time.format.DateTimeFormat;
 
 import play.Logger;
 import play.cache.Cache;
+import stats.Calculations;
 
 import com.google.common.io.PatternFilenameFilter;
 
@@ -55,8 +57,9 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 							s.save();
 						//updateMarketPriceCache(s);TODO enable cache 
 					}
-					importHistory.save();
 					Logger.debug("Successful Import " + file.getAbsolutePath());
+					importHistory.save();
+					PortletStats.persistPortletsforDate(exchange, date);
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -88,6 +91,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 				if(!existsInDb(s))
 					s.save();
 				//updateMarketPriceCache(s);TODO enable cache 
+				PortletStats.persistPortletsforDate(exchange, date);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -179,6 +183,12 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 		stats.setLowPrice(Double.parseDouble(split[4]));
 		stats.setAvgVol(Double.parseDouble(split[6]));
 		stats.setLocalDate(parseLocalDate(split[1]));
+		StockStats dayBack = StockStats.findStockStatsOnDate(stock, LocalDate.now().minusDays(1));
+		if(dayBack != null)
+			stats.setDailyReturn(Calculations.calcReturnFromStats(stats, dayBack));
+		StockStats yearBack = StockStats.findStockStatsOnDate(stock, LocalDate.now().minusYears(1));
+		if(yearBack != null)
+			stats.setAnnualReturn(Calculations.calcReturnFromStats(stats, yearBack));
 		return stats;
 	}
 

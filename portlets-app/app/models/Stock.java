@@ -6,8 +6,6 @@ import java.util.Set;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-import data.RedisKey;
-import play.Logger;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
@@ -46,13 +44,6 @@ public class Stock extends Model {
 			return null;
 		List<Stock> list = find.where().eq("primaryExchange", primaryExchange).findList();
 		return list;
-	}
-	
-	public static double currentPrice(String symbol) {
-		String key = RedisKey.LAST_MARKET_PRICE_FLOAT + symbol;
-		double d = (double) play.cache.Cache.get(key);
-		if(Logger.isDebugEnabled()) Logger.debug("Got Price: " + d + " for symbol: " + symbol);
-		return d;
 	}
 
 	public Long getId() {
