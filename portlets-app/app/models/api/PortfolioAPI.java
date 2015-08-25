@@ -49,6 +49,18 @@ public class PortfolioAPI {
 	public String getOwnerName() {
 		return owner.getFullName();
 	}
+	public int getOwnerFollowerCount() {
+		return owner.getFollowerCount();
+	}
+	public int getOwnerFollowingCount() {
+		return owner.getFollowingCount();
+	}
+	public String getOwnerProfilePicture() {
+		return owner.getProfilePicture();
+	}
+	public int getOwnerPortletCreatedCount() {
+		return owner.getPortletCreatedCount();
+	}
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
