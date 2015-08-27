@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -142,6 +143,13 @@ public class Portlet extends Model {
 	}
 	public void setSectors(List<Sector> sectors) {
 		this.sectors = sectors;
+	}
+	public void addSector(Sector sector) {
+		if(this.sectors != null) {
+			this.sectors.add(sector);
+		} else {
+			this.sectors = Arrays.asList(sector);
+		}
 	}
 	public String getNotes() {
 		return notes;

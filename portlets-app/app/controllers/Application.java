@@ -436,7 +436,11 @@ public class Application extends Controller {
     }
     
     public static Result listPortletsBySector(Long sectorId) {
-    	List<Portlet> list = Portlet.findBySector(sectorId);
+    	List<Portlet> portlets = Portlet.findBySector(sectorId);
+    	List<PortletAPI> list = new ArrayList<PortletAPI>();
+    	for (Portlet portlet : portlets) {
+			list.add(new PortletAPI(portlet));
+		}
     	return ok(Json.toJson(list));
     }
 
@@ -541,11 +545,16 @@ public class Application extends Controller {
     	if(localUser != null) {
         	try {
         		//TODO start transaction
-				newPortlet.setOwner(localUser);
-				newPortlet.setValidity(PortletValidityState.PENDING);
-		    	newPortlet.save();
 		        final JsonNode json = request().body().asJson();
 		        if(json != null) {
+					newPortlet.setOwner(localUser);
+					newPortlet.setValidity(PortletValidityState.PENDING);
+		        	JsonNode sectorId = json.findPath("sectorId");
+		        	if(sectorId != null) {
+		        		Sector sector = Sector.find.byId(sectorId.asLong());
+		        		newPortlet.addSector(sector);
+		        	}
+			    	newPortlet.save();
 		        	JsonNode stockArray = json.findPath("stocks");
 		        	if(stockArray == null)
 		        		return Results.badRequest("Missing JSON field stocks");
@@ -563,7 +572,7 @@ public class Application extends Controller {
 		        }
 			} catch (Exception e) {
 				//TODO revert transaction
-				e.printStackTrace();
+				Logger.error("Failed to Create Portlet for request: " + request().body(), e);
 			}
 		    	
     	} else {
