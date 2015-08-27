@@ -26,6 +26,10 @@ public class Calculations {
 
 	public static double calcReturnFromPrice(double newPrice, double oldPrice) {
 		//return round((100*(newPrice - oldPrice))/oldPrice, 2);
+		if(oldPrice == 0) {
+			Logger.error("Wrong data to calculate Return for oldPrice: " + oldPrice);
+			return 0;
+		}
 		return (100*(newPrice - oldPrice))/oldPrice;
 	}
 
@@ -81,6 +85,10 @@ public class Calculations {
 				portfolioValue += ups.getQty() * stats.getClosePrice();
 			else
 				Logger.error("Missing stats for stock: " + ups.getStock());
+		}
+		if(portfolioValue == 0) {
+			Logger.error("Missing data to calculate Portfolio Value for UserPortletStock List: " + upsList);
+			return 0;
 		}
 		double volatilityPrincipal = 0;
 		for (UserPortletStock ups : upsList) {

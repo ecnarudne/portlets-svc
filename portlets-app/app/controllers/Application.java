@@ -577,13 +577,23 @@ public class Application extends Controller {
         return ok(portfolio.render(getLocalUser(session())));
     }
 
-   
+    public static Result listOwnedPortlets() {
+    	List<Portlet> portlets = Portlet.findByOwner(getLocalUser(session()));
+    	List<PortletAPI> portletAPIs = new ArrayList<PortletAPI>();
+	    if(portlets != null) {
+	    	for (Portlet p : portlets) {
+	    		portletAPIs.add(new PortletAPI(p));
+			}
+	    }
+    	return ok(Json.toJson(portletAPIs));
+    }
+
     public static Result listMyPortlets() {
     	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(session()));
-    	Set<Portlet> portlets = new HashSet<Portlet>();
+    	Set<PortletAPI> portlets = new HashSet<PortletAPI>();
 	    if(portletStocks != null) {
 	    	for (UserPortletStock ups : portletStocks) {
-	    		portlets.add(ups.getPortlet());
+	    		portlets.add(new PortletAPI(ups.getPortlet()));
 			}
 	    }
     	return ok(Json.toJson(portlets));
