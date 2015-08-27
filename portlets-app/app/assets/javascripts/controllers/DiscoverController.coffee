@@ -31,7 +31,7 @@ angular.module('DiscoverCtrl',['Api'])
                     before: ->
                       $log.debug('Fetching Portlet lists.')
                     success: (data, status, headers, config) ->
-                      $log.debug 'Portlet list fetched successfully.' + JSON.stringify(data)
+                      #$log.debug 'Portlet list fetched successfully.' + JSON.stringify(data)
                       $scope.portlets = data
                     error: (data, status, headers, config, statusText) ->
                       $log.error('Got error while fetcching portlet list')                   
