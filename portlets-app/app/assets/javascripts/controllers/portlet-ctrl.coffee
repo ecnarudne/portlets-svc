@@ -24,7 +24,7 @@ angular.module('PagePortletCtrl',['Api'])
                 }
             )
             console.log 'Route parameters: ' + $routeParams.portletId
-            ###portletApi.getPortletDetails(
+            portletApi.getPortletDetails(
                 $routeParams.portletId  
                 {
                   before: ->
@@ -40,28 +40,27 @@ angular.module('PagePortletCtrl',['Api'])
                   complete: (data, status, headers, config) ->
                     $log.debug('In complete function')
                 }
-            )###
+            )
             portletApi.getPortletStatTable(
-                5
+                $routeParams.portletId
                 {
                   before: ->
                     $log.debug('Fetching data for StatTable.')
                   success: (data, status, headers, config) ->
                     stocks=[]
-                    console.log "data :"  + JSON.stringify data[0]
+                    console.log "dataStat :"  + JSON.stringify data[0]
                     data.filter((stock)->
-                      console.log stock.closePrice
                       stockURL = undefined
                       stockURL = '/#/page-stock/' + stock.id
                       stockJson ={}
-                      stockJson.COMPANY = "<a href= "  + stockURL + ">" + stock.stock.name + "</a>"
-                      stockJson.TICKER = stock.stock.symbol
-                      stockJson.ACTIVITY = stock.activity
-                      stockJson.WEIGHT = 2
-                      stockJson.AVG_COST = 500
-                      stockJson.PRICE = stock.closePrice
-                      stockJson.TOTAL_RETURN = 5.5
-                      stockJson.DAILY_RETURN = 3.3
+                      stockJson.COMPANY = "<a href= "  + stockURL + ">" + stock.stockStats.stock + "</a>"
+                      stockJson.TICKER = stock.stockStats.stock
+                      stockJson.ACTIVITY = stock.stockStats.activity
+                      stockJson.WEIGHT = stock.weightage
+                      stockJson.AVG_COST = stock.stockStats.closePrice
+                      stockJson.PRICE = stock.stockStats.closePrice
+                      stockJson.TOTAL_RETURN = stock.annualReturn
+                      stockJson.DAILY_RETURN = stock.dailyReturn
                       stocks.push stockJson
                       )
                     createTable(stocks)

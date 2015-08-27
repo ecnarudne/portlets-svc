@@ -85,7 +85,7 @@ angular.module('Api', ['ngCookies'])
         return
 
       api.prototype.getMyPortlets = (request) ->
-        get(actionUrl("/listmyportlets"),request)
+        get(actionUrl("/listownedportlets"),request)
         return
 
       api.prototype.saveProfile = (request) ->
