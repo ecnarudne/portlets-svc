@@ -24,6 +24,7 @@ import models.UserValidityState;
 import models.api.PortfolioAPI;
 import models.api.PortletAPI;
 import models.api.PortletStockAPI;
+import models.api.StockStatsAPI;
 import models.api.UserPortletStockAPI;
 
 import org.joda.time.DateTimeZone;
@@ -53,8 +54,6 @@ import views.html.users;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.feth.play.module.pa.PlayAuthenticate;
-
-import data.CsvMarketDataLoader;
 
 public class Application extends Controller {
 
@@ -395,16 +394,26 @@ public class Application extends Controller {
     	StockStats stats = StockStats.findLatestByStock(stock);
     	return ok(Json.toJson(stats));
     }
-    
-    
+
     public static Result listMyStockStatsByPortlet(Long portletId) {
     	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
     	Logger.debug("stocks.size(): " + stocks.size());
     	ArrayList<UserPortletStockAPI> list = new ArrayList<UserPortletStockAPI>(stocks.size());
     	for (UserPortletStock ups : stocks) {
-    		StockStats stats = CsvMarketDataLoader.loadStockStatsBySymbol(ups.getStock());
+    		StockStats stats = StockStats.findLatestBySymbol(ups.getStock());//TODO must cache
     		UserPortletStockAPI api = new UserPortletStockAPI(ups, stats);
 			list.add(api );
+		}
+    	return ok(Json.toJson(list));
+    }
+
+    public static Result listStockStatsByPortlet(Long portletId) {
+    	List<PortletStock> stocks = PortletStock.findByPortletId(portletId);
+    	Logger.debug("stocks.size(): " + stocks.size());
+    	ArrayList<StockStatsAPI> list = new ArrayList<StockStatsAPI>(stocks.size());
+    	for (PortletStock ps : stocks) {
+    		StockStats stats = StockStats.findLatestBySymbol(ps.getStock());//TODO must cache
+			list.add(new StockStatsAPI(stats));
 		}
     	return ok(Json.toJson(list));
     }

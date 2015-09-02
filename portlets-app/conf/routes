@@ -38,6 +38,7 @@ GET     /listmyportletstocks        controllers.Application.listMyPortletStocks(
 GET     /listownedportlets             controllers.Application.listOwnedPortlets()
 GET     /portlet/:portletId         controllers.Application.portlet(portletId: Long)
 GET     /listmystockstats/:portletId controllers.Application.listMyStockStatsByPortlet(portletId: Long)
+GET     /liststockstats/:portletId controllers.Application.listStockStatsByPortlet(portletId: Long)
 GET     /listrecentportlets/:limit  controllers.Application.listRecentPortlets(limit: Int)
 GET     /listopportlets/:limit      controllers.Application.listTopPerformingPortlets(limit: Int)
 GET     /listportletstocks/:portletId controllers.Application.listPortletStocks(portletId: Long)
