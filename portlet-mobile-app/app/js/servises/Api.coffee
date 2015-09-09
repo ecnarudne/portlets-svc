@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://192.168.1.107:9000'
+      domain = 'localhost:9000'
       
       actionUrl = (path) ->
           domain + path
@@ -118,7 +118,7 @@ angular.module('Api', ['ngCookies'])
         return
 
       api.prototype.getPortletStatTable = (portletId,request) ->
-        get(actionUrl("/listmystockstats/" + portletId),request)
+        get(actionUrl("/liststockstats/" + portletId),request)
         return
 
       api.prototype.getStocks = (exchange,request) ->
