@@ -26,3 +26,8 @@ portlet-mobile-app/plugins/
 node_modules/
 target/
 dump.rdb
+
+/portlet-mobile-app/redis-stable/
+/portlet-mobile-app/redis-stable.tar.gz
+/portlet-mobile-app/npm-debug.log
+/npm-debug.log

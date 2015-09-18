@@ -32,7 +32,7 @@ angular.module('PortfolioCtrl',['Api'])
                     $scope.portfolio = data
                     $scope.portfolio.dailyReturn = data.dailyReturn.toFixed(2)
                     $scope.portfolio.annualReturn = data.annualReturn.toFixed(2)
-                    $cookies.pictureURL = $scope.portfolio.owner.profilePicture
+                    $cookies.pictureURL = $scope.portfolio.ownerProfilePicture
                     
                     $scope.arrow = undefined
                     dailyReturn = parseFloat $scope.portfolio.dailyReturn

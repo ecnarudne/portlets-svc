@@ -48,18 +48,19 @@ angular.module('PagePortletCtrl',['Api'])
                     $log.debug('Fetching data for StatTable.')
                   success: (data, status, headers, config) ->
                     stocks=[]
+                    console.log "dataStat :"  + JSON.stringify data[0]
                     data.filter((stock)->
                       stockURL = undefined
-                      stockURL = '/#/page-stock/' + stock.stats.stock.id
+                      stockURL = '/#/page-stock/' + stock.id
                       stockJson ={}
-                      stockJson.COMPANY = "<a href= "  + stockURL + ">" + stock.stats.stock.name + "</a>"
-                      stockJson.TICKER = stock.stats.stock.symbol
-                      stockJson.ACTIVITY = stock.stats.activity
-                      stockJson.WEIGHT = stock.buyWeight
-                      stockJson.AVG_COST = stock.buyPrice
-                      stockJson.PRICE = stock.stats.closePrice
-                      stockJson.TOTAL_RETURN = stock.totalReturn.toFixed(2)
-                      stockJson.DAILY_RETURN = stock.dailyReturn.toFixed(2)
+                      stockJson.COMPANY = "<a href= "  + stockURL + ">" + stock.stockStats.stock + "</a>"
+                      stockJson.TICKER = stock.stockStats.stock
+                      stockJson.ACTIVITY = stock.stockStats.activity
+                      stockJson.WEIGHT = stock.weightage
+                      stockJson.AVG_COST = stock.stockStats.closePrice
+                      stockJson.PRICE = stock.stockStats.closePrice
+                      stockJson.TOTAL_RETURN = stock.annualReturn
+                      stockJson.DAILY_RETURN = stock.dailyReturn
                       stocks.push stockJson
                       )
                     createTable(stocks)

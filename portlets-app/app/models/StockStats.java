@@ -17,6 +17,10 @@ import org.joda.time.LocalDate;
 import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlQuery;
+import com.avaje.ebean.SqlRow;
+
 @Entity
 public class StockStats extends Model {
 	private static final long serialVersionUID = 1L;
@@ -26,27 +30,35 @@ public class StockStats extends Model {
 	private String exchange;
 	@ManyToOne
 	private Stock stock;
-	private String date;
+	//private String date;
 	private LocalDate localDate;
-/*	private double openPrice;
+	private double openPrice;
 	private double closePrice;
 	private double highPrice;
 	private double lowPrice;
-	private double volume;
 	private double avgVol;
 	private double mktcap;
-*/
-	private String openPrice;
-	private String closePrice;
-	private String highPrice;
-	private String lowPrice;
-	private String volume;
-	private String avgVol;
-	private String mktcap;
 	private String activity;
-	private double annualReturns;
+	private double dailyReturn;
+	private double annualReturn;
 
 	public static Finder<Long, StockStats> find = new Finder<Long, StockStats>(Long.class, StockStats.class);
+
+	public static Double calcDailyVolatility(Long stockId, LocalDate startDate, LocalDate endDate) {
+		StringBuilder sql = new StringBuilder("SELECT STD(daily_return) as sd FROM stock_stats WHERE stock_id=:stockId");
+		if(startDate != null)
+			sql.append(" AND local_date > :startDate");
+		if(endDate != null)
+			sql.append(" AND local_date < :endDate");
+		SqlQuery query = Ebean.createSqlQuery(sql.toString());
+		query.setParameter("stockId", stockId);
+		if(startDate != null)
+			query.setParameter("startDate", startDate);
+		if(endDate != null)
+			query.setParameter("endDate", endDate);
+		SqlRow row = query.findUnique();
+		return row.getDouble("sd");
+	}
 
 	public static NavigableMap<LocalDate, Map<Long, StockStats>> buildDateMapByStockIds(Collection<Long> stockIds) {
 		//TODO must cache
@@ -81,7 +93,7 @@ public class StockStats extends Model {
 	}
 
 	public static StockStats findLatestByStock(Stock stock) {
-		return StockStats.find.where().eq("stock_id", stock.getId()).orderBy("local_date").setMaxRows(1).findUnique();
+		return StockStats.find.where().eq("stock_id", stock.getId()).orderBy("local_date desc").setMaxRows(1).findUnique();
 	}
 
 	public static List<StockStats> findBySymbol(String symbol) {
@@ -92,65 +104,16 @@ public class StockStats extends Model {
 		return findLatestByStock(Stock.findBySymbol(symbol));
 	}
 
+	public static StockStats findStockStatsOnDate(Stock stock, LocalDate onDate) {
+		//if(Logger.isDebugEnabled()) Logger.debug("findStockStatsOnDate for Stock ID: " + stock.getId() + " onDate: " + onDate);
+		return find.where().le("localDate", onDate).eq("stock_id", stock.getId()).orderBy("local_date desc").setMaxRows(1).findUnique();
+	}
+
 	public Stock getStock() {
 		return stock;
 	}
 	public void setStock(Stock stock) {
 		this.stock = stock;
-	}
-	/**
-	 * Format: YYYYMMDD
-	 */
-	public String getDate() {
-		return date;
-	}
-	/**
-	 * Format: YYYYMMDD
-	 */
-	public void setDate(String date) {
-		this.date = date;
-	}
-	public String getOpenPrice() {
-		return openPrice;
-	}
-	public void setOpenPrice(String openPrice) {
-		this.openPrice = openPrice;
-	}
-	public String getClosePrice() {
-		return closePrice;
-	}
-	public void setClosePrice(String closePrice) {
-		this.closePrice = closePrice;
-	}
-	public String getHighPrice() {
-		return highPrice;
-	}
-	public void setHighPrice(String highPrice) {
-		this.highPrice = highPrice;
-	}
-	public String getLowPrice() {
-		return lowPrice;
-	}
-	public void setLowPrice(String lowPrice) {
-		this.lowPrice = lowPrice;
-	}
-	public String getVolume() {
-		return volume;
-	}
-	public void setVolume(String volume) {
-		this.volume = volume;
-	}
-	public String getAvgVol() {
-		return avgVol;
-	}
-	public void setAvgVol(String avgVol) {
-		this.avgVol = avgVol;
-	}
-	public String getMktcap() {
-		return mktcap;
-	}
-	public void setMktcap(String mktcap) {
-		this.mktcap = mktcap;
 	}
 	public String getActivity() {
 		return activity;
@@ -176,10 +139,52 @@ public class StockStats extends Model {
 	public void setLocalDate(LocalDate localDate) {
 		this.localDate = localDate;
 	}
-	public double getAnnualReturns() {
-		return annualReturns;
+	public double getOpenPrice() {
+		return openPrice;
 	}
-	public void setAnnualReturns(double annualReturns) {
-		this.annualReturns = annualReturns;
+	public void setOpenPrice(double openPrice) {
+		this.openPrice = openPrice;
+	}
+	public double getClosePrice() {
+		return closePrice;
+	}
+	public void setClosePrice(double closePrice) {
+		this.closePrice = closePrice;
+	}
+	public double getHighPrice() {
+		return highPrice;
+	}
+	public void setHighPrice(double highPrice) {
+		this.highPrice = highPrice;
+	}
+	public double getLowPrice() {
+		return lowPrice;
+	}
+	public void setLowPrice(double lowPrice) {
+		this.lowPrice = lowPrice;
+	}
+	public double getAvgVol() {
+		return avgVol;
+	}
+	public void setAvgVol(double avgVol) {
+		this.avgVol = avgVol;
+	}
+	public double getMktcap() {
+		return mktcap;
+	}
+	public void setMktcap(double mktcap) {
+		this.mktcap = mktcap;
+	}
+	public double getDailyReturn() {
+		return dailyReturn;
+	}
+	public void setDailyReturn(double dailyReturn) {
+		this.dailyReturn = dailyReturn;
+	}
+	public double getAnnualReturn() {
+		return annualReturn;
+	}
+	public void setAnnualReturn(double annualReturn) {
+		this.annualReturn = annualReturn;
 	}
 }

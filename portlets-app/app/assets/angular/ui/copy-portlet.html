@@ -3,7 +3,7 @@
     <div class="col-md-12 col-sm-12">
       <div>
         <div class="panel-heading">
-          <h4>Create your own Portlet</h4>
+          <h4>Copy Portlet</h4>
         </div>
         <div class="panel-body">
           <form method="POST" name="portlet_form" ng-submit="addPortlet()" >
@@ -59,7 +59,6 @@
                             <tr ng-repeat="stock in stocks | filter : search " >
                               <td> {{stock.name}} </td>
                               <td> {{stock.symbol}} </td>
-                              <!-- <td> <input  type = 'text' class="input" ng-model="percentage">  </td> -->
                               <td><a class="btn btn-sm btn-success" ng-click="addStock(stock.name)">Add</a></td> 
                             </tr>
                           </tbody>
@@ -96,12 +95,6 @@
                   <div class="col-md-9">
                   <h5 ng-show="showSelected">Available Weightage : <span ng-bind="availableWeightage"></span> </h5>
                     <div class="row">
-                      <!-- <div>
-                        <select data-placeholder="Choose a stock..." ng-model= "portlet.stock" multiple="" style="width:350px;" tabindex="4" class="chosen-select">
-                          <option value=""></option>
-                          <option ng-repeat="stock in stocks" ng-click="addStock()">{{stock}}</option>
-                        </select> 
-                      </div> -->
                       <div class="top-20">
                         <button type="submit"  class="btn btn-primary">Create Portlet</a></button> <span style="display:inline-block">You have selected<span class="badge badge-secondary"><span ng-bind='size'></span></span>stock(s) in your portlet</span>
                       </div>

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import models.PortletStats;
+import models.PriceImportHistory;
 import models.Stock;
 import models.StockStats;
 
@@ -16,6 +18,7 @@ import org.joda.time.format.DateTimeFormat;
 
 import play.Logger;
 import play.cache.Cache;
+import stats.Calculations;
 
 import com.google.common.io.PatternFilenameFilter;
 
@@ -42,31 +45,32 @@ public class CsvMarketDataLoader implements MarketDataLoader {
             String dateString = file.getName().substring(indexOfDelimeter + 1, indexOfDot);
             LocalDate date = LocalDate.parse(dateString, DateTimeFormat.forPattern("yyyyMMdd"));
 			String exchange = file.getName().substring(0, indexOfDelimeter);
-			BufferedReader br = null;
-			try {
-				br = new BufferedReader(new FileReader(file));
-				String line;
-				while ((line = br.readLine()) != null) {
-					StockStats s = formStockStatsFromCSV(exchange, date, line);
-					int count = StockStats.find.where()
-							.ieq("exchange", exchange)
-							.ieq("date", s.getDate())
-							.eq("stock_id", s.getStock().getId()).findRowCount();
-					if(count == 0)
-						s.save();
-					updateMarketPriceCache(s);
-				}
-				Logger.debug("Successful Import " + file.getAbsolutePath());
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} finally {
-				if (br != null) {
-					try {
-						br.close();
-					} catch (IOException e) {
-						e.printStackTrace();
+			PriceImportHistory importHistory = new PriceImportHistory(exchange, date, file.getAbsolutePath());
+			if(!PriceImportHistory.existsInDb(exchange, date)) {
+				BufferedReader br = null;
+				try {
+					br = new BufferedReader(new FileReader(file));
+					String line;
+					while ((line = br.readLine()) != null) {
+						StockStats s = formStockStatsFromCSV(exchange, date, line);
+						if(!existsInDb(s))
+							s.save();
+						//updateMarketPriceCache(s);TODO enable cache 
+					}
+					Logger.debug("Successful Import " + file.getAbsolutePath());
+					importHistory.save();
+					PortletStats.persistPortletsforDate(exchange, date);
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					if (br != null) {
+						try {
+							br.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
 				}
 			}
@@ -84,13 +88,10 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 			while ((line = br.readLine()) != null) {
 	            LocalDate date = LocalDate.parse(dateString, DateTimeFormat.forPattern("yyyyMMdd"));
 				StockStats s = formStockStatsFromCSV(exchange, date, line);
-				int count = StockStats.find.where()
-						.ieq("exchange", exchange)
-						.ieq("date", s.getDate())
-						.eq("stock_id", s.getStock().getId()).findRowCount();
-				if(count < 1)
+				if(!existsInDb(s))
 					s.save();
-				updateMarketPriceCache(s);
+				//updateMarketPriceCache(s);TODO enable cache 
+				PortletStats.persistPortletsforDate(exchange, date);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -109,12 +110,20 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 		return true;
 	}
 
-	private void updateMarketPriceCache(StockStats s) {
+	protected boolean existsInDb(StockStats s) {
+		int count = StockStats.find.where()
+				.ieq("exchange", s.getExchange())
+				.eq("local_date", s.getLocalDate())
+				.eq("stock_id", s.getStock().getId()).findRowCount();
+		return(count > 0);
+	}
+
+	protected void updateMarketPriceCache(StockStats s) {
 		String lastPxKey = RedisKey.LAST_MARKET_PRICE_FLOAT
 				+ s.getStock().getSymbol();
 		Cache.set(lastPxKey, s.getClosePrice());
 		if (Logger.isDebugEnabled())
-			Logger.debug("Fetched Price: " + ((String) Cache.get(lastPxKey))
+			Logger.debug("Fetched Price: " + (Cache.get(lastPxKey))
 					+ " for: " + s.getStock().getSymbol());
 
 		String pxStatsKey = RedisKey.LAST_MARKET_PRICE_STATS
@@ -156,7 +165,7 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 			stats.setLocalDate(localDate);
 		} else {
 	        try {
-				stats.setLocalDate(LocalDate.parse(split[1], DateTimeFormat.forPattern("yyyy-MMM-dd")));
+				stats.setLocalDate(parseLocalDate(split[1]));
 			} catch (Exception e) {
 				Logger.warn("Failed to parse date: " + split[1]);
 			}
@@ -168,13 +177,27 @@ public class CsvMarketDataLoader implements MarketDataLoader {
 		 * stats.setLowPrice(parseWithDefault(split[4], 0));
 		 * stats.setAvgVol(parseWithDefault(split[6], 0));
 		 */
-		stats.setClosePrice(split[5]);
-		stats.setOpenPrice(split[2]);
-		stats.setHighPrice(split[3]);
-		stats.setLowPrice(split[4]);
-		stats.setAvgVol(split[6]);
-		stats.setDate(split[1]);
+		stats.setClosePrice(Double.parseDouble(split[5]));
+		stats.setOpenPrice(Double.parseDouble(split[2]));
+		stats.setHighPrice(Double.parseDouble(split[3]));
+		stats.setLowPrice(Double.parseDouble(split[4]));
+		stats.setAvgVol(Double.parseDouble(split[6]));
+		stats.setLocalDate(parseLocalDate(split[1]));
+		StockStats dayBack = StockStats.findStockStatsOnDate(stock, LocalDate.now().minusDays(1));
+		if(dayBack != null)
+			stats.setDailyReturn(Calculations.calcReturnFromStats(stats, dayBack));
+		StockStats yearBack = StockStats.findStockStatsOnDate(stock, LocalDate.now().minusYears(1));
+		if(yearBack != null)
+			stats.setAnnualReturn(Calculations.calcReturnFromStats(stats, yearBack));
 		return stats;
+	}
+
+	protected static LocalDate parseLocalDate(String dateString) {
+		try {
+			return LocalDate.parse(dateString, DateTimeFormat.forPattern("dd-MMM-yyyy"));
+		} catch (Exception e) {
+			return LocalDate.parse(dateString, DateTimeFormat.forPattern("yyyyMMdd"));
+		}
 	}
 
 	/**

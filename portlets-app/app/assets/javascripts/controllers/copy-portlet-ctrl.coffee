@@ -26,7 +26,7 @@ angular.module('CopyPortletCtrl',['Api'])
                     if s.weightage == undefined
                         weight = 0
                     else
-                        weight = parseInt(s.weightage)
+                        weight = parseFloat(s.weightage)
                         $scope.totalWeight = $scope.totalWeight + weight
                     $scope.availableWeightage = 100 - $scope.totalWeight
             portletApi.getPortletDetails(

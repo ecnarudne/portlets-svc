@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://localhost:9000'
+      domain = 'http://portlets.nearbymap.com'
       
       # We need to set cookie after login. Hardcoaded cookie   
 
@@ -85,7 +85,7 @@ angular.module('Api', ['ngCookies'])
         return
 
       api.prototype.getMyPortlets = (request) ->
-        get(actionUrl("/listmyportlets"),request)
+        get(actionUrl("/listownedportlets"),request)
         return
 
       api.prototype.saveProfile = (request) ->
@@ -116,7 +116,7 @@ angular.module('Api', ['ngCookies'])
         return
 
       api.prototype.getPortletStatTable = (portletId,request) ->
-        get(actionUrl("/listmystockstats/" + portletId),request)
+        get(actionUrl("/listportletstats/" + portletId),request)
         return
 
       api.prototype.getStocks = (exchange,request) ->

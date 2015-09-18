@@ -42,6 +42,8 @@ public class UserPortletStock extends Model {
 		this.qty = qty;
 		this.buyPrice = buyPrice;
 		this.buyEpoch = (new Date()).getTime();
+		PortletInvestmentAudit audit = new PortletInvestmentAudit(this, System.currentTimeMillis());//TODO get single epoch for all audits for same change
+		audit.save();
 	}
 	public static Finder<Long, UserPortletStock> find = new Finder<Long, UserPortletStock>(Long.class, UserPortletStock.class);
 

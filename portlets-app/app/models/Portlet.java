@@ -1,5 +1,6 @@
 package models;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -35,17 +36,10 @@ public class Portlet extends Model {
 	private String notes;
 	private PortletValidityState validity;
 	private boolean visibleToAll;
+	private VolatilityClass volatilityClass;
 	private String primaryExchange = Exchange.NASDAQ;
 	private Date lastRebalancedOn;
 	private Date createdOn;
-
-	/* Calculated attributes */
-	private long followerCount;
-	private double volatility;
-	private double totalReturn;
-	private double dailyReturn;
-	private double annualReturn;
-	private double lastValue;
 
 	public static Finder<Long, Portlet> find = new Finder<Long, Portlet>(Long.class, Portlet.class);
 
@@ -58,6 +52,7 @@ public class Portlet extends Model {
 		this.sectors = sectors;
 		this.createdOn = new Date();
 	}
+
 	public static Portlet fromJson(JsonNode root) {
 		Portlet instance = Json.fromJson(root, Portlet.class);
 /* If Sectors do not get populated
@@ -102,7 +97,15 @@ public class Portlet extends Model {
 		return null;
 	}
 
-	public static Collection<Portlet> findByPartName(String partName) {
+	public static List<Portlet> findCreatedBefore(String exchange, Date maxCreateDate) {
+		return find.where().eq("primaryExchange", exchange).le("createdOn", maxCreateDate).orderBy("createdOn").findList();
+	}
+
+	public static List<Portlet> findCreatedAfter(String exchange, Date startDate) {
+		return find.where().eq("primaryExchange", exchange).ge("createdOn", startDate).orderBy("createdOn").findList();
+	}
+
+	public static List<Portlet> findByPartName(String partName) {
 		List<Portlet> list = find.where().like("name", "%"+partName+"%").findList();
 		return list;
 	}
@@ -114,16 +117,6 @@ public class Portlet extends Model {
 			sectors.addAll(portlet.getSectors());
 		}
 		return sectors;
-	}
-
-	public String getVolatilityClass() {
-		if(volatility < 2) {//Daily
-			return VolatilityClass.LOW.getDisplayName();
-		} else if(volatility < 4) {
-			return VolatilityClass.MEDIUM.getDisplayName();
-		} else {
-			return VolatilityClass.HIGH.getDisplayName();
-		}
 	}
 
 	/* Boiler-plates */
@@ -150,6 +143,13 @@ public class Portlet extends Model {
 	}
 	public void setSectors(List<Sector> sectors) {
 		this.sectors = sectors;
+	}
+	public void addSector(Sector sector) {
+		if(this.sectors != null) {
+			this.sectors.add(sector);
+		} else {
+			this.sectors = Arrays.asList(sector);
+		}
 	}
 	public String getNotes() {
 		return notes;
@@ -187,46 +187,16 @@ public class Portlet extends Model {
 	public void setLastRebalancedOn(Date lastRebalancedOn) {
 		this.lastRebalancedOn = lastRebalancedOn;
 	}
-	public long getFollowerCount() {
-		return followerCount;
-	}
-	public void setFollowerCount(long followerCount) {
-		this.followerCount = followerCount;
-	}
-	public double getVolatility() {
-		return volatility;
-	}
-	public void setVolatility(double volatility) {
-		this.volatility = volatility;
-	}
-	public double getTotalReturn() {
-		return totalReturn;
-	}
-	public void setTotalReturn(double totalReturn) {
-		this.totalReturn = totalReturn;
-	}
-	public double getDailyReturn() {
-		return dailyReturn;
-	}
-	public void setDailyReturn(double dailyReturn) {
-		this.dailyReturn = dailyReturn;
-	}
-	public double getAnnualReturn() {
-		return annualReturn;
-	}
-	public void setAnnualReturn(double annualReturn) {
-		this.annualReturn = annualReturn;
-	}
 	public String getPrimaryExchange() {
 		return primaryExchange;
 	}
 	public void setPrimaryExchange(String primaryExchange) {
 		this.primaryExchange = primaryExchange;
 	}
-	public double getLastValue() {
-		return lastValue;
+	public VolatilityClass getVolatilityClass() {
+		return volatilityClass;
 	}
-	public void setLastValue(double lastValue) {
-		this.lastValue = lastValue;
+	public void setVolatilityClass(VolatilityClass volatilityClass) {
+		this.volatilityClass = volatilityClass;
 	}
 }

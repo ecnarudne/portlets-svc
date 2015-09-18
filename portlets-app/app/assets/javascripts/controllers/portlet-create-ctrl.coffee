@@ -18,9 +18,6 @@ angular.module('PortletCtrl',['Api'])
             $scope.availableWeightage = 100
             $scope.size = 0
             $scope.isShown = false
-
-            original = angular.copy($scope.portlet)
-            # Used to set ot reset form field after submitting
             $scope.calcWeightage = () ->
                 $scope.totalWeight = 0
                 $scope.selectedStocks.forEach (s) -> 
@@ -29,7 +26,7 @@ angular.module('PortletCtrl',['Api'])
                     if s.weightage == undefined
                         weight = 0
                     else
-                        weight = parseInt(s.weightage)
+                        weight = parseFloat(s.weightage)
                         $scope.totalWeight = $scope.totalWeight + weight
                     $scope.availableWeightage = 100 - $scope.totalWeight
             
@@ -78,7 +75,7 @@ angular.module('PortletCtrl',['Api'])
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $scope.portlet )
                             success: (data, status, headers, config) ->
                                 console.log("Hi data submittes successfully")
-                                $location.path "/page-portlet/1"
+                                $location.path "/page-portlet/" + data.id
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 $location.path("/portlet-create")

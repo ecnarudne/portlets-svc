@@ -34,6 +34,13 @@ public class PortletStock extends Model {
 		this.weightage = weightage;
 	}
 
+	@Override
+	public void save() {
+		super.save();
+		PortletDefinitionAudit audit = new PortletDefinitionAudit(this, System.currentTimeMillis());//TODO get single epoch for all audits for same changefor 
+		audit.save();
+	}
+	
 	public static List<PortletStock> findByPortlet(Portlet portlet) {
 		if(portlet == null)
 			return null;
@@ -76,5 +83,8 @@ public class PortletStock extends Model {
 	}
 	public void setLastUpdatedOn(Date lastUpdatedOn) {
 		this.lastUpdatedOn = lastUpdatedOn;
+	}
+	public static List<PortletStock> findByPortletId(Long portletId) {
+		return find.where().eq("portlet_id", portletId).findList();
 	}
 }

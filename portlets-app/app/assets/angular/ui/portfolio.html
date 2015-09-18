@@ -4,30 +4,30 @@
             <div class="row">
               <div class="userbox">
                 <div class="col-xs-6 col-sm-2">
-                  <div class="profile-avatar"><img src="{{portfolio.owner.profilePicture}}" alt="Profile Image" class="profile-avatar-img img-rounded"></div>
+                  <div class="profile-avatar"><img src="{{portfolio.ownerProfilePicture}}" alt="Profile Image" class="profile-avatar-img img-rounded"></div>
                   <!-- /.profile-avatar-->
                 </div>
                 <!-- /.col-->
                 <div class="col-xs-6 col-sm-2 col-sm-push-8">
                   <div class="list-group"><a href="javascript:;" class="list-group-item">
                       <h3 class="pull-right"></h3>
-                      <h4 class="list-group-item-heading" ng-bind="portfolio.owner.portletCreatedCount"></h4>
+                      <h4 class="list-group-item-heading" ng-bind="portfolio.ownerPortletCreatedCount"></h4>
                       <p class="list-group-item-text" >Portlets created</p></a>
                     <div href="javascript:;" class="list-group-item">
                       <h3 class="pull-right"></h3>
-                      <h4 class="list-group-item-heading" ng-bind="portfolio.owner.followerCount"></h4>
+                      <h4 class="list-group-item-heading" ng-bind="portfolio.ownerFollowerCount"></h4>
                       <p class="list-group-item-text">Followers</p>
                     </div>
                     <div href="javascript:;" class="list-group-item">
                       <h3 class="pull-right"></h3>
-                      <h4 class="list-group-item-heading" ng-bind="portfolio.owner.followingCount"></h4>
+                      <h4 class="list-group-item-heading" ng-bind="portfolio.ownerFollowingCount"></h4>
                       <p class="list-group-item-text">Following</p>
                     </div>
                   </div>
                   <!-- /.list-group-->
                 </div>
                 <div class="col-xs-12 col-sm-8 col-sm-pull-2">
-                  <h2 class="username" ng-bind="portfolio.owner.fullName"></h2>
+                  <h2 class="username" ng-bind="portfolio.ownerName"></h2>
                   <!-- username-->
                   <div class="userblurb"><span ng-bind="portfolio.owner.profileTitle"></span></div>
                   <!-- blurb text-->
@@ -103,7 +103,7 @@
                 <li><a href="javascript:;">
                     <h4>Followed Portlets <span class="badge badge-default demo-element">{{portfolio.followedPortletCount}}</span></h4></a></li>
                 <li><a href="javascript:;">
-                    <h4>Created Portlets <span class="badge badge-default demo-element">{{portfolio.owner.portletCreatedCount}}</span></h4></a></li>
+                    <h4>Created Portlets <span class="badge badge-default demo-element">{{portfolio.ownerPortletCreatedCount}}</span></h4></a></li>
               </ul>
             </div>
             <div class="row">
