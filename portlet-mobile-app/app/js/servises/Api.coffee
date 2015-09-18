@@ -7,7 +7,8 @@ angular.module('Api', ['ngCookies'])
     "$log"
     "$cookies"
     "$location"
-    ($http, $log, $cookies, $location) ->
+    "$state"
+    ($http, $log, $cookies, $location, $state) ->
       # Default domain to use
       domain = 'http://192.168.1.2:9000'
       
@@ -118,7 +119,7 @@ angular.module('Api', ['ngCookies'])
         return
 
       api.prototype.getPortletStatTable = (portletId,request) ->
-        get(actionUrl("/listmystockstats/" + portletId),request)
+        get(actionUrl("/listportletstats/" + portletId),request)
         return
 
       api.prototype.getStocks = (exchange,request) ->
@@ -138,11 +139,12 @@ angular.module('Api', ['ngCookies'])
         return
           
       isLogin = () ->
-        if($cookies.cookieVal == undefined)
-          ###$log.debug('User is not logedin redirecting to sign-up.')
-          $location.path("/sign-up")
+        if(window.localStorage['token'] == undefined)
+          $log.debug('User is not logedin redirecting to sign-up.')
+#          $location.path("/sign-up")
+          $state.go("sign-up");
           return false
-        else###
+        else
           return true
 
       new api()
