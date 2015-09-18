@@ -9,7 +9,7 @@ angular.module('Api', ['ngCookies'])
     "$location"
     ($http, $log, $cookies, $location) ->
       # Default domain to use
-      domain = 'http://192.168.1.107:9000'
+      domain = 'http://192.168.1.2:9000'
       
       actionUrl = (path) ->
           domain + path
@@ -40,7 +40,7 @@ angular.module('Api', ['ngCookies'])
           return
         options = withDefaults(request)
         options.before()
-        dispatch($http.get(url, {headers: "x-cookie-value": $cookies.cookieVal}), options)
+        dispatch($http.get(url, {headers: "token": window.localStorage['token']}), options)
 
       post = (url, request) ->
         options = withDefaults(request)
@@ -50,7 +50,7 @@ angular.module('Api', ['ngCookies'])
             url
             JSON.stringify(options.data)
             headers:
-              "x-cookie-value": $cookies.cookieVal
+              "token": window.localStorage['token']
           )
           options
         )
