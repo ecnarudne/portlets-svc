@@ -21,7 +21,7 @@ appController.controller(
                 portlet.notes = $scope.notes
                 portlet.sectorId = $scope.sectorId
                 $rootScope.portlet = portlet
-                $rootScope.portlet.selectedStocks = []
+                $rootScope.portlet.stocks = []
                 $rootScope.availableWeightage = 100 
 
             portletApi.getCategories(
@@ -74,21 +74,23 @@ appController.controller(
             )
             console.log 'selected Stock are: ' + JSON.stringify $scope.selectedStocks
             $scope.addStock = (stock)->
-                count =$rootScope.portlet.selectedStocks.filter((value) ->value.name == stock).length
+                count =$rootScope.portlet.stocks.filter((value) ->value.name == stock).length
                 if count == 0
-                    $rootScope.portlet.selectedStocks.push stock
+                    stock.stock = stock.name
+
+                    $rootScope.portlet.stocks.push stock
                     $rootScope.isDisabled = true
                     $scope.showSelected = true
-                    console.log 'Added Stocks: ' + JSON.stringify $rootScope.portlet.selectedStocks
+                    console.log 'Added Stocks: ' + JSON.stringify $rootScope.portlet.stocks
                 else
                     alert 'This Stock is already added'
-                $scope.size = $rootScope.portlet.selectedStocks.filter((value) -> value.name != '').length
+                $scope.size = $rootScope.portlet.stocks.filter((value) -> value.name != '').length
 
             $scope.setWeightage = (stock,percentage) ->
-                $rootScope.portlet.selectedStocks.forEach (s) -> s.weightage = percentage if s.name == stock
-                console.log "JSon array with weight is :" + JSON.stringify $scope.portlet.selectedStocks
+                $rootScope.portlet.stocks.forEach (s) -> s.weightage = percentage if s.name == stock
+                console.log "JSon array with weight is :" + JSON.stringify $scope.portlet.stocks
                 $scope.totalWeight = 0 
-                $rootScope.portlet.selectedStocks.forEach (s) -> 
+                $rootScope.portlet.stocks.forEach (s) ->
                     weight = 0
                     if s.weightage == undefined
                         weight = 0
@@ -101,14 +103,14 @@ appController.controller(
                 console.log  'total weightage'+ $scope.totalWeight 
 
             $scope.deleteStock = (stock)->
-                $rootScope.portlet.selectedStocks = $.grep($rootScope.portlet.selectedStocks, (x) -> x.name != stock)
-                console.log "Json array is :" + JSON.stringify $rootScope.portlet.selectedStocks
-                $scope.size = $rootScope.portlet.selectedStocks.filter((value) -> value.name != '').length
+                $rootScope.portlet.stocks = $.grep($rootScope.portlet.stocks, (x) -> x.name != stock)
+                console.log "Json array is :" + JSON.stringify $rootScope.portlet.stocks
+                $scope.size = $rootScope.portlet.stocks.filter((value) -> value.name != '').length
                 if $scope.size == 0
                     $rootScope.isDisabled = false
                     $scope.availableWeightage = 100
                 $scope.totalWeight = 0
-                $rootScope.portlet.selectedStocks.forEach (s) -> 
+                $rootScope.portlet.stocks.forEach (s) ->
                     console.log "in delete stock for each loop"
                     weight = 0
                     if s.weightage == undefined or s.weightage == ''
@@ -132,6 +134,7 @@ appController.controller(
                                 console.log "submitting Portlet Data: " + JSON.stringify $rootScope.portlet
                             success: (data, status, headers, config) ->
                                 console.log("Data submittes successfully")
+                                window.location = '#/app/portfolio'
                             error: (data, status, headers, config) ->
                                 $log.error('Something went wrong! ' + data)
                                 
