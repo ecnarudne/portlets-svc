@@ -129,6 +129,7 @@ appController.controller(
                             data: $rootScope.portlet
                             before: ->
                                 $log.debug('submitting Portlet Data: ' + JSON.stringify $rootScope.portlet )
+                                console.log "submitting Portlet Data: " + JSON.stringify $rootScope.portlet
                             success: (data, status, headers, config) ->
                                 console.log("Data submittes successfully")
                             error: (data, status, headers, config) ->

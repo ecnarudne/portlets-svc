@@ -10,7 +10,7 @@ angular.module('Api', ['ngCookies'])
     "$state"
     ($http, $log, $cookies, $location, $state) ->
       # Default domain to use
-      domain = 'http://192.168.1.2:9000'
+      domain = 'http://192.168.11.111:9000'
       
       actionUrl = (path) ->
           domain + path

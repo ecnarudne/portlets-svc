@@ -42,6 +42,7 @@ angular.module('PortfolioCtrl',['ionic','Api'])
                     $log.debug('Fetching my portlets.')
                   success: (data, status, headers, config) ->
                     $log.debug 'MyPortlets: ' + JSON.stringify(data)
+                    console.log 'MyPortlets: ' + JSON.stringify(data[0])
                     $scope.portlets = data
                   error: (data, status, headers, config, statusText) ->
                     $log.error('Got error while getting  my portlets')                   
