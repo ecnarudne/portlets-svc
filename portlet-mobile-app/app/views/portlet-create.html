@@ -17,7 +17,7 @@
           <textarea ng-model="notes" style="width:95%;margin-left:5%;color:#ffffff;" rows="4" placeholder="Tell us what your portlet is about" ></textarea>
         </row>
         <row>
-          <span class="input-label col col-90" style="color:#ffffff;">Select Exchange</span>
+          <span class="input-label col col-90" style="color:#ffffff;">Select Category</span>
             <select ng-change="setPortletData()" style="background-color:transparent;" ng-model="sectorId"  name="stockExchange" data-required="true" class="form-control" >
                 <option value="">Please Select</option>
                 <option ng-repeat="sector in sectors" value = "{{sector.id}}" >{{sector.name}}</option>
