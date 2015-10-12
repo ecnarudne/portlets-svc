@@ -85,6 +85,7 @@ appController.controller(
                 else
                     alert 'This Stock is already added'
                 $scope.size = $rootScope.portlet.stocks.filter((value) -> value.name != '').length
+                console.log("size : "+$scope.size)
 
             $scope.setWeightage = (stock,percentage) ->
                 $rootScope.portlet.stocks.forEach (s) -> s.weightage = percentage if s.name == stock
@@ -121,11 +122,13 @@ appController.controller(
                     $rootScope.availableWeightage = 100 - $scope.totalWeight
 
             $scope.addPortlet = () ->
-                if $scope.size < 3 
+                $scope.size = $rootScope.portlet.stocks.filter((value) -> value.name != '').length
+                console.log("final size : "+$scope.size)
+                if $scope.size < 9
                     alert 'Portlet must have at least 9 stocks'
                 else
                     if $scope.totalWeight != 100
-                        alert 'weight must be 100 %'
+                        alert 'Weight must be 100 %'
                     else
                         portletApi.addPortlet(
                             data: $rootScope.portlet
