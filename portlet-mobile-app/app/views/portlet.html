@@ -96,7 +96,7 @@
                         <center>
                         <p>{{portlet.profilePicture}}</p>
                         <h4 class="twe" >CREATED BY</h4><img class="img-circle" src="{{portlet.owner.profilePicture}}" style="width:50px; height:50px; position:center;" alt="{{portlet.profilePicture}}">
-                        <figcaption ng-bind="portlet.owner.fullName">
+                        <figcaption ng-bind="portlet.ownerName">
                             
                         </figcaption><br>
                         </center>
@@ -118,9 +118,9 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="stock in stocks">
-                                <td> <span ng-bind="stock.stats.stock.name"> </span></td>
-                                <td> <span ng-bind="stock.weight"> </span>%</td>
-                                <td> <span ng-bind="stock.return"> </span>%</td>
+                                <td> <span ng-bind="stock.stockStats.stock"> </span></td>
+                                <td> <span ng-bind="stock.weightage"> </span>%</td>
+                                <td> <span ng-bind="stock.portlet.totalReturn"> </span>%</td>
                             </tr>
                         </tbody>
                     </table>

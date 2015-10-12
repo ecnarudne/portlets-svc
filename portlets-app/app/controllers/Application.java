@@ -63,7 +63,7 @@ public class Application extends Controller {
 	private static final int LIST_MAX_LIMIT = 100;
 
 	public static Result portfolioPriceHistory(){
-    	User currentUser = getLocalUser(session());
+    	User currentUser = getLocalUser(request(), session());
     	if(currentUser == null)
     		forbidden("Login Required");
 		List<UserPortletStock> ups = UserPortletStock.findByUser(currentUser);
@@ -93,7 +93,7 @@ public class Application extends Controller {
 	}
 
 	public static Result myPortfolio() {
-    	User currentUser = getLocalUser(session());
+    	User currentUser = getLocalUser(request(), session());
     	if(currentUser == null)
     		return forbidden("Login Required");
     	PortfolioAPI portfolio = new PortfolioAPI(currentUser);
@@ -159,12 +159,12 @@ public class Application extends Controller {
 
 	public static Result index() {
 		//printSession();
-        //return ok(index.render(getLocalUser(session())));
+        //return ok(index.render(getLocalUser(request(), session())));
 		return ok(index.render());
     }
 
     public static Result users() {
-        return ok(users.render(getLocalUser(session())));
+        return ok(users.render(getLocalUser(request(), session())));
     }
 
     public static Result addUser() {
@@ -189,6 +189,49 @@ public class Application extends Controller {
         	return forbidden("No Token in Header");
         }
     }
+
+	public static boolean isTokenValid(String[] headers) {
+        if(headers != null && headers.length > 0) {
+        	try {
+				String token = headers[0];
+				UserToken userToken = UserToken.findByToken(token);
+				if(userToken != null) {
+					return true;
+				} else {
+					Logger.warn("Token not found");
+		        	return false;
+				}
+			} catch (Exception e) {
+	        	Logger.warn("Token not valid");
+	        	return false;
+			}
+        } else {
+        	Logger.warn("No Token in Header");
+        	return false;
+        }
+    }
+
+	public static UserToken findUserToken(String[] headers) {
+        if(headers != null && headers.length > 0) {
+        	try {
+				String token = headers[0];
+				UserToken userToken = UserToken.findByToken(token);
+				if(userToken != null) {
+					return userToken;
+				} else {
+					Logger.warn("Token not found");
+					return null;
+				}
+			} catch (Exception e) {
+	        	Logger.warn("Token not valid");
+				return null;
+			}
+        } else {
+        	Logger.warn("No Token in Header");
+        	return null;
+        }
+    }
+
 
 	public static Result validateToken() {
         String[] headers = request().headers().get("token");
@@ -226,7 +269,7 @@ public class Application extends Controller {
     }
     
     public static Result sectors() {
-        return ok(sectors.render(getLocalUser(session())));
+        return ok(sectors.render(getLocalUser(request(), session())));
     }
     
     
@@ -237,7 +280,7 @@ public class Application extends Controller {
 
     public static Result addSector() {
     	Sector newSector = Form.form(Sector.class).bindFromRequest().get();
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
 		newSector.setCreatedOn(new Date());
     	newSector.save();
@@ -245,7 +288,7 @@ public class Application extends Controller {
     }
 
     public static Result definePortletJson() {
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
         JsonNode root = request().body().asJson();
         if(root != null) {
@@ -259,9 +302,9 @@ public class Application extends Controller {
     }
 
     public static Result followPortlet(Long portletId) {
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
-    	User user = getLocalUser(session());
+    	User user = getLocalUser(request(), session());
     	Portlet portlet = Portlet.find.byId(portletId);
         if(portlet != null) {
         	Follows existing = Follows.findByUserAndPortlet(user, portlet);
@@ -276,9 +319,9 @@ public class Application extends Controller {
     }
 
     public static Result unfollowPortlet(Long portletId) {
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
-    	User user = getLocalUser(session());
+    	User user = getLocalUser(request(), session());
     	Portlet portlet = Portlet.find.byId(portletId);
         if(portlet != null) {
         	Follows existing = Follows.findByUserAndPortlet(user, portlet);
@@ -290,9 +333,9 @@ public class Application extends Controller {
     }
 
     public static Result updateProfileText() {
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
-    	User user = getLocalUser(session());
+    	User user = getLocalUser(request(), session());
         JsonNode json = request().body().asJson();
         if(json != null) {
             user.setNameTitle(json.findPath("nametitle").asText());
@@ -305,7 +348,7 @@ public class Application extends Controller {
     }
 
     public static Result subscribeToPortletJson(Long portletId) {
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
         JsonNode json = request().body().asJson();
         if(json != null) {
@@ -332,7 +375,7 @@ public class Application extends Controller {
         		    	newUserPortletStock.setBuyPrice(currentPx);
         		    	newUserPortletStock.setBuyWeight(ps.getWeightage());
         		    	newUserPortletStock.setQty(shares);
-        		    	newUserPortletStock.setUser(getLocalUser(session()));
+        		    	newUserPortletStock.setUser(getLocalUser(request(), session()));
         		    	newUserPortletStock.save();
                 		remainingAmount -= spent;
             		}
@@ -348,7 +391,7 @@ public class Application extends Controller {
     }
 
 	public static Result addSectorJson() {
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
         JsonNode json = request().body().asJson();
         if(json != null) {
@@ -368,7 +411,7 @@ public class Application extends Controller {
     }
 
 	public static Result setMyProfileJson() {//TODO implement
-    	if(!isLoggedIn(session()))
+    	if(!isLoggedIn(request(), session()))
 			return forbidden();
         JsonNode json = request().body().asJson();
         if(json != null) {
@@ -396,7 +439,7 @@ public class Application extends Controller {
     }
 
     public static Result listMyStockStatsByPortlet(Long portletId) {
-    	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(session()), portletId);
+    	List<UserPortletStock> stocks = UserPortletStock.findByUserAndPortlet(getLocalUser(request(), session()), portletId);
     	Logger.debug("stocks.size(): " + stocks.size());
     	ArrayList<UserPortletStockAPI> list = new ArrayList<UserPortletStockAPI>(stocks.size());
     	for (UserPortletStock ups : stocks) {
@@ -419,7 +462,7 @@ public class Application extends Controller {
     }
 
     public static Result portlets() {
-        return ok(portlets.render(getLocalUser(session())));
+        return ok(portlets.render(getLocalUser(request(), session())));
     }
     
     public static Result listPortlets() {
@@ -496,12 +539,12 @@ public class Application extends Controller {
     }
 
 	public static Result listMyStocks() {
-    	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
+    	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(request(), session()));
     	return ok(Json.toJson(list));
     }
 
     public static Result myStocks() {
-        return ok(mystocks.render(getLocalUser(session())));
+        return ok(mystocks.render(getLocalUser(request(), session())));
     }
 
     public static Result subscribeToPortlet() {
@@ -534,7 +577,7 @@ public class Application extends Controller {
     		newUserPortletStock.setBuyPrice(buyPrice);
 	    	newUserPortletStock.setQty((amount*ps.getWeightage())/(buyPrice*100));
 	    	newUserPortletStock.setBuyWeight(ps.getWeightage());
-	    	newUserPortletStock.setUser(getLocalUser(session()));
+	    	newUserPortletStock.setUser(getLocalUser(request(), session()));
 	    	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
 	    	Logger.info("Saving: " + newUserPortletStock);
 	    	newUserPortletStock.save();//TODO Transaction
@@ -543,14 +586,14 @@ public class Application extends Controller {
     }
 
     public static Result stocksInPortlet(Long portletId) {
-        return ok(stocksinportlet.render(getLocalUser(session()), portletId));
+        return ok(stocksinportlet.render(getLocalUser(request(), session()), portletId));
     }
 
     public static Result addPortlet() {
     	Portlet newPortlet = Form.form(Portlet.class).bindFromRequest().get();
     	newPortlet.setCreatedOn(new Date());
     	
-    	final User localUser = getLocalUser(session());
+    	final User localUser = getLocalUser(request(), session());
     	if(localUser != null) {
         	try {
         		//TODO start transaction
@@ -592,11 +635,11 @@ public class Application extends Controller {
     }
 
     public static Result portfolio() {
-        return ok(portfolio.render(getLocalUser(session())));
+        return ok(portfolio.render(getLocalUser(request(), session())));
     }
 
     public static Result listOwnedPortlets() {
-    	List<Portlet> portlets = Portlet.findByOwner(getLocalUser(session()));
+    	List<Portlet> portlets = Portlet.findByOwner(getLocalUser(request(), session()));
     	List<PortletAPI> portletAPIs = new ArrayList<PortletAPI>();
 	    if(portlets != null) {
 	    	for (Portlet p : portlets) {
@@ -607,7 +650,7 @@ public class Application extends Controller {
     }
 
     public static Result listMyPortlets() {
-    	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(session()));
+    	List<UserPortletStock> portletStocks = UserPortletStock.findByUser(getLocalUser(request(), session()));
     	Set<PortletAPI> portlets = new HashSet<PortletAPI>();
 	    if(portletStocks != null) {
 	    	for (UserPortletStock ups : portletStocks) {
@@ -618,7 +661,7 @@ public class Application extends Controller {
     }
 
     public static Result listMyPortletStocks() {
-    	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(session()));
+    	List<UserPortletStock> list = UserPortletStock.findByUser(getLocalUser(request(), session()));
     	return ok(Json.toJson(list));
     }
 
@@ -636,20 +679,24 @@ public class Application extends Controller {
     	if(qty != null && !qty.trim().isEmpty())
     		newUserPortletStock.setQty(Double.parseDouble(qty));
     	newUserPortletStock.setStock(requestData.get("stock"));
-    	newUserPortletStock.setUser(getLocalUser(session()));
+    	newUserPortletStock.setUser(getLocalUser(request(), session()));
     	newUserPortletStock.setBuyEpoch(System.currentTimeMillis());
     	Logger.info("Saving: " + newUserPortletStock);
     	newUserPortletStock.save();
     	return redirect(routes.Application.portfolio());
     }
 
-    public static User getLocalUser(final Session session) {
-        final User localUser = User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
+    public static User getLocalUser(final Request request, final Session session) {
+        User localUser = User.findByAuthUserIdentity(PlayAuthenticate.getUser(session));
+        if(localUser == null) {
+        	UserToken userToken = findUserToken(request().headers().get("token"));
+        	localUser = userToken.getUser();
+        }
         return localUser;
     }
 
-    private static boolean isLoggedIn(Session session) {
-    	final User localUser = getLocalUser(session);
+    private static boolean isLoggedIn(Request request, Session session) {
+    	final User localUser = getLocalUser(request, session);
     	if(localUser == null) {
             flash(FLASH_ERROR_KEY, "Please login first");
     		Logger.error("Please login first");

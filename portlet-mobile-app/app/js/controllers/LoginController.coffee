@@ -17,6 +17,7 @@ appController.controller(
     ($scope, $cordovaOauth, $location, portletApi,$log, $http, $cookies, $localStorage,$state) ->
       console.log("u r in LoginController")
       $scope.login = ->
+
         $cordovaOauth.google('945704286859-9fpaqjv25ce7ofuscp7b62hs5qd0j6b6.apps.googleusercontent.com', [
           'https://www.googleapis.com/auth/userinfo.email'
           'https://www.googleapis.com/auth/plus.me'
@@ -24,6 +25,7 @@ appController.controller(
         ]).then ((result) ->
           $localStorage.accessToken = result.access_token
           access_token = result.access_token
+
           console.log "token From google server is : " + access_token
 
           portletApi.authGoogle(
@@ -36,7 +38,7 @@ appController.controller(
                 window.localStorage['token'] = access_token;
                 console.log 'token : ' + window.localStorage['token']
               error: (data, status, headers, config, statusText) ->
-                $log.error('Got error while authentication.')                   
+                $log.error('Got error while authentication.')
               complete: (data, status, headers, config) ->
                 $log.debug('In complete of authentication')
                 $location.path '/app/portfolio'

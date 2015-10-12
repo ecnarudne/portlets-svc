@@ -34,9 +34,11 @@ angular.module('PortletCtrl',['ionic','Api'])
                 {
                   before: ->
                     $log.debug('Fetching page portlet data.')
+                    console.log 'Fetching page portlet data.'
                   success: (data, status, headers, config) ->
                     $log.debug 'Data fetched successfully.' + JSON.stringify(data)
                     $scope.portlet = data
+                    console.log 'portlet data.' +JSON.stringify(data)
                     $scope.portlet.dailyReturn = data.dailyReturn.toFixed(2)
                     $scope.portlet.annualReturn = data.annualReturn.toFixed(2)
                   error: (data, status, headers, config, statusText) ->
@@ -53,6 +55,7 @@ angular.module('PortletCtrl',['ionic','Api'])
                   success: (data, status, headers, config) ->
                     $scope.stocks = data
                     $log.debug 'Portlets stocks are fetched successfully' + JSON.stringify(data)
+                    console.log 'Portlets stocks are fetched successfully:' +JSON.stringify(data[0])
                     ###data.filter((stock)->
                       stockJson ={}
                       stockJson.COMPANY = stock.stats.stock.name
